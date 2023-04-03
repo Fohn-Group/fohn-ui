@@ -99,7 +99,7 @@ Button View are a good example:
 This will render in html a button with proper Tailwind Css utility set in Theme class used making it easy
 to define your own utility color and style.
 
-<img src="https://github.com/Fohn-Group/fohn-ui/public/images/secondary-btn.png" width="128">
+<img src="https://github.com/Fohn-Group/fohn-ui/blob/dev-develop/public/images/secondary-btn.png?raw=true" width="128">
 
 ## Javascript and Jquery
 
