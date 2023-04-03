@@ -1,6 +1,8 @@
 # Fohn-ui
  PHP Framework using TailwindCss.
 
+[Join Discord Channel](https://discord.gg/VwrPA8Nb3t)
+
 ## History
 
 Fohn-ui is a direct evolution of Agile Toolkit (atk4/ui), thus you will find a lot 
