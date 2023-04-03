@@ -11,6 +11,7 @@
   ],
   "homepage": "https://github.com/fohn-group/fohn-ui",
   "license": "MIT",
+  "version": "dev-develop",
   "authors": [
     {
       "name": "Alain Belair",
