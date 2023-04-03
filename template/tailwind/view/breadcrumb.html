@@ -1,0 +1,19 @@
+<nav id="{$idAttr}" class="{$classAttr}">
+  <ol class="list-reset flex">
+    {Items}
+      {Link_Region}
+        <li>
+          <a data_id="{$id}" href="{$url}" >{$label}</a>
+        </li>
+      {/}
+      {Separator_Region}
+        <li>
+          <span class="mx-2 text-gray-500">{$separator}</span>
+        </li>
+      {/}
+      {NoLink_Region}
+        <li><span class="text-gray-500">{$label}</span></li>
+      {/}
+    {/Items}
+  </ol>
+</nav>

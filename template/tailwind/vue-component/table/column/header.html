@@ -1,0 +1,6 @@
+<template #{$columnName}="@{headerName, headerLabel, isSorted, isAscending, sort, toggleSort, isSortable}">
+    <th :data-header-name="headerName" :class="@{'cursor-pointer': isSortable}" class="{$headerTws}" @click="toggleSort" @click.alt="sort('asc')" @click.alt.shift="sort('desc')">
+        {{headerLabel}}
+        <i :class="@{'bi bi-arrow-down-short':isSorted && !isAscending, 'bi bi-arrow-up-short':isSorted && isAscending}"></i>
+    </th>
+</template>

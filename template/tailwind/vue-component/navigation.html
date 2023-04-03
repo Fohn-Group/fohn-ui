@@ -1,0 +1,48 @@
+<aside id="{$idAttr}" class="{$classAttr}" {$attributes}>
+    <!-- Navigation Component   -->
+    <fohn-navigation
+            :navigation="navigation"
+            menu-width="{width}52{/width}"
+            break-point="{breakPoint}lg{/breakPoint}"
+            #default="@{title, icons, groups, navigationCss, isOpen, inMobileMode, fn}"
+            class="fohn-admin-side-navigation text-sm invisible"
+            ref="root">
+        <div class="fixed z-20 h-full top-0 left-0 bg-gray-800 z-40 text-white" :class="navigationCss">
+            <!-- nav toggle -->
+            <div  id="fohn-navigation-toggle" @click="fn.closeNavigation()" class="pl-4 pt-4 h-12">
+                <span v-if="inMobileMode" class="mx-2 bi bi-arrow-left cursor-pointer text-xl"></span>
+                <span>{{title}}</span>
+            </div>
+            <!-- nav items -->
+            <fohn-navigation-group
+                    v-for="group in groups"
+                    :group="group"
+                    :icons="icons"
+                    #default="@{items, isActive, isOpen, stateIcon, groupUrl, groupName, groupIcon, hasItems, fn}"
+                    class="my-1 flex flex-col border-b border-gray-700">
+                <div class="pl-1 flex flex-row h-10" :class="@{'bg-blue-500': isActive}">
+                    <div class="flex flex-1 justify-start items-center">
+                        <span class="pl-1 pr-2"><i :class="groupIcon"></i></span>
+                        <a class="w-full" :href="groupUrl">{{groupName}}</a>
+                    </div>
+                    <div v-if="hasItems" class="flex flex-wrap justify-end pr-1 content-center">
+                        <span class="cursor-pointer"><i :class="stateIcon" @click="fn.toggleGroup()"></i></span>
+                    </div>
+                </div>
+                <transition  enter-active-class="transition ease-linear duration-200"
+                             enter-from-class="opacity-0 origin-top scale-y-0"
+                             enter-to-class="opacity-100 origin-top scale-y-100"
+                             leave-active-class="transition ease-linear duration-200"
+                             leave-from-class="opacity-100  origin-top scale-y-100"
+                             leave-to-class="opacity-0 origin-top scale-y-0">
+                    <ul v-if="hasItems" class="bg-gray-900 shadow-inner pt-4 pb-2 pl-4 pr-2 text-sm text-gray-300" v-show="isOpen">
+                        <li v-for="item in items" class="py-1 px-1 hover:text-white hover:bg-gray-800 flex flex-1" :class="@{'text-white underline': fn.isActiveUrl(item.url)}">
+                            <a :href="item.url" class="w-full cursor-pointer">{{item.name}}</a>
+                        </li>
+                    </ul>
+                </transition>
+            </fohn-navigation-group>
+        </div>
+        <div class="overlay z-10 absolute top-0 left-0 h-full w-full bg-black opacity-20" :class="@{hidden: !isOpen}" @click="fn.closeNavigation()"></div>
+    </fohn-navigation>
+</aside>

@@ -1,0 +1,35 @@
+<div class="">
+        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2">
+            <div class="text-purple-700 italic text-sm md:col-span-3 lg:col-span-4 border-b border-purple-700 mt-4" >Line Control with different html type attribute value.</div>
+            <div>{$ctrl_name}</div>
+            <div>{$ctrl_email}</div>
+            <div>{$ctrl_password}</div>
+            <div>{$ctrl_number}</div>
+            <div>{$ctrl_float}</div>
+            <div>{$ctrl_money}</div>
+            <div class="text-purple-700 italic text-sm md:col-span-3 lg:col-span-4 border-b border-purple-700 mt-4">Selection controls.</div>
+            <div>{$ctrl_select}</div>
+            <div>
+                <div class="grid grid-rows-1 w-full"><div class="md:mx-auto lg:mx-auto">{$ctrl_radio}</div></div>
+            </div>
+            <div>
+                <div class="grid grid-flow-row auto-rows-min w-full"><div>Checkbox</div><div class="ml-4 mt-1">{$ctrl_check_php}{$ctrl_check_js}</div></div>
+            </div>
+            <div>{$ctrl_country}</div>
+            <div class="text-purple-700 italic text-sm md:col-span-3 lg:col-span-4 border-b border-purple-700 mt-4">Date and Time controls.</div>
+            <div>{$ctrl_date}</div>
+            <div>{$ctrl_time}</div>
+            <div>{$ctrl_datetime}</div>
+            <div class="text-purple-700 italic text-sm md:col-span-3 lg:col-span-4 border-b border-purple-700 mt-4">Other controls.</div>
+        </div>
+        <div class="grid grid-cols-1 divide-y">
+            <div class="w-1/2">{$ctrl_text}</div>
+            <div class="w-1/2 pt-4">{$ctrl_range}</div>
+        </div>
+        <div class="grid grid-cols-1">{$Content}</div>
+        <div class="grid grid-cols-1 border-b border-gray-300">
+            <div class="my-4 mx-auto">
+                {$Buttons}
+            </div>
+        </div>
+</div>

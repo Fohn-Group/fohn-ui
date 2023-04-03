@@ -1,0 +1,35 @@
+<div id="{$idAttr}" class="{$classAttr}" {$attribute}>
+    <fohn-control
+            :ctrl-name="{$name}"
+            :caption="{$caption}"
+            :type="{$type}"
+            :placeholder="{$placeholder}"
+            :ctrl-value="{$value}"
+            :hint="{$hint}"
+            :is-required="{$isRequired}"
+            :is-read-only="{$isReadOnly}"
+            :is-disabled="{$isDisabled}"
+            :on-changes="{$onChanges}"
+            :form-store-id="{$formStoreId}"
+            :step="{$step}"
+            :min="{$min}"
+            :max="{$max}"
+            #default="@{inputAttrs, caption, hint, errorMsg}"
+    >
+        <label class="relative block my-4">
+            <span :class="@{'font-bold': inputAttrs.required, 'text-red-900': errorMsg}">{{caption}}
+                <span v-show="inputAttrs.value"> : {{inputAttrs.value}}</span>
+            </span>
+            <div class="flex items-center">
+                <input
+                        v-bind="inputAttrs"
+                        v-model="inputAttrs.value"
+                        class="{$inputTws}"
+                        :class="@{'border-red-900': errorMsg, 'bg-red-100': errorMsg}"
+                >
+            </div>
+        </label>
+        <div v-if="errorMsg" class="text-red-900 italic -mt-4 ml-2">{{errorMsg}}</div>
+        <div v-if="!errorMsg && hint" class="italic text-gray-500 -mt-4 ml-2">{{hint}}</div>
+    </fohn-control>
+</div>

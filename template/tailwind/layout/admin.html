@@ -1,0 +1,31 @@
+<div id="{$idAttr}" class="fohn-layout min-h-screen flex flex-col {$classAttr}" style="{$styleAttr}">
+  <!-- sidebar -->
+  {$navigation}
+  <!-- main  -->
+  <main class="flex-grow flex-shrink flex-1 pt-12">
+    <!-- top nav -->
+    <nav class="h-12 bg-gray-800 fixed top-0 left-0 z-30 w-full" >
+      <div class="flex text-white">
+        <div class="px-3 py-3 lg:px-5 lg:pl-3 flex flex-1 justify-start" onclick="fohn.store().getNavigationStore().openNavigation()">
+          <span class="mx-2 bi bi-list cursor-pointer text-xl"></span>
+        </div>
+        <div class="px-3 py-3 lg:px-5 lg:pl-3 flex flex-1 justify-end">
+          {$topBarContent}
+        </div>
+      </div>
+    </nav>
+    <!-- content -->
+    <div id="fohn-admin-content" class="p-4 ml-0 {breakPoint}lg{/breakPoint}:ml-{width}52{/width}">
+      <div class="w-full lg:w-5/6 mx-auto">
+        {$Content}
+      </div>
+    </div>
+  </main>
+  <!-- footer -->
+  <footer class="h-16 ml-0 {breakPoint}lg{/breakPoint}:ml-{width}52{/width}">
+    <div class="h-full flex flex-1 items-center justify-center">
+      {$footer}
+    </div>
+  </footer>
+  <div class="fohn-pushable bg-gray-900 opacity-50 fixed inset-0 z-10 hidden"></div>
+</div>

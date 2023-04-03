@@ -1,0 +1,26 @@
+<div id="{$idAttr}" class="{$classAttr}" {$attributes}>
+  <fohn-control
+          :ctrl-name="{$name}"
+          :caption="{$caption}"
+          :type="{$type}"
+          :placeholder="{$placeholder}"
+          :ctrl-value="{$value}"
+          :hint="{$hint}"
+          :is-required="{$isRequired}"
+          :is-read-only="{$isReadOnly}"
+          :is-disabled="{$isDisabled}"
+          :on-changes="{$onChanges}"
+          :form-store-id="{$formStoreId}"
+          #default="@{inputAttrs, caption, hint, errorMsg}"
+  >
+    <label class="inline-flex items-center">
+      <input
+              v-bind="inputAttrs"
+              v-model="inputAttrs.value"
+              class="{$inputTws}"
+      >
+      <span class="ml-2">{{caption}}</span>
+    </label>
+  </fohn-control>
+</div>
+

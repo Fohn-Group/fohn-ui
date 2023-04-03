@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="{lang}en{/}" class="">
+  <head>
+    <title>{title}Fohn UI - Untitled Project{/}</title>{$meta}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    {$head}
+    {$includeJs}
+    {$includeCss}
+  </head>
+  <body class="{$classAttr}">{$Content}
+    <div class="fohn-side-panels">{$RightPanel}</div>
+    <div class="fohn-modal">{$Modals}</div>
+    <div id="fohn-toast"></div>
+  <script type="application/javascript">{$InitJsBundle}</script>
+  <script type="application/javascript">{$documentReady}</script>
+  <div id="fohn-modals"></div>
+  </body>
+  <div id="fohn-exception-dialog" class="invisible"></div>
+</html>

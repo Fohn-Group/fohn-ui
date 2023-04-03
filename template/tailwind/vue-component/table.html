@@ -1,0 +1,156 @@
+<div id="{$idAttr}"  class="{$classAttr}" {$attributes}>
+        {$header}
+        <fohn-table
+                store-id="{$storeId}"
+                data-url="{$dataUrl}"
+                :items-per-page="{$itemsPerPage}"
+                :columns="{$columns}"
+                ref="root"
+                class="invisible"
+                :actions="{$tableActions}"
+                #default="@{isFetching,
+                query,
+                columns,
+                sortDirection,
+                currentPage,
+                sortColumn,
+                rows,
+                totalItems,
+                itemsPerPage,
+                loadPage,
+                searchItems,
+                sortTable,
+                clearSearch,
+                setItemsPerPage,
+                executeAction}">
+            <div class="" :class="@{'animate-pulse': isFetching}">
+                {$beforeTable}
+                {TableSearch}
+                <div class="flex justify-end">
+                    <div class="flex relative w-64 py-2">
+                        <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                            <i class="bi bi-search"></i>
+                        </div>
+                        <input
+                                type="text"
+                                v-model="query"
+                                name="_q"
+                                @keyup="searchItems(query)"
+                                class="block w-full py-2 pl-10 mt-1 rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring-0 focus:ring-blue-200 focus:ring-opacity-50"
+                                placeholder="Search..."
+                                required
+                        >
+                        <button v-if="query" type="button" @click="clearSearch()" class="flex absolute inset-y-0 right-0 items-center pr-3">
+                            <i class="bi bi-x"></i>
+                        </button>
+                    </div>
+                </div>
+                {/TableSearch}
+                <table class="{$tableTws}" >
+                    <caption>{$caption}</caption>
+                    {TableHeaders}
+                    <thead>
+                    <tr class="{$headRowTws} bg-gray-100">
+                        <template v-for="column in columns" >
+                            <fohn-header-cell :column="column" :sort-column="sortColumn" :sort-direction="sortDirection" @sort-table="sortTable">
+                                {$headers}
+                            </fohn-header-cell>
+                        </template>
+                    </tr>
+                    </thead>
+                    {/TableHeaders}
+                    <tbody>
+                        <template v-for="(row, idx) in rows" :key="idx">
+                            <fohn-table-row :row="row">
+                                <template #default="@{row}" >
+                                    <tr :data-id="row.id" :class="row.css" class="{$rowTws}">
+                                        <template v-for="column in columns">
+                                            <fohn-table-cell :cell="row.cells[column.name]">
+                                                {$cells}
+                                            </fohn-table-cell>
+                                        </template>
+                                    </tr>
+                                </template>
+                            </fohn-table-row>
+                        </template>
+                    </tbody>
+                </table>
+                {$afterTable}
+                {Paginator}
+                <div class="py-4">
+                    <fohn-table-paginator
+                            :current-page="currentPage"
+                            :total-items="totalItems"
+                            :disabled="isFetching"
+                            :page-limit="{$pagesLimit}"
+                            :items-per-page="itemsPerPage"
+                            #default="@{range,
+                            currentPage,
+                            totalPages,
+                            totalItems,
+                            itemsPerPage,
+                            itemsPerPages,
+                            fromItem,
+                            toItem,
+                            setItemsPerPage,
+                            goToPage,
+                            }"
+                            @load-page="loadPage($event)"
+                            @set-items-per-page="setItemsPerPage($event)">
+                        <div class="flex flex-row flex-wrap justify-between">
+                            <div class="pb-2">
+                                <ul class="inline-flex text-center bg-white mx-auto">
+                                    <li class="w-8 h-8 table-cell">
+                                        <button @click="goToPage(1)"
+                                                :disabled="currentPage === 1"
+                                                class="disabled:text-gray-400 hover:bg-blue-100 w-full h-full transition duration-100 ease-in-out ">
+                                            <i class="bi bi-chevron-bar-left"></i>
+                                        </button>
+                                    </li>
+                                    <li class="w-8 h-8 table-cell">
+                                        <button @click="goToPage(currentPage - 1)"
+                                                :disabled="currentPage === 1"
+                                                class="disabled:text-gray-400  hover:bg-blue-100 w-full h-full transition duration-100 ease-in-out focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50">
+                                            <i class="bi bi-chevron-left"></i>
+                                        </button>
+                                    </li>
+                                    <template v-for="page in range">
+                                        <li class="w-8 h-8 table-cell">
+                                            <button @click="goToPage(page)"
+                                                    :class="{'text-blue-700 border-b-2 border-blue-700': page === currentPage, 'text-gray-600' : page !== currentPage}"
+                                                    class="hover:bg-blue-100 w-full h-full transition duration-100 ease-in-out">
+                                                {{page}}
+                                            </button>
+                                        </li>
+                                    </template>
+                                    <li class="w-8 h-8 table-cell">
+                                        <button @click="goToPage(currentPage + 1)"
+                                                :disabled="currentPage === totalPages"
+                                                class="disabled:text-gray-400 hover:bg-blue-100 w-full h-full transition duration-100 ease-in-out focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50">
+                                            <i class="bi bi-chevron-right"></i>
+                                        </button>
+                                    </li>
+                                    <li class="w-8 h-8 table-cell">
+                                        <button @click="goToPage(totalPages)"
+                                                :disabled="currentPage === totalPages"
+                                                class="disabled:text-gray-400 hover:bg-blue-100 w-full h-full transition duration-100 ease-in-out focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50">
+                                            <i class="bi bi-chevron-bar-right"></i>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="invisible md:visible pb-2">{{fromItem}} - {{toItem}} / {{totalItems}}</div>
+                            <div class="pb-2">
+                                <select v-model="itemsPerPage" @change="setItemsPerPage(itemsPerPage)" class=" p-1 mb-1 w-24 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500">
+                                    <option v-for="items in itemsPerPages" :value="items">{{items}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </fohn-table-paginator>
+                </div>
+                {/Paginator}
+            </div>
+        </fohn-table>
+        {$footer}
+    {$Content}
+</div>

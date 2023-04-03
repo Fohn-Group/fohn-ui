@@ -1,0 +1,25 @@
+<div id="{$idAttr}" {$attributes} class="{$classAttr}">
+    <fohn-control
+            :ctrl-name="{$name}"
+            :caption="{$caption}"
+            :type="{$type}"
+            :placeholder="{$placeholder}"
+            :ctrl-value="{$value}"
+            :hint="{$hint}"
+            :is-required="{$isRequired}"
+            :is-read-only="{$isReadOnly}"
+            :is-disabled="{$isDisabled}"
+            :on-changes="{$onChanges}"
+            :form-store-id="{$formStoreId}"
+            #default="@{inputAttrs, caption, hint, errorMsg}"
+            >
+        <label class="block my-4"><span>{{caption}}</span>
+            <textarea
+                    v-bind="inputAttrs"
+                    v-model="inputAttrs.value"
+                    class="{$inputTws}"
+                    :class="@{'border-red-900': errorMsg, 'bg-red-100': errorMsg}"
+                    rows="{$rows}"></textarea>
+        </label>
+    </fohn-control>
+</div>

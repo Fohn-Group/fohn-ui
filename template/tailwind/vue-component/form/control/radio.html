@@ -1,0 +1,34 @@
+<div id="{$idAttr}" class="{$classAttr}" {$attributes}>
+    <fohn-control :ctrl-name="{$name}"
+                  :caption="{$caption}"
+                  :type="{$type}"
+                  :placeholder="{$placeholder}"
+                  :ctrl-value="{$value}"
+                  :hint="{$hint}"
+                  :is-required="{$isRequired}"
+                  :is-read-only="{$isReadOnly}"
+                  :is-disabled="{$isDisabled}"
+                  :on-changes="{$onChanges}"
+                  :form-store-id="{$formStoreId}"
+                  #default="@{inputAttrs, caption, hint, errorMsg}"
+    >
+        <div class="mb-2" :class="@{'font-bold': inputAttrs.required, 'text-red-900': errorMsg}">{{caption}}</div>
+        <fohn-radio v-model="inputAttrs.value" :items="{$items}" #default="@{items, value, setCtrlValue}">
+            <template v-for="item in items">
+                <label class="flex items-center mx-4">
+                    <input
+                            v-model="inputAttrs.value"
+                            type="radio"
+                            :name="{$name}"
+                           class="{$inputTws}"
+                           :value="item.key"
+                           @change="setCtrlValue(item.key)"
+                    >
+                    <span class="ml-2">{{item.label}}</span>
+                </label>
+            </template>
+        </fohn-radio>
+        <div v-if="errorMsg" class="text-red-900 italic ml-2">{{errorMsg}}</div>
+        <div v-if="!errorMsg && hint" class="italic text-gray-500 ml-2">{{hint}}</div>
+    </fohn-control>
+</div>

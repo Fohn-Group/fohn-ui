@@ -1,0 +1,34 @@
+<phpunit bootstrap="vendor/autoload.php" printerClass="\PHPUnit\TextUI\DefaultResultPrinter" colors="true">
+    <php>
+        <var name="DB_DSN" value="sqlite::memory:" />
+        <var name="DB_USER" value="" />
+        <var name="DB_PASSWD" value="" />
+        <var name="DB_DBNAME" value="" />
+    </php>
+    <testsuites>
+        <testsuite name="main">
+            <directory>tests</directory>
+            <directory>tests/Core</directory>
+            <directory>tests/Service</directory>
+            <directory>tests/DemoApp</directory>
+            <directory>tests/Callback</directory>
+            <directory>tests/Javascript</directory>
+        </testsuite>
+    </testsuites>
+    <groups>
+        <exclude>
+            <group>demos_http</group>
+        </exclude>
+    </groups>
+    <listeners>
+        <listener class="JohnKary\PHPUnit\Listener\SpeedTrapListener" />
+    </listeners>
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+        <report>
+            <php outputFile="build/logs/clover.cov" />
+        </report>
+    </coverage>
+</phpunit>

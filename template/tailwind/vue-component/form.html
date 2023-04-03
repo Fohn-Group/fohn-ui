@@ -1,0 +1,15 @@
+<div id="{$idAttr}" class="{$classAttr}" {$attributes} >
+    {$header}
+    <fohn-form
+            :store-id="{$storeId}"
+            :data-record-id="{$dataRecordId}"
+            :can-leave="{$canLeave}"
+            :submit-url="{$submitUrl}"
+            :values-url="{$valuesUrl}"
+            #default="@{isSubmitting, canLeave, formErrors, submitForm, setControlValue, isDirty, storeId}" ref="root" class="invisible">
+        <form id="{$formId}" @submit.prevent="submitForm">
+            {$Layouts}
+        </form>
+    </fohn-form>
+    {$footer}
+</div>

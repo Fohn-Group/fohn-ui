@@ -1,0 +1,69 @@
+<div id="{$idAttr}" class="{$classAttr}" {$attributes}>
+    <fohn-control
+            :ctrl-name="{$name}"
+            :caption="{$caption}"
+            :type="{$type}"
+            :placeholder="{$placeholder}"
+            :ctrl-value="{$value}"
+            :hint="{$hint}"
+            :is-required="{$isRequired}"
+            :is-read-only="{$isReadOnly}"
+            :is-disabled="{$isDisabled}"
+            :on-changes="{$onChanges}"
+            :form-store-id="{$formStoreId}"
+            #default="@{inputAttrs, caption, hint, errorMsg}"
+    >
+        <div class="mb-2" :class="@{'font-bold': inputAttrs.required, 'text-red-900': errorMsg}">{{caption}}</div>
+        <fohn-select
+                v-model="inputAttrs.value"
+                :max-items="{$maxItems}"
+                :allow-null="{$allowNull}"
+                :items="{$items}"
+                :open-icon="{$openIcon}"
+                :close-icon="{$closeIcon}"
+                :request-url="{$requestUrl}"
+                :filter-mode="{$filterMode}"
+                #default="@{select, setValue, toggleList, closeItems, filterItems, clearValue, isItemSelected, openItems,}">
+            <input type="hidden" :value="select.value" :name="inputAttrs.name">
+            <div class="relative flex justify-center items-center">
+                <input :value="select.label"
+                       :placeholder="inputAttrs.placeholder"
+                       type="text"
+                       @input="filterItems"
+                       @blur="closeItems"
+                       @focus="openItems"
+                       @click="openItems"
+                       class="{$inputTws}"
+                       :class="@{'cursor-pointer' :!select.isOpen, 'cursor-auto': select.isOpen}"
+                >
+                <div class="absolute items-right px-2 right-2 bg-white cursor-pointer">
+                    <div class="grid grid-cols-3 gap-2">
+                        <div><fohn-spinner size="small" :spin="select.isFetching"></fohn-spinner></div>
+                        <div><i v-if="select.value && select.allowNull" :class="select.deleteIcon" @click="clearValue"></i></div>
+                        <div><i :class="select.toggleState" @click="toggleList"></i></div>
+                    </div>
+                </div>
+            </div>
+            <transition :duration="300" name="fade">
+                    <div class="fohn-select-items relative" v-if="select.isOpen" tabindex="-1">
+                        <div class="bg-white border border-gray-200 shadow-xl max-h-64 overflow-y-scroll overscroll-y-none absolute inset-x-0 top-1 z-10">
+                            <ul class="divide-y divide-gray-300">
+                                <template v-for="(item, index) in select.items" :key="index" >
+                                    <li
+                                            :class="@{'bg-blue-50': isItemSelected(item)}"
+                                            class="p-2 hover:bg-gray-50 cursor-pointer snap-center w-full"
+                                            :data-id="item.key"
+                                            @click.stop="setValue(item)"
+                                    >
+                                       {{item.label}}
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
+                    </div>
+            </transition>
+        </fohn-select>
+        <div v-if="errorMsg" class="text-red-900 italic ml-2">{{errorMsg}}</div>
+        <div v-if="!errorMsg && hint" class="italic text-gray-500 ml-2">{{hint}}</div>
+    </fohn-control>
+</div>
