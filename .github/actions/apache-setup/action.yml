@@ -4,6 +4,9 @@ inputs:
   php-version:
     description: 'Setup PHP version. Must match the PHP version used by shivammathur/setup-php'
     required: true
+  site-directory:
+    description: 'The site directory for Apache to serve'
+    default: /tests
   http-port:
     description: 'The port for Apache to listen to HTTP requests'
     default: 8888\
@@ -20,7 +23,22 @@ runs:
         sudo a2enmod php${{ inputs.php-version }} rewrite
       shell: bash
     - name: Configure the site under test
-      run: echo "apache config"
+      run: |
+        echo "<Directory ${{ inputs.site-directory }}>" | sudo tee /etc/apache2/sites-available/sut.conf
+        echo '  Options Indexes FollowSymLinks' | sudo tee -a /etc/apache2/sites-available/sut.conf
+        echo '  AllowOverride all' | sudo tee -a /etc/apache2/sites-available/sut.conf
+        echo '  Require all granted' | sudo tee -a /etc/apache2/sites-available/sut.conf
+        echo '</Directory>' | sudo tee -a /etc/apache2/sites-available/sut.conf
+        echo '' | sudo tee -a /etc/apache2/sites-available/sut.conf
+        echo "<VirtualHost *:${{ inputs.http-port }}>" | sudo tee -a /etc/apache2/sites-available/sut.conf
+        echo '  ServerAdmin admin@localhost' | sudo tee -a /etc/apache2/sites-available/sut.conf
+        echo "  DocumentRoot ${{ inputs.site-directory }}" | sudo tee -a /etc/apache2/sites-available/sut.conf
+        echo '  ErrorLog ${APACHE_LOG_DIR}/error.log' | sudo tee -a /etc/apache2/sites-available/sut.conf
+        echo '  CustomLog ${APACHE_LOG_DIR}/access.log combined' | sudo tee -a /etc/apache2/sites-available/sut.conf
+        echo '</VirtualHost>' | sudo tee -a /etc/apache2/sites-available/sut.conf
+        sudo sed -ri -e "s!Listen 80!Listen ${{ inputs.http-port }}!g" /etc/apache2/ports.conf
+        sudo a2ensite sut
+        sudo a2dissite 000-default
       shell: bash
     - name: Start Apache in the foreground
       run: |
