@@ -33,7 +33,7 @@ class CallbackPayloadTest extends TestCase
             'results' => array_merge($payload, ['d1' => 'test1']),
         ];
 
-        $request = new \GuzzleHttp\Psr7\Request('POST', '/tests/Callback/callback.php');
+        $request = new \GuzzleHttp\Psr7\Request('POST', '/Callback/callback.php');
         // Send Request
         $response = $this->client->send($request, [
             'query' => [

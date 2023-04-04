@@ -1,11 +1,8 @@
-name: PHP Composer
+name: Fohn-ui unit test
 
 on:
   pull_request:
   push:
-
-permissions:
-  contents: read
 
 jobs:
   unit-test:
@@ -29,7 +26,7 @@ jobs:
       uses: thunder/apache-shiva-php-action@v1
       with:
         php-version: '8.2'
-        site-directory: /
+        site-directory: /tests
         http-port: 8080
 
     - name: Validate composer.json and composer.lock
@@ -47,11 +44,8 @@ jobs:
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
 
-    - name: check path
-      run: ls
-
-#    - name: "Run php unit"
-#      run: vendor/bin/phpunit --exclude-group none --no-coverage -v
+    - name: "Run php unit"
+      run: vendor/bin/phpunit --exclude-group none --no-coverage -v
 
 #    - name: CodeStyle
 #      run: composer run-script code-style
