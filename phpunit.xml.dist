@@ -11,6 +11,7 @@
             <directory>tests/Core</directory>
             <directory>tests/Service</directory>
             <directory>tests/DemoApp</directory>
+            <directory>tests/Callback</directory>
             <directory>tests/Javascript</directory>
         </testsuite>
     </testsuites>
