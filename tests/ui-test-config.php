@@ -12,5 +12,5 @@ return [
         'time' => 'H:i',
         'datetime' => 'M d, Y H:i:s',
     ],
-    'base_uri' => 'http://localhost',
+    'base_uri' => 'http://localhost:8080',
 ];
