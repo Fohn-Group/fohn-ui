@@ -30,7 +30,7 @@ jobs:
       with:
         php-version: '8.2'
         site-directory: /test
-        http-port: 8080
+        http-port: 80
 
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
