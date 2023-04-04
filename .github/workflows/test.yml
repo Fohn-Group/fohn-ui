@@ -48,7 +48,7 @@ jobs:
       run: composer install --prefer-dist --no-progress
 
     - name: check path
-      run: echo "$PATH"
+      run: echo "ls"
 
 #    - name: "Run php unit"
 #      run: vendor/bin/phpunit --exclude-group none --no-coverage -v
