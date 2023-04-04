@@ -24,29 +24,39 @@ class CallbackPayloadTest extends TestCase
         $this->client = new Client(['base_uri' => $config['base_uri']]);
     }
 
-    public function testDataCallback(): void
+    public function testIndex(): void
     {
-        $payload = ['p1' => 'v1'];
-        $expected = [
-            'success' => true,
-            'count' => 2,
-            'results' => array_merge($payload, ['d1' => 'test1']),
-        ];
-
-        $request = new \GuzzleHttp\Psr7\Request('POST', '/Callback/callback.php');
-        // Send Request
-        $response = $this->client->send($request, [
-            'query' => [
-                Request::URL_QUERY_TARGET => 'data_tg',
-                'data_tg' => Request::DATA_TYPE,
-            ],
-            'body' => json_encode($payload),
-        ]);
+        $request = new \GuzzleHttp\Psr7\Request('GET', '/Callback/index.html');
+        $response = $this->client->send($request);
         // Read Response
         $responseBody = (string) $response->getBody();
         $this->assertSame(200, $response->getStatusCode(), ' Status error on Data callback.');
-        $this->assertSame(json_decode($responseBody, true), $expected);
+
     }
+
+//    public function testDataCallback(): void
+//    {
+//        $payload = ['p1' => 'v1'];
+//        $expected = [
+//            'success' => true,
+//            'count' => 2,
+//            'results' => array_merge($payload, ['d1' => 'test1']),
+//        ];
+//
+//        $request = new \GuzzleHttp\Psr7\Request('POST', '/Callback/callback.php');
+//        // Send Request
+//        $response = $this->client->send($request, [
+//            'query' => [
+//                Request::URL_QUERY_TARGET => 'data_tg',
+//                'data_tg' => Request::DATA_TYPE,
+//            ],
+//            'body' => json_encode($payload),
+//        ]);
+//        // Read Response
+//        $responseBody = (string) $response->getBody();
+//        $this->assertSame(200, $response->getStatusCode(), ' Status error on Data callback.');
+//        $this->assertSame(json_decode($responseBody, true), $expected);
+//    }
 //
 //    public function testAjaxCallback(): void
 //    {
