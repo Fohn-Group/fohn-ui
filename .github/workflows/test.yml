@@ -23,7 +23,7 @@ jobs:
         coverage: pcov
 
     - name: Setup Apache
-      uses: actions/apache-setup
+      uses: actions/apache-setup.yml
       with:
         php-version: '8.2'
         http-port: 8080
