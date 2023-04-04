@@ -64,5 +64,11 @@
     "psr-4": {
       "Fohn\\Ui\\Tests\\": "tests/"
     }
+  },
+  "scripts" : {
+    "code-style-dev": "vendor/friendsofphp/php-cs-fixer/php-cs-fixer fix --using-cache=no --diff --verbose",
+    "code-style" : "vendor/bin/php-cs-fixer fix --dry-run --using-cache=no --diff --verbose",
+    "phpstan" : "vendor/bin/phpstan analyse",
+    "unit-test" : "vendor/phpunit/phpunit/phpunit --configuration phpunit.xml.dist --teamcity"
   }
 }
