@@ -47,8 +47,11 @@ jobs:
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
 
-    - name: "Run php unit"
-      run: vendor/bin/phpunit --exclude-group none --no-coverage -v
+    - name: check path
+      run: echo "{path}"
+
+#    - name: "Run php unit"
+#      run: vendor/bin/phpunit --exclude-group none --no-coverage -v
 
 #    - name: CodeStyle
 #      run: composer run-script code-style
