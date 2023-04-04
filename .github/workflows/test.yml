@@ -29,8 +29,8 @@ jobs:
       uses: thunder/apache-shiva-php-action@v1
       with:
         php-version: '8.2'
-        site-directory: /test
-        http-port: 80
+        site-directory: /tests
+        http-port: 8080
 
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
