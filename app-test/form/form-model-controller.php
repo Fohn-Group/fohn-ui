@@ -47,8 +47,8 @@ $nameCtrl = $f->getControl('first_name')
 
         return $error;
     })->onSetValue(function ($value) {
-                return strtoupper($value);
-            });
+        return strtoupper($value);
+    });
 
 View::addAfter($nameCtrl)
     ->setText('Test control onValidation and onSetValue Hook. Try entering John as value. Also the value save in db wil be in uppercase.')

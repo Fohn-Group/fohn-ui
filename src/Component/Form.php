@@ -108,7 +108,7 @@ class Form extends View implements VueInterface
      */
     public function onControlsValueRequest(\Closure $fx): self
     {
-//        $this->initValueCallback();
+        //        $this->initValueCallback();
         $this->onHooks(self::HOOKS_GET_VALUES, $fx);
 
         $this->valuesCb->onDataRequest(function (array $payload = []): array {
