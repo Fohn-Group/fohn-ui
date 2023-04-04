@@ -46,8 +46,8 @@ jobs:
 
     - name: Give apache permission to tests
       run: |
-        sudo chown -R www-data:www-data tests
-        sudo chmod -R og-r tests
+        sudo chown -R www-data:www-data /var/www
+        sudo chmod -R og-r /var/www
 
     - name: "Run php unit"
       run: vendor/bin/phpunit --exclude-group none --no-coverage -v
