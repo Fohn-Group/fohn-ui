@@ -19,5 +19,4 @@ phpunit-*.xml
 behat.yml
 
 .codefresh
-.github
 phpstan.neon

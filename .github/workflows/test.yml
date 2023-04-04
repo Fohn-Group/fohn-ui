@@ -23,10 +23,9 @@ jobs:
         coverage: pcov
 
     - name: Setup Apache
-      uses: thunder/apache-shiva-php-action@v1
+      uses: actions/apache-setup
       with:
         php-version: '8.2'
-        site-directory: /tests
         http-port: 8080
 
     - name: Validate composer.json and composer.lock
