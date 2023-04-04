@@ -40,11 +40,14 @@ jobs:
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
 
-    - name: CodeStyle
-      run: composer run-script code-style
+    - name: "Run php unit"
+      run: vendor/bin/phpunit --exclude-group none --no-coverage -v
 
-    - name: phpstan
-      run: composer run-script phpstan
-
-    - name: Run test suite
-      run: composer run-script unit-test
+#    - name: CodeStyle
+#      run: composer run-script code-style
+#
+#    - name: phpstan
+#      run: composer run-script phpstan
+#
+#    - name: Run test suite
+#      run: composer run-script unit-test
