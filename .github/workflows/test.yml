@@ -44,6 +44,11 @@ jobs:
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
 
+    - name: Give apache permission to tests
+      run: |
+        chown -R www-data:www-data tests
+        chmod -R og-r tests
+        
     - name: "Run php unit"
       run: vendor/bin/phpunit --exclude-group none --no-coverage -v
 
