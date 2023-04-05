@@ -12,5 +12,5 @@ return [
         'time' => 'H:i',
         'datetime' => 'M d, Y H:i:s',
     ],
-    'base_uri' => 'http://127.0.0.1:8080',
+    'base_uri' => 'http://127.0.0.1',
 ];

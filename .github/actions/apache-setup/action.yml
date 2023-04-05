@@ -6,10 +6,10 @@ inputs:
     required: true
   site-directory:
     description: 'The site directory for Apache to serve'
-    default: /tests
+    default: /
   http-port:
     description: 'The port for Apache to listen to HTTP requests'
-    default: 8888\
+    default: 80\
 # Install Apache and configure to serve the site under test. Apache is run
 # in the foreground using the same user as the test runner to avoid common
 # pitfalls with file ownership.
