@@ -25,8 +25,8 @@ runs:
     - name: Configure the site under test
       run: |
         echo "<VirtualHost *:${{ inputs.http-port }}>" | sudo tee /etc/apache2/sites-enabled/sut.conf
-        echo "  DocumentRoot ${{ inputs.site.directory }}" | sudo tee -a /etc/apache2/sites-enabled/sut.conf
-        echo "  <Directory ${{ inputs.site.directory }}>" | sudo tee -a /etc/apache2/sites-enabled/sut.conf
+        echo "  DocumentRoot ${{ inputs.site-directory }}" | sudo tee -a /etc/apache2/sites-enabled/sut.conf
+        echo "  <Directory ${{ inputs.site-directory }}>" | sudo tee -a /etc/apache2/sites-enabled/sut.conf
         echo "    Options All" | sudo tee -a /etc/apache2/sites-enabled/sut.conf
         echo "      AllowOverride All" | sudo tee -a /etc/apache2/sites-enabled/sut.conf
         echo "    Order allow,deny" | sudo tee -a /etc/apache2/sites-enabled/sut.conf
