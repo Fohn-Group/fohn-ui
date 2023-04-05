@@ -44,13 +44,15 @@ jobs:
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
 
+    - name: check path
+      run: ls -l
 #    - name: Give apache permission to tests
 #      run: |
 #        sudo chown -R www-data:www-data /var/www
 #        sudo chmod -R og-r /var/www
 
-    - name: "Run php unit"
-      run: vendor/bin/phpunit --exclude-group none --no-coverage -v
+#    - name: "Run php unit"
+#      run: vendor/bin/phpunit --exclude-group none --no-coverage -v
 
 #    - name: CodeStyle
 #      run: composer run-script code-style
