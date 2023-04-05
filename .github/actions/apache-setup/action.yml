@@ -29,6 +29,7 @@ runs:
         echo '  AllowOverride None' | sudo tee -a /etc/apache2/sites-available/000-default.conf
         echo '  Require all granted' | sudo tee -a /etc/apache2/sites-available/000-default.conf
         echo '</Directory>' | sudo tee -a /etc/apache2/sites-available/000-default.conf
+        sudo sed -ri -e "s!Listen 80!Listen ${{ inputs.http-port }}!g" /etc/apache2/ports.conf
       shell: bash
     - name: Start Apache in the foreground
       run: |
