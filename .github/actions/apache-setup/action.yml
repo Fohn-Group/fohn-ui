@@ -32,5 +32,9 @@ runs:
       shell: bash
     - name: Start Apache in the foreground
       run: |
+        source /etc/apache2/envvars
+        export APACHE_LOG_DIR="${PWD}"
+        export APACHE_LOCK_DIR="${PWD}"
+        export APACHE_PID_FILE="${PWD}/apache2.pid"
         nohup apache2 -DFOREGROUND
       shell: bash
