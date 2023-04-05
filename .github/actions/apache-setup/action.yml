@@ -1,4 +1,4 @@
-name: 'apache-setup'
+name: 'Apache PHP'
 description: 'Use after shivammathur/setup-php to use Apache. Logs will be written to the working directory.'
 inputs:
   php-version:
@@ -24,17 +24,23 @@ runs:
       shell: bash
     - name: Configure the site under test
       run: |
-        echo "<VirtualHost *:${{ inputs.http-port }}>" | sudo tee /etc/apache2/sites-enabled/sut.conf
-        echo "  DocumentRoot ${{ inputs.site-directory }}" | sudo tee -a /etc/apache2/sites-enabled/sut.conf
-        echo "  <Directory ${{ inputs.site-directory }}>" | sudo tee -a /etc/apache2/sites-enabled/sut.conf
-        echo "    Options All" | sudo tee -a /etc/apache2/sites-enabled/sut.conf
-        echo "      AllowOverride All" | sudo tee -a /etc/apache2/sites-enabled/sut.conf
-        echo "    Order allow,deny" | sudo tee -a /etc/apache2/sites-enabled/sut.conf
-        echo "    Allow from all" | sudo tee -a /etc/apache2/sites-enabled/sut.conf
-        echo "      Require all granted" | sudo tee -a /etc/apache2/sites-enabled/sut.conf
-        echo "  </Directory>" | sudo tee -a /etc/apache2/sites-enabled/sut.conf
-        echo '</VirtualHost>' | sudo tee -a /etc/apache2/sites-enabled/sut.conf
-        echo 'Listen ${{inputs.http-port}}' | sudo tee -a /etc/apache2/ports.conf
+        echo "<Directory ${{ inputs.site-directory }}>" | sudo tee /etc/apache2/sites-available/sut.conf
+        echo "    Options All" | sudo tee -a /etc/apache2/sites-available/sut.conf
+        echo "      AllowOverride All" | sudo tee -a /etc/apache2/sites-available/sut.conf
+        echo "    Order allow,deny" | sudo tee -a /etc/apache2/sites-available/sut.conf
+        echo "    Allow from all" | sudo tee -a /etc/apache2/sites-available/sut.conf
+        echo "      Require all granted" | sudo tee -a /etc/apache2/sites-available/sut.conf
+        echo '</Directory>' | sudo tee -a /etc/apache2/sites-available/sut.conf
+        echo '' | sudo tee -a /etc/apache2/sites-available/sut.conf
+        echo "<VirtualHost *:${{ inputs.http-port }}>" | sudo tee -a /etc/apache2/sites-available/sut.conf
+        echo '  ServerAdmin admin@localhost' | sudo tee -a /etc/apache2/sites-available/sut.conf
+        echo "  DocumentRoot ${{ inputs.site-directory }}" | sudo tee -a /etc/apache2/sites-available/sut.conf
+        echo '  ErrorLog ${APACHE_LOG_DIR}/error.log' | sudo tee -a /etc/apache2/sites-available/sut.conf
+        echo '  CustomLog ${APACHE_LOG_DIR}/access.log combined' | sudo tee -a /etc/apache2/sites-available/sut.conf
+        echo '</VirtualHost>' | sudo tee -a /etc/apache2/sites-available/sut.conf
+        sudo sed -ri -e "s!Listen 80!Listen ${{ inputs.http-port }}!g" /etc/apache2/ports.conf
+        sudo a2ensite sut
+        sudo a2dissite 000-default
       shell: bash
     - name: Start Apache in the foreground
       run: |
@@ -44,4 +50,5 @@ runs:
         export APACHE_PID_FILE="${PWD}/apache2.pid"
         nohup apache2 -DFOREGROUND > /dev/null 2>&1 &
         sleep 2
+        nc -z "127.0.0.1" "${{ inputs.http-port }}"
       shell: bash
