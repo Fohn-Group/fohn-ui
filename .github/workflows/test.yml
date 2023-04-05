@@ -45,7 +45,9 @@ jobs:
       run: composer install --prefer-dist --no-progress
 
     - name: check path
-      run: ls -l
+      run: |
+        pwd -P
+        pwd -L
 #    - name: Give apache permission to tests
 #      run: |
 #        sudo chown -R www-data:www-data /var/www
