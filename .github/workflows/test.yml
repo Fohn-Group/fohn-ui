@@ -46,9 +46,9 @@ jobs:
       uses: ./.github/actions/apache-setup
       with:
         php-version: ${{ matrix.php }}
-        site-directory: /home/runner/work/fohn-ui/fohn-ui
+        site-directory: /home/runner/work/fohn-ui/fohn-ui/
         http-port: 8888
-        
+
 #    - name: Give apache permission to tests
 #      run: |
 #        sudo chown -R www-data:www-data /var/www
