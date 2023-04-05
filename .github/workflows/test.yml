@@ -62,10 +62,10 @@ jobs:
       run: ls build/logs
 
     - name: Upload Coverage
-      uses: codecov/codecov-action@v2
+      uses: codecov/codecov-action@v3
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        files: build/logs/clover.cov
+        files: build/logs/clover.cov, build/logs/http.xml
         verbose: true
 #    - name: "Run php unit"
 #      run: vendor/bin/phpunit --exclude-group none --no-coverage -v
