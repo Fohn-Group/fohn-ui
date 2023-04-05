@@ -9,7 +9,7 @@ inputs:
     default: '/'
   http-port:
     description: 'The port for Apache to listen to HTTP requests'
-    default: 80\
+    default: 8888\
 # Install Apache and configure to serve the site under test. Apache is run
 # in the foreground using the same user as the test runner to avoid common
 # pitfalls with file ownership.
