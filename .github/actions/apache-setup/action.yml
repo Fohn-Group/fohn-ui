@@ -37,5 +37,6 @@ runs:
         export APACHE_LOG_DIR="${PWD}"
         export APACHE_LOCK_DIR="${PWD}"
         export APACHE_PID_FILE="${PWD}/apache2.pid"
-        nohup apache2 -DFOREGROUND
+        nohup apache2 -DFOREGROUND > /dev/null 2>&1 &
+        sleep 2
       shell: bash
