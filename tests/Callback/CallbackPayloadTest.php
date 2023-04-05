@@ -26,7 +26,7 @@ class CallbackPayloadTest extends TestCase
 
     public function testIndex(): void
     {
-        $request = new \GuzzleHttp\Psr7\Request('GET', '/Callback/index.html');
+        $request = new \GuzzleHttp\Psr7\Request('GET', '/tests/Callback/index.html');
         $response = $this->client->send($request);
         // Read Response
         $responseBody = (string) $response->getBody();
