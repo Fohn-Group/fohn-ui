@@ -49,20 +49,17 @@ jobs:
         site-directory: /home/runner/work/fohn-ui/fohn-ui
         http-port: 7000
 
-    - name: check port conf
-      run: |
-        cat /etc/apache2/ports.conf
+    - name: CodeStyle
+      run: composer run-script code-style
 
-    - name: check sut conf
-      run: |
-        cat /etc/apache2/sites-enabled/sut.conf
-#    - name: Give apache permission to tests
-#      run: |
-#        sudo chown -R www-data:www-data /var/www
-#        sudo chmod -R og-r /var/www
+    - name: phpstan
+      run: composer run-script phpstan
 
-    - name: "Run php unit"
-      run: vendor/bin/phpunit --exclude-group none --no-coverage -v
+    - name: Run test suite
+      run: composer run-script unit-test
+      
+#    - name: "Run php unit"
+#      run: vendor/bin/phpunit --exclude-group none --no-coverage -v
 
 #    - name: CodeStyle
 #      run: composer run-script code-style
