@@ -25,7 +25,9 @@ jobs:
     - name: Setup Apache
       uses: ./.github/actions/apache-setup
       with:
-        php-version: ${{matrix.php}}
+        php-version: ${{ matrix.php }}
+        site-directory: /
+        http-port: 8080
 
     - name: Validate composer.json and composer.lock
       run: composer validate --strict

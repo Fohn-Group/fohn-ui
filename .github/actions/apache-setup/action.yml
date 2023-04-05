@@ -6,7 +6,7 @@ inputs:
     required: true
   site-directory:
     description: 'The site directory for Apache to serve'
-    default: '/'
+    required: true
   http-port:
     description: 'The port for Apache to listen to HTTP requests'
     default: 8888\
