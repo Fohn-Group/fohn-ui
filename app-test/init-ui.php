@@ -9,31 +9,35 @@ use Fohn\Ui\App;
 use Fohn\Ui\PageException;
 use Fohn\Ui\Service\Data;
 use Fohn\Ui\Service\Ui;
+use Fohn\Ui\Tests\Utils\HttpCoverage;
 
 require_once __DIR__ . '/init-autoloader.php';
 
-if (!Ui::isBooted()) {
-    bootUi(loadConfig());
-}
 
-function bootUi(array $config): void
-{
+Ui::service()->boot(function (Ui $ui)  {
+    $config = loadConfig();
     date_default_timezone_set($config['timezone']);
     Data::setDb($config['db']);
 
     // Create service.
-    $ui = Ui::service();
     $ui->environment = $config['env'];
     $ui->displayformat = array_merge($ui->displayformat, $config['format']);
     $ui->locale($config['locale']);
     $ui->timezone($config['timezone']);
-
     $ui->setApp(new App());
 
     // Add default exception handler.
     $ui->setExceptionHandler(PageException::factory());
     // Set demos page.
     $ui->initAppPage(AppTest::createPage($ui->environment));
+});
+
+// Check for coverage
+if (in_array('pcov', Ui::serverRequest()->getHeader('x-coverage-id'), true)) {
+    HttpCoverage::start();
+    Ui::app()->onHooks(App::HOOKS_BEFORE_EXIT, function () {
+        HttpCoverage::saveData();
+    });
 }
 
 function loadConfig(): array

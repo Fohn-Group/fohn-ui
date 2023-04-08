@@ -210,6 +210,17 @@ class Ui implements UiInterface
         return (string) (new Uri($url))->withQuery(Query::build($params));
     }
 
+    /**
+     * Setup service via Closure.
+     */
+    public function boot(\Closure $fx): void
+    {
+        if (!$this->isBooted) {
+            $fx($this);
+            $this->isBooted = true;
+        }
+    }
+
     public function appendTemplateDirectories(array $directories): void
     {
         $this->templateDirectories = $directories;
