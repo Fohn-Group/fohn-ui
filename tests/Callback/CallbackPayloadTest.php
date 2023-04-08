@@ -24,16 +24,6 @@ class CallbackPayloadTest extends TestCase
         $this->client = new Client(['base_uri' => $config['base_uri']]);
     }
 
-//    public function testIndex(): void
-//    {
-//        $request = new \GuzzleHttp\Psr7\Request('GET', '/tests/Callback/index.html');
-//        $response = $this->client->send($request);
-//        // Read Response
-//        $responseBody = (string) $response->getBody();
-//        $this->assertSame(200, $response->getStatusCode(), ' Status error on Data callback.');
-//
-//    }
-
     public function testDataCallback(): void
     {
         $payload = ['p1' => 'v1'];
