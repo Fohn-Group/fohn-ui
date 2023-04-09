@@ -37,32 +37,24 @@ jobs:
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
 
-    - name: check path
-      run: |
-        pwd -P
-        pwd -L
+    - name: CodeStyle
+      run: vendor/bin/php-cs-fixer fix --dry-run --using-cache=no --diff --verbose
 
-    - name: Setup Apache
+    - name: Static analysis
+      run: vendor/bin/phpstan analyse
+
+    - name: Setup Apache for http app-test
       uses: ./.github/actions/apache-setup
       with:
         php-version: ${{ matrix.php }}
         site-directory: /home/runner/work/fohn-ui/fohn-ui
         http-port: 7000
 
-#    - name: CodeStyle
-#      run: composer run-script code-style
-
-    - name: CodeStyle
-      run: vendor/bin/php-cs-fixer fix --dry-run --using-cache=no --diff --verbose
-
-    - name: phpstan
-      run: composer run-script phpstan
-
     - name: Run test suite
       run: composer run-script unit-test
 
     - name: merge coverage
-      run: php -d memory_limit=2G vendor/bin/phpcov merge build/logs/ --clover build/coverage/merged.xml
+      run: vendor/bin/phpcov merge build/logs/ --clover build/coverage/merged.xml
 
     - name: Upload Coverage
       uses: codecov/codecov-action@v3
