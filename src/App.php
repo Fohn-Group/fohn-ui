@@ -17,7 +17,7 @@ class App
     use HookTrait;
     use InjectorTrait;
 
-    public const HOOKS_BEFORE_EXIT = self::class.'@beforeExit';
+    public const HOOKS_BEFORE_EXIT = self::class . '@beforeExit';
     public const HOOKS_BEFORE_OUTPUT = self::class . '@beforeOutput';
 
     /** @var \Closure Function that will set final html output. */
