@@ -61,11 +61,19 @@ jobs:
     - name: Check coverage
       run: ls build/logs
 
+    - name: merge coverage
+      run: php -d memory_limit=2G vendor/bin/phpcov merge build/logs/ --clover build/coverage/merged.xml
+
+    - name: Check merged
+      run: |
+        ls build/coverage
+        cat build/coverage/merge.xml
+
     - name: Upload Coverage
       uses: codecov/codecov-action@v3
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        files: build/logs/clover.cov, build/logs/http.xml
+        files: build/coverage/merged.xml
         verbose: true
 #    - name: "Run php unit"
 #      run: vendor/bin/phpunit --exclude-group none --no-coverage -v
