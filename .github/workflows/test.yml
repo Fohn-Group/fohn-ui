@@ -49,8 +49,11 @@ jobs:
         site-directory: /home/runner/work/fohn-ui/fohn-ui
         http-port: 7000
 
+#    - name: CodeStyle
+#      run: composer run-script code-style
+
     - name: CodeStyle
-      run: composer run-script code-style
+      run: vendor/bin/php-cs-fixer fix --dry-run --using-cache=no --diff --verbose
 
     - name: phpstan
       run: composer run-script phpstan
@@ -58,16 +61,8 @@ jobs:
     - name: Run test suite
       run: composer run-script unit-test
 
-    - name: Check coverage
-      run: ls build/logs
-
     - name: merge coverage
       run: php -d memory_limit=2G vendor/bin/phpcov merge build/logs/ --clover build/coverage/merged.xml
-
-    - name: Check merged
-      run: |
-        ls build/coverage
-        cat build/coverage/merged.xml
 
     - name: Upload Coverage
       uses: codecov/codecov-action@v3
@@ -75,14 +70,3 @@ jobs:
         token: ${{ secrets.CODECOV_TOKEN }}
         files: build/coverage/merged.xml
         verbose: true
-#    - name: "Run php unit"
-#      run: vendor/bin/phpunit --exclude-group none --no-coverage -v
-
-#    - name: CodeStyle
-#      run: composer run-script code-style
-#
-#    - name: phpstan
-#      run: composer run-script phpstan
-#
-#    - name: Run test suite
-#      run: composer run-script unit-test
