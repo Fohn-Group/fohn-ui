@@ -14,6 +14,11 @@
             <directory>tests/Callback</directory>
             <directory>tests/Javascript</directory>
         </testsuite>
+        <filter>
+            <whitelist processUncoveredFilesFromWhiteList="true">
+                <directory suffix=".php">src</directory>
+            </whitelist>
+        </filter>
     </testsuites>
     <groups>
         <exclude>
