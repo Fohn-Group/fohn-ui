@@ -13,8 +13,7 @@ use Fohn\Ui\Tests\Utils\HttpCoverage;
 
 require_once __DIR__ . '/init-autoloader.php';
 
-
-Ui::service()->boot(function (Ui $ui)  {
+Ui::service()->boot(function (Ui $ui) {
     $config = loadConfig();
     date_default_timezone_set($config['timezone']);
     Data::setDb($config['db']);

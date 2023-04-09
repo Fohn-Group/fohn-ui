@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 // log coverage for test-suite
 
@@ -29,7 +29,8 @@ final class HttpCoverage
         $filter = new Filter();
         $filter->includeDirectory(__DIR__ . '/../src');
         self::$coverage = new CodeCoverage(
-            (new \SebastianBergmann\CodeCoverage\Driver\Selector())->forLineCoverage($filter), $filter
+            (new \SebastianBergmann\CodeCoverage\Driver\Selector())->forLineCoverage($filter),
+            $filter
         );
 
         self::$coverage->start($_SERVER['SCRIPT_NAME']);
@@ -38,7 +39,7 @@ final class HttpCoverage
     public static function saveData(): void
     {
         self::$coverage->stop();
-        $filename = dirname(__DIR__, 2) . '/build/logs/' . basename($_SERVER['SCRIPT_NAME'] ?? 'unknown') . '-' .  hash('sha256', microtime(true) . random_bytes(64)) . '.cov';
+        $filename = dirname(__DIR__, 2) . '/build/logs/' . basename($_SERVER['SCRIPT_NAME'] ?? 'unknown') . '-' . hash('sha256', microtime(true) . random_bytes(64)) . '.cov';
         (new Report\PHP())->process(self::$coverage, $filename);
         self::$coverage = null;
     }

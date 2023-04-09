@@ -16,7 +16,6 @@ require_once __DIR__ . '/../init-configuration.php';
 $config = loadConfig();
 
 Ui::service()->boot(function (Ui $ui) use ($config) {
-
     $app = new App(['registerShutdown' => false]);
 
     HttpCoverage::start();
@@ -38,5 +37,4 @@ Ui::service()->boot(function (Ui $ui) use ($config) {
     $ui->setExceptionHandler(PageException::factory());
     // Set demos page.
     $ui->initAppPage(\Fohn\Ui\AppTest\AppTest::createPage($ui->environment));
-
 });

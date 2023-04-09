@@ -9,16 +9,15 @@ use Fohn\Ui\App;
 use Fohn\Ui\PageException;
 use Fohn\Ui\Service\Data;
 use Fohn\Ui\Service\Ui;
-use Fohn\Ui\Tests\Utils\HttpCoverage;
 
-//require_once __DIR__ . '/../../app-test/init-autoloader.php';
+// require_once __DIR__ . '/../../app-test/init-autoloader.php';
 
-//if (!ui::isBooted()) {
+// if (!ui::isBooted()) {
 //    bootTestUi(loadConfig());
-//}
+// }
 
-//function bootTestUi(array $config): void
-//{
+// function bootTestUi(array $config): void
+// {
 //    $app = new App(['registerShutdown' => false]);
 //
 //    date_default_timezone_set($config['timezone']);
@@ -39,10 +38,10 @@ use Fohn\Ui\Tests\Utils\HttpCoverage;
 //    $ui->initAppPage(\Fohn\Ui\AppTest\AppTest::createPage($ui->environment));
 //
 //    $ui->markAsBooted();
-//}
+// }
 //
-//function loadConfig(): array
-//{
+// function loadConfig(): array
+// {
 //    /** @var array $config */
 //    $config = require __DIR__ . '/../ui-test-config.php';
 //
@@ -61,4 +60,4 @@ use Fohn\Ui\Tests\Utils\HttpCoverage;
 //    }
 //
 //    return $config;
-//}
+// }
