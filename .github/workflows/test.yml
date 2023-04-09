@@ -67,7 +67,7 @@ jobs:
     - name: Check merged
       run: |
         ls build/coverage
-        cat build/coverage/merge.xml
+        cat build/coverage/merged.xml
 
     - name: Upload Coverage
       uses: codecov/codecov-action@v3
