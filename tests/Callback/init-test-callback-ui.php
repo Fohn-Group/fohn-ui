@@ -11,7 +11,7 @@ use Fohn\Ui\Service\Ui;
 use Fohn\Ui\Tests\Utils\HttpCoverage;
 
 require_once __DIR__ . '/../../app-test/init-autoloader.php';
-require_once __DIR__ . '/init-configuration.php';
+require_once __DIR__ . '/../init-configuration.php';
 
 $config = loadConfig();
 
