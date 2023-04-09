@@ -8,6 +8,7 @@ declare(strict_types = 1);
 namespace Fohn\Ui\Tests\DemoApp;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
 use PHPUnit\Framework\TestCase;
 
 class AppTest extends TestCase
@@ -19,7 +20,7 @@ class AppTest extends TestCase
 
     protected function setUp(): void
     {
-        require_once __DIR__ . '/init-configuration.php';
+        require_once __DIR__ . '/../init-configuration.php';
 
         $this->client = new Client(
             [
@@ -63,7 +64,7 @@ class AppTest extends TestCase
      */
     public function testAppTestHtmlResponse(string $uri): void
     {
-        $request = new \GuzzleHttp\Psr7\Request('GET', '/app-test/' . $uri);
+        $request = new Request('GET', '/app-test/' . $uri);
         $response = $this->client->send($request);
 
         $this->assertSame(200, $response->getStatusCode(), ' Status error on ' . $uri);
