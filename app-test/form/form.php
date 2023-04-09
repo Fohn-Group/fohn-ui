@@ -25,6 +25,9 @@ $form->addFooter(View::factory(['text' => 'Form Footer']));
 
 $iso = $form->getControl('iso');
 
+$controls = $form->getControls();
+$hasAControl = $form->hasControl('a_control');
+
 $form->onSubmit(function (Form $f) use ($modelCtrl, $id) {
     if ($errors = $modelCtrl->saveModelUsingForm($id, $f->getControls())) {
         $f->addValidationErrors($errors);
