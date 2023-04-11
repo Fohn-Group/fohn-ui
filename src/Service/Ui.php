@@ -55,10 +55,7 @@ class Ui implements UiInterface
     /** The Js library package name. */
     public string $jsLibrary = 'fohn';
     public string $environment = self::PROD_ENV;
-    public string $protocol = 'http://';
-    public string $baseUri = 'localhost';
-    public string $port = '80';
-    public string $version = '1.0.0';
+
     public string $title = 'Fohn Application';
     public bool $catchRunawayCallbacks = true;
     public string $themeClass = Fohn::class;
@@ -212,7 +209,7 @@ class Ui implements UiInterface
 
     public function appendTemplateDirectories(array $directories): void
     {
-        $this->templateDirectories = $directories;
+        $this->templateDirectories = array_merge($this->templateDirectories, $directories);
     }
 
     public static function templateFromFile(string $fileName): HtmlTemplate
