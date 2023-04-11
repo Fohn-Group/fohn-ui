@@ -39,17 +39,18 @@ Here is a minimal setup:
 
 declare(strict_types=1);
 
-// Create service.
-$ui = Ui::service();
-$ui->setApp(new App());
-
-// Add default exception handler.
-$ui->setExceptionHandler(PageException::factory());
-
-// Set page.
-$page = Page::factory(['title' => 'My Fohn-ui Project']);
-$page->addLayout(SideNavigation::factory(['topBarTitle' => 'My Fohn-Ui App']));
-$ui->initAppPage($page);
+// Create and boot service.
+Ui::service()->boot(function (Ui $ui) {
+    $ui->setApp(new App());
+    
+    // Add default exception handler.
+    $ui->setExceptionHandler(PageException::factory());
+    
+    // Set page.
+    $page = Page::factory(['title' => 'My Fohn-ui Project']);
+    $page->addLayout(SideNavigation::factory(['topBarTitle' => 'My Fohn-Ui App']));
+    $ui->initAppPage($page);
+});
 
 View::addTo(Ui::layout())->setText('Hello World');
 ```
@@ -64,8 +65,16 @@ For example, Ui::service() will supply Theme class used by View.
 Ui::theme()::styleAs()
 ```
 
-Therefore, you could customize pretty much everything used externally by View class using your own implemantation
-by overriding or creating your own service Ui::class.
+Therefore, you could customize pretty much everything used externally by `View::class` using your own implementation
+by overriding `Ui::class` or simply setup proper property at boot time.
+
+```
+Ui::service()->boot(function (Ui $ui) {
+    // ...code
+    $ui->formLayoutSeed = [MyFormLayout::class]
+});
+```
+
 
 ## Running app-test using Docker
 
@@ -141,7 +150,9 @@ $form->addControl(new Form\Control\Range(['caption' => 'Range', 'controlName' =>
 Ui::viewDump($form, 'form');
 ```
 
-In order to display how $form is render in html before Vue simply append query param dump=form to the page url.
+In order to display how $form is render in html prior to be rendered by Vue, simply append query param dump=form to the page url.
+
+`http://localhost/form.php?dump=form`
 
 ## Html Template
 
