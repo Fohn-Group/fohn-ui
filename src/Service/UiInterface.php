@@ -71,6 +71,8 @@ interface UiInterface
      */
     public static function factory(string $className, array $properties = []);
 
+    public function boot(\Closure $fx): void;
+
     public function setApp(App $app): App;
 
     /** Set Page use by App output handler.*/

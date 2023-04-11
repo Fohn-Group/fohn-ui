@@ -18,21 +18,11 @@ class CallbackPayloadTest extends TestCase
 
     protected function setUp(): void
     {
-        require_once __DIR__ . '/init-configuration.php';
+        require_once __DIR__ . '/../init-configuration.php';
         $config = loadConfig();
 
         $this->client = new Client(['base_uri' => $config['base_uri']]);
     }
-
-//    public function testIndex(): void
-//    {
-//        $request = new \GuzzleHttp\Psr7\Request('GET', '/tests/Callback/index.html');
-//        $response = $this->client->send($request);
-//        // Read Response
-//        $responseBody = (string) $response->getBody();
-//        $this->assertSame(200, $response->getStatusCode(), ' Status error on Data callback.');
-//
-//    }
 
     public function testDataCallback(): void
     {

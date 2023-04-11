@@ -14,8 +14,16 @@
   "authors": [
     {
       "name": "Alain Belair",
-      "homepage": "https://fohn-ui.com/",
-      "role": "Developer"
+      "homepage": "https://fohn-ui.com/"
+    },
+    {
+      "name": "Romans Malinovskis",
+      "email": "romans@agiletoolkit.org",
+      "homepage": "https://nearly.guru/"
+    },
+    {
+      "name": "Imants Horsts",
+      "homepage": "https://darkside.lv/"
     }
   ],
   "minimum-stability": "dev",
@@ -66,7 +74,7 @@
     }
   },
   "scripts" : {
-    "code-style": "vendor/friendsofphp/php-cs-fixer/php-cs-fixer fix --using-cache=no --diff --verbose",
+    "code-style": "vendor/bin/php-cs-fixer fix --using-cache=no --diff --verbose",
     "phpstan" : "vendor/bin/phpstan analyse",
     "unit-test" : "vendor/phpunit/phpunit/phpunit --configuration phpunit.xml.dist"
   }

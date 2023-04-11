@@ -19,7 +19,14 @@ $modelCtrl = new FormModelController(new Country(Data::db()));
 $id = (string) $modelCtrl->getModel()->tryLoadAny()->get('id');
 
 $form = Form::addTo(Ui::layout());
+$form->addHeader(View::factory(['text' => 'Form Header']));
 $form->addControls($modelCtrl->factoryFormControls($id));
+$form->addFooter(View::factory(['text' => 'Form Footer']));
+
+$iso = $form->getControl('iso');
+
+$controls = $form->getControls();
+$hasAControl = $form->hasControl('a_control');
 
 $form->onSubmit(function (Form $f) use ($modelCtrl, $id) {
     if ($errors = $modelCtrl->saveModelUsingForm($id, $f->getControls())) {
