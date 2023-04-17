@@ -38,7 +38,7 @@ class Chip extends View
     {
         Ui::theme()::styleAs(Base::CHIP, [$this]);
         $this->content->htmlContent = $this->htmlContent;
-        $this->htmlContent          = null;
+        $this->htmlContent = null;
         parent::beforeHtmlRender();
     }
 }
