@@ -37,7 +37,7 @@ $v->setIdAttribute('v-test');
 
 $jQueryReload = JqReload::addAbstractTo($v, ['urlTrigger' => 'jq_reload_tg']);
 $jQueryReload->onJqueryRequest(function ($payload) use ($v) {
-    $v->setText($payload['p1']);
+    $v->setHtmlContent($payload['p1']);
 });
 
 $genericCallback = Generic::addAbstractTo(Ui::layout(), ['urlTrigger' => 'generic_tg']);

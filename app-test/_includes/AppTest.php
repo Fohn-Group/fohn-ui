@@ -40,7 +40,7 @@ class AppTest
         /** @var SideNavigation $layout */
         $layout = $page->getLayout();
         // Add footer to this page.
-        $layout->addView(View::factory(['htmlTag' => 'div', 'text' => 'Made with Fohn - Ui']), 'footer');
+        $layout->addView(View::factory(['htmlTag' => 'div', 'htmlContent' => 'Made with Fohn - Ui']), 'footer');
 
         foreach (self::getNavigationGroup() as $group) {
             $layout->addNavigationGroup($group);
@@ -138,7 +138,7 @@ class AppTest
                 'text-lg',
                 Tw::textColor('info'),
             ],
-            'text' => $caption,
+            'htmlContent' => $caption,
         ]);
     }
 }

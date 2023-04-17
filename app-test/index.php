@@ -12,4 +12,4 @@ require_once __DIR__ . '/init-ui.php';
 
 Header::addTo(Ui::layout(), ['title' => 'Fohn Ui Test', 'size' => 4]);
 
-View::addTo(Ui::layout())->setText('Testing application for Fohn-Ui views and componnents.');
+View::addTo(Ui::layout())->setHtmlContent('Testing application for Fohn-Ui views and componnents.');

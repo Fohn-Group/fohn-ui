@@ -107,7 +107,7 @@ $modalDynamic->onOpen(function ($modal) {
         'first-letter:text-7xl', 'first-letter:font-bold', 'first-letter:text-purple-700',
         'first-letter:mr-3', 'first-letter:float-left', ];
 
-    View::addTo($modal)->setHtmlTag('p')->setText(Utils::getLoremIpsum(random_int(10, 100)))->appendTailwinds($tw);
+    View::addTo($modal)->setHtmlTag('p')->setHtmlContent(Utils::getLoremIpsum(random_int(10, 100)))->appendTailwinds($tw);
 });
 
 $btn = Button::addTo(Ui::layout(), ['label' => 'Open Modal', 'color' => 'info', 'type' => 'outline']);

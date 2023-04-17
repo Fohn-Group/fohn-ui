@@ -38,4 +38,4 @@ $form->onSubmit(function (Form $f) use ($modelCtrl, $id) {
 View::addAfter($form->getControl('iso3'))
     ->appendTailwind('italic text-sm my-2')
     ->appendTailwind(Tw::textColor('secondary'))
-    ->setText('The ISO and ISO3 country codes are internationally recognized means of identifying countries (and their subdivisions) using a two-letter or three-letter combination.');
+    ->setHtmlContent('The ISO and ISO3 country codes are internationally recognized means of identifying countries (and their subdivisions) using a two-letter or three-letter combination.');

@@ -11,12 +11,12 @@ use Fohn\Ui\View;
 
 require_once __DIR__ . '/../init-ui.php';
 
-View::addTo(Ui::layout())->setText('Test View Method');
+View::addTo(Ui::layout())->setHtmlContent('Test View Method');
 
 // Test View method
 
 // add Outside view to the grid.
-$view = View::addTo(Ui::layout())->setText('View Text');
+$view = View::addTo(Ui::layout())->setHtmlContent('View Text');
 $view->appendTailwinds(['m-6', 'p-4', 'w-1/2']);
 $view->appendCssClasses('test');
 $view->setHtmlTag('p');
@@ -24,4 +24,4 @@ $view->removeTailwind('p-4');
 
 $tView = View::addTo(Ui::layout());
 Fohn::styleAs(Base::CONSOLE, [$tView]);
-$tView->setText($view->getHtml());
+$tView->setHtmlContent($view->getHtml());
