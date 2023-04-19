@@ -27,7 +27,7 @@ $gridLayout = GridLayout::addTo($segment, ['columns' => 1, 'rows' => 2, 'directi
 
 $row = View::addTo($gridLayout)->appendTailwinds([Tw::marginX('auto'), Tw::marginY('4')]);
 /** @var View\Chip $counter */
-$counter = View\Chip::addTo($row, ['text' => '0', 'color' => 'secondary'])->appendTailwinds(['absolute', 'z-10']);
+$counter = View\Chip::addTo($row, ['htmlContent' => '0', 'color' => 'secondary'])->appendTailwinds(['absolute', 'z-10']);
 $ping = View\Chip::addTo($row, ['color' => 'secondary']);
 
 $row = View::addTo($gridLayout)->appendTailwinds([Tw::marginY('auto')]);

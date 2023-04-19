@@ -69,8 +69,8 @@ class View extends AbstractView
 
     public string $defaultTemplate = 'view/element.html';
 
-    /** Set text contents of this view. */
-    public ?string $text = null;
+    /** Set html contents of this view. */
+    public ?string $htmlContent = null;
 
     /** Default html tag. */
     public string $htmlTag = 'div';
@@ -156,9 +156,9 @@ class View extends AbstractView
         return $this;
     }
 
-    public function setText(string $text): self
+    public function setHtmlContent(string $htmlContent): self
     {
-        $this->text = $text;
+        $this->htmlContent = $htmlContent;
 
         return $this;
     }
@@ -337,8 +337,8 @@ class View extends AbstractView
         $this->getTemplate()->trySet(self::CLASS_TEMPLATE_TAG, $css);
         $this->getTemplate()->trySet(self::TAG_TEMPLATE_TAG, $this->htmlTag);
 
-        if ($this->text !== null) {
-            $this->getTemplate()->trySet(self::MAIN_TEMPLATE_REGION, $this->text);
+        if ($this->htmlContent !== null) {
+            $this->getTemplate()->tryDangerouslySetHtml(self::MAIN_TEMPLATE_REGION, $this->htmlContent);
         }
 
         $this->renderStyles();

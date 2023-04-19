@@ -30,7 +30,7 @@ class Link extends Html
             $params[$this->idParamName] = $id;
         }
 
-        $link = \Fohn\Ui\View\Link::factory(['text' => htmlspecialchars($value ?? $this->nullValue), 'url' => Ui::buildUrl($this->url, $params)]);
+        $link = \Fohn\Ui\View\Link::factory(['htmlContent' => htmlspecialchars($value ?? $this->nullValue), 'url' => Ui::buildUrl($this->url, $params)]);
 
         return $link->getHtml();
     }

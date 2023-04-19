@@ -418,7 +418,7 @@ class Ui implements UiInterface
 
         $container = $page->addView(View::factory([])->appendTailwinds(['m-12']));
         $console = $container->addView(View\Console::factory());
-        $console->addView(View::factory(['htmlTag' => 'code']))->setText($view->getHtml($includeJs));
+        $console->addView(View::factory(['htmlTag' => 'code']))->setHtmlContent($view->getHtml($includeJs));
         $renderView = static::viewRenderer($page);
         $template = $renderView->getRenderTemplate();
         $template->tryDangerouslyAppendHtml('includeCss', static::service()->buildHtmlTag('link/', [

@@ -39,7 +39,6 @@
     "php": ">=7.4.0",
     "ext-json": "*",
     "atk4/data": "^4.0.0",
-    "atk4/i18n": "^1.0",
     "guzzlehttp/psr7": "^2.2",
     "myclabs/deep-copy": "^1.10",
     "ext-pdo": "*",

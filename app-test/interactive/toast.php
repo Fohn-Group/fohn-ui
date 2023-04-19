@@ -16,7 +16,7 @@ require_once __DIR__ . '/../init-ui.php';
 
 Ui::layout()->appendJsAction(JsToast::notify('This toast is display on page load.'));
 
-$info = View::addTo(Ui::layout(), ['text' => 'Toast can display result of javascript expression.']);
+$info = View::addTo(Ui::layout(), ['htmlContent' => 'Toast can display result of javascript expression.']);
 
 $btn = Button::addTo(Ui::layout(), ['label' => 'Show Toast', 'type' => 'outline', 'color' => 'info']);
 Jquery::addEventTo($btn, 'click')->execute(JsToast::notifyWithJs(Jquery::withThis()->text(), Jquery::withView($info)->text()));

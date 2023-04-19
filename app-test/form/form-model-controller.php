@@ -18,9 +18,9 @@ use Fohn\Ui\View;
 require_once __DIR__ . '/../init-ui.php';
 
 View::addTo(Ui::layout(), ['htmlTag' => 'p'])
-    ->setText('Test adding control via an Atk model using specify record id.');
+    ->setHtmlContent('Test adding control via an Atk model using specify record id.');
 View::addTo(Ui::layout(), ['htmlTag' => 'p'])
-    ->setText('Record id must be supply when saving model using FormController.');
+    ->setHtmlContent('Record id must be supply when saving model using FormController.');
 
 /**
  * Return a Javascript function that will update text inside a view.
@@ -51,7 +51,7 @@ $nameCtrl = $f->getControl('first_name')
     });
 
 View::addAfter($nameCtrl)
-    ->setText('Test control onValidation and onSetValue Hook. Try entering John as value. Also the value save in db wil be in uppercase.')
+    ->setHtmlContent('Test control onValidation and onSetValue Hook. Try entering John as value. Also the value save in db wil be in uppercase.')
     ->appendTailwinds([Tw::textColor('secondary'), 'italic']);
 
 // @phpstan-ignore-next-line
