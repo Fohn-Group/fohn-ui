@@ -29,7 +29,7 @@ class ViewTest extends FohnTestCase
         $view->appendHtmlStyles(['cursor' => 'pointer']);
         $view->setIdAttribute('anchor-id');
         $view->appendHtmlAttributes(['href' => '#']);
-        $view->setHtmlContent('<span>Anchor</span>');
+        $view->setTextContent('<span>Anchor</span>', false);
         $this->assertSame('<a id="anchor-id" class="t1 t2 t3 t4 t5 anchor-class" style="cursor:pointer;" href="#" data-ui-name="anchor-view"><span>Anchor</span></a>', $view->getHtml());
 
         $view->removeTailwind('t3');

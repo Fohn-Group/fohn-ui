@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Fohn\Ui\HtmlTemplate;
 
 use Fohn\Ui\Core\Exception;
+use Fohn\Ui\Service\Ui;
 
 class Value
 {
@@ -12,7 +13,7 @@ class Value
 
     private function encodeValueToHtml(string $value): string
     {
-        return htmlspecialchars($value, \ENT_NOQUOTES | \ENT_HTML5, 'UTF-8');
+        return Ui::service()->htmlSpecialChars($value);
     }
 
     public function set(string $value): self

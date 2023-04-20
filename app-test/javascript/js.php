@@ -39,17 +39,17 @@ Header::addTo(Ui::layout(), ['title' => 'Assign event to View', 'size' => 4]);
 // This button hides on page load
 $b = Button::addTo(Ui::layout(), ['label' => 'Hidden Button']);
 Jquery::onDocumentReady($b)->hide();
-Fohn::styleAs(Base::CONSOLE, [View::addTo(Ui::layout(), ['htmlTag' => 'pre'])->setHtmlContent($b->getJavascript())]);
+Fohn::styleAs(Base::CONSOLE, [View::addTo(Ui::layout(), ['htmlTag' => 'pre'])->setTextContent($b->getJavascript())]);
 
 // This button hides when clicked
 $b = Button::addTo(Ui::layout())->setLabel('Hide on click Button');
 Jquery::addEventTo($b, 'click')->execute(Jquery::withThis()->hide());
-Fohn::styleAs(Base::CONSOLE, [View::addTo(Ui::layout(), ['htmlTag' => 'pre'])->setHtmlContent($b->getJavascript())]);
+Fohn::styleAs(Base::CONSOLE, [View::addTo(Ui::layout(), ['htmlTag' => 'pre'])->setTextContent($b->getJavascript())]);
 
 $b = Button::addTo(Ui::layout(), ['label' => 'Open in new window with ?foo=bar']);
 Jquery::addEventTo($b, 'click')->execute(Ui::jsWindowOpen(Ui::buildUrl(Ui::parseRequestUrl()), ['foo' => 'bar']));
 
-Fohn::styleAs(Base::CONSOLE, [View::addTo(Ui::layout(), ['htmlTag' => 'pre'])->setHtmlContent($b->getJavascript())]);
+Fohn::styleAs(Base::CONSOLE, [View::addTo(Ui::layout(), ['htmlTag' => 'pre'])->setTextContent($b->getJavascript())]);
 
 Header::addTo(Ui::layout(), ['title' => 'js() method', 'size' => 4]);
 
@@ -65,7 +65,7 @@ Jquery::addEventTo($b, 'click')
         ]
     );
 
-Fohn::styleAs(Base::CONSOLE, [View::addTo(Ui::layout(), ['htmlTag' => 'pre'])->setHtmlContent($b->getJavascript())]);
+Fohn::styleAs(Base::CONSOLE, [View::addTo(Ui::layout(), ['htmlTag' => 'pre'])->setTextContent($b->getJavascript())]);
 
 Header::addTo(Ui::layout(), ['title' => 'Callbacks', 'size' => 4]);
 
@@ -74,7 +74,7 @@ $b = Button::addTo(Ui::layout(), ['label' => 'Callback Test']);
 Jquery::jqCallback($b, 'click', function ($jquery, $payload) {
     return $jquery->text(random_int(1, 20) . ' id = ' . $payload['id']);
 }, ['id' => 2]);
-Fohn::styleAs(Base::CONSOLE, [View::addTo(Ui::layout(), ['htmlTag' => 'pre'])->setHtmlContent($b->getJavascript())]);
+Fohn::styleAs(Base::CONSOLE, [View::addTo(Ui::layout(), ['htmlTag' => 'pre'])->setTextContent($b->getJavascript())]);
 
 $l = $_GET['test'] ?? '';
 

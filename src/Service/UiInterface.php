@@ -87,6 +87,8 @@ interface UiInterface
     /** Generate View::attributeId property. */
     public function factoryId(string $viewName): string;
 
+    public function htmlSpecialChars(string $html): string;
+
     /** Return a Form Layout Interface. Called by Form for its default layout. */
     public function getFormLayout(): FormLayoutInterface;
 

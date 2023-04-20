@@ -284,6 +284,11 @@ class Ui implements UiInterface
         return Utils::generateId($viewName, $keep, $lenght);
     }
 
+    public function htmlSpecialChars(string $html): string
+    {
+        return htmlspecialchars($html, \ENT_NOQUOTES | \ENT_HTML5, 'UTF-8');
+    }
+
     /**
      * @param string|array $tag
      * @param string|array $attributes
@@ -418,7 +423,7 @@ class Ui implements UiInterface
 
         $container = $page->addView(View::factory([])->appendTailwinds(['m-12']));
         $console = $container->addView(View\Console::factory());
-        $console->addView(View::factory(['htmlTag' => 'code']))->setHtmlContent($view->getHtml($includeJs));
+        $console->addView(View::factory(['htmlTag' => 'code']))->setTextContent($view->getHtml($includeJs));
         $renderView = static::viewRenderer($page);
         $template = $renderView->getRenderTemplate();
         $template->tryDangerouslyAppendHtml('includeCss', static::service()->buildHtmlTag('link/', [

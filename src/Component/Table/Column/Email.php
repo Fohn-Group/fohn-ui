@@ -17,7 +17,8 @@ class Email extends Html
     protected function getLinkValue(?string $value, string $id): string
     {
         $fvalue = $value ?? $this->nullValue;
-        $link = \Fohn\Ui\View\Link::factory(['htmlContent' => htmlspecialchars($fvalue), 'url' => 'mailto:' . $fvalue]);
+        $link = \Fohn\Ui\View\Link::factory(['url' => 'mailto:' . $fvalue]);
+        $link->setTextContent($fvalue);
 
         return $link->getHtml();
     }

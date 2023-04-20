@@ -88,7 +88,7 @@ $table->getTableColumn('date_publish')->formatValue(function ($column, $value) u
 
 $table->getTableColumn('tag')->formatValue(function ($column, $value) {
     $tag = (new View\Tag(['textSize' => 'x-small', 'shape' => 'rounded', 'width' => '8']));
-    $tag->setHtmlContent((string) $value);
+    $tag->setTextContent((string) $value);
     $tag->removeTailwind('mx-2')->removeTailwind('my-1');
     $tag->appendTailwind('mx-auto');
     $tag->color = $value > 50 ? 'primary' : 'secondary';

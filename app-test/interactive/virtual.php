@@ -24,7 +24,7 @@ $vp->onPageRequest(function ($page) use ($vp) {
     $breadCrumb->addLast('Top Virtual Page');
 
     View\Heading\Header::addTo($page, ['size' => 6, 'title' => 'Top Page Content']);
-    View\Segment::addTo($page)->setHtmlContent(Utils::getLoremIpsum(12));
+    View\Segment::addTo($page)->setTextContent(Utils::getLoremIpsum(12));
 
     $vp2 = VirtualPage::with(AppTest::createPage());
     $vp2->onPageRequest(function ($page) use ($vp) {
@@ -34,7 +34,7 @@ $vp->onPageRequest(function ($page) use ($vp) {
         $breadCrumb->addLast('Inner Virtual Page');
 
         View\Heading\Header::addTo($page, ['size' => 6, 'title' => 'Inner Page Content']);
-        $segment = View\Segment::addTo($page)->setHtmlContent(Utils::getLoremIpsum((int) 50));
+        $segment = View\Segment::addTo($page)->setTextContent(Utils::getLoremIpsum((int) 50));
 
         $b = Button::addTo($page, ['label' => 'Reload Loren Ipsum', 'color' => 'secondary', 'type' => 'text']);
         Jquery::addEventTo($b, 'click')->execute(JsReload::view($segment));
@@ -54,7 +54,7 @@ $page = Page::factory()->addLayout(Layout::factory(['template' => Ui::templateFr
 $vp2 = VirtualPage::with($page);
 $vp2->onPageRequest(function ($page) {
     View\Heading\Header::addTo($page, ['title' => 'Center Layout', 'size' => 5])->removeTailwind('mt-6');
-    View\Segment::addTo($page)->setHtmlContent(Utils::getLoremIpsum((int) 50));
+    View\Segment::addTo($page)->setTextContent(Utils::getLoremIpsum((int) 50));
     $btn = View\Button::addTo($page, ['label' => 'Back', 'color' => 'secondary', 'type' => 'text']);
     $btn->jsLinkTo(Ui::parseRequestUrl());
 });
