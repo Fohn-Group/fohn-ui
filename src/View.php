@@ -159,7 +159,7 @@ class View extends AbstractView
     /**
      * Set main region with text.
      * In order to use html markup, $useHtmlSpecialChars needs to be false.
-     * textContent is set in template at rendering if set. 
+     * textContent is set in template at rendering if set.
      */
     public function setTextContent(?string $text, bool $useHtmlSepcialChars = true): self
     {
