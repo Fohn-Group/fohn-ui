@@ -19,9 +19,9 @@ $modelCtrl = new FormModelController(new Country(Data::db()));
 $id = (string) $modelCtrl->getModel()->tryLoadAny()->get('id');
 
 $form = Form::addTo(Ui::layout());
-$form->addHeader(View::factory(['htmlContent' => 'Form Header']));
+$form->addHeader(View::factory()->setTextContent('Form Header'));
 $form->addControls($modelCtrl->factoryFormControls($id));
-$form->addFooter(View::factory(['htmlContent' => 'Form Footer']));
+$form->addFooter(View::factory()->setTextContent('Form Footer'));
 
 $iso = $form->getControl('iso');
 
@@ -39,6 +39,6 @@ $form->onSubmit(function (Form $f) use ($modelCtrl, $id) {
 View::addAfter($form->getControl('iso3'))
     ->appendTailwind('italic text-sm mt-2')
     ->appendTailwind(Tw::textColor('secondary'))
-    ->setHtmlContent('The ISO and ISO3 country codes are internationally recognized means of identifying countries (and their subdivisions) using a two-letter or three-letter combination.');
+    ->setTextContent('The ISO and ISO3 country codes are internationally recognized means of identifying countries (and their subdivisions) using a two-letter or three-letter combination.');
 
 Ui::viewDump($form, 'form');

@@ -73,7 +73,7 @@ $range = $form->getControl('range');
 View::addBefore($range)
     ->appendTailwind('italic text-sm -mb-2')
     ->appendTailwind(Tw::textColor('secondary'))
-    ->setHtmlContent('This range control use an onChange handler in order to update value in chip below. An optional debonce value is also apply to the onChange handler.');
+    ->setTextContent('This range control use an onChange handler in order to update value in chip below. An optional debonce value is also apply to the onChange handler.');
 
 $chip = View\Chip::addAfter($range, ['size' => '12', 'color' => 'secondary']);
 $chip->appendTailwind('mx-auto');

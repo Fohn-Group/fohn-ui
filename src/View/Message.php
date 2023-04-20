@@ -44,7 +44,7 @@ class Message extends View
 
     public function setTitle(string $title): self
     {
-        $this->titleView->setHtmlContent($title);
+        $this->titleView->setTextContent($title);
 
         return $this;
     }
@@ -61,7 +61,7 @@ class Message extends View
 
     public function addText(string $text): self
     {
-        $this->msgContainer->addView(View::factory(['htmlTag' => 'p', 'htmlContent' => $text]));
+        $this->msgContainer->addView(View::factory(['htmlTag' => 'p'])->setTextContent($text));
 
         return $this;
     }

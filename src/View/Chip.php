@@ -37,8 +37,8 @@ class Chip extends View
     protected function beforeHtmlRender(): void
     {
         Ui::theme()::styleAs(Base::CHIP, [$this]);
-        $this->content->htmlContent = $this->htmlContent;
-        $this->htmlContent = null;
+        $this->content->setTextContent($this->getTextContent());
+        $this->setTextContent(null);
         parent::beforeHtmlRender();
     }
 }

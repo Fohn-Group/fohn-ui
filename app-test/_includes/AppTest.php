@@ -40,7 +40,8 @@ class AppTest
         /** @var SideNavigation $layout */
         $layout = $page->getLayout();
         // Add footer to this page.
-        $layout->addView(View::factory(['htmlTag' => 'div', 'htmlContent' => 'Made with Fohn - Ui']), 'footer');
+        $layout->addView(View::factory(['htmlTag' => 'div']), 'footer')
+            ->setTextContent('Made with Fohn - Ui');
 
         foreach (self::getNavigationGroup() as $group) {
             $layout->addNavigationGroup($group);
@@ -132,13 +133,12 @@ class AppTest
 
     public static function tableCaptionFactory(string $caption): View
     {
-        return new View([
+        return (new View([
             'defaultTailwind' => [
                 'my-2',
                 'text-lg',
                 Tw::textColor('info'),
             ],
-            'htmlContent' => $caption,
-        ]);
+        ]))->setTextContent($caption);
     }
 }

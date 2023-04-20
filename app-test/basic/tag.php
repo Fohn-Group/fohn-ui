@@ -13,11 +13,13 @@ require_once __DIR__ . '/../init-ui.php';
 $img = '../images/fohn-logo.png';
 
 $labelBar = Ui::layout()->addView(new View())->appendTailwinds(['flex', 'inline-block', 'mx-2']);
-Tag::addTo($labelBar, ['htmlContent' => 'Hot!']);
-Tag::addTo($labelBar, ['htmlContent' => '23', 'iconName' => 'bi-envelope', 'color' => 'info']);
-Tag::addTo($labelBar, ['htmlContent' => 'Item', 'iconName' => 'bi-trash2', 'color' => 'error']);
-Tag::addTo($labelBar, ['htmlContent' => 'Logo', 'imageSrc' => $img]);
-Tag::addTo($labelBar, ['htmlContent' => 'Beer', 'iconName' => 'bi-cup-straw', 'placement' => 'left']);
-Tag::addTo($labelBar, ['htmlContent' => 'Logo', 'imageSrc' => $img, 'shape' => 'rounded']);
-Tag::addTo($labelBar, ['htmlContent' => 'Here', 'iconName' => 'bi-bullseye', 'color' => 'error', 'placement' => 'left', 'shape' => 'rounded']);
-Tag::addTo($labelBar, ['htmlContent' => 'Here', 'iconName' => 'bi-bullseye', 'color' => 'error', 'placement' => 'left', 'type' => 'outline']);
+Tag::addTo($labelBar)->setTextContent('Hot!');
+Tag::addTo($labelBar, ['iconName' => 'bi-envelope', 'color' => 'info'])->setTextContent('23');
+Tag::addTo($labelBar, ['iconName' => 'bi-trash2', 'color' => 'error'])->setTextContent('Item');
+Tag::addTo($labelBar, ['imageSrc' => $img])->setTextContent('Logo');
+Tag::addTo($labelBar, ['iconName' => 'bi-cup-straw', 'placement' => 'left'])->setTextContent('Beer');
+Tag::addTo($labelBar, ['imageSrc' => $img, 'shape' => 'rounded'])->setTextContent('Logo');
+Tag::addTo($labelBar, ['iconName' => 'bi-bullseye', 'color' => 'error', 'placement' => 'left', 'shape' => 'rounded'])
+    ->setTextContent('Here');
+Tag::addTo($labelBar, ['iconName' => 'bi-bullseye', 'color' => 'error', 'placement' => 'left', 'type' => 'outline'])
+    ->setTextContent('Here');

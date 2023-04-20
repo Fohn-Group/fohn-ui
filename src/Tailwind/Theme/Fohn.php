@@ -194,9 +194,9 @@ class Fohn extends Base
 
         if ($btn->getShape() === 'wide' || $btn->getShape() === 'block' || $btn->getShape() === 'normal') {
             $tws = Tw::from($sizes[$btn->getSize()])->merge($shapes[$btn->getShape()])();
-        } elseif ($btn->getShape() === 'square' && ($btn->getIcon() && !$btn->htmlContent)) {
+        } elseif ($btn->getShape() === 'square' && ($btn->getIcon() && !$btn->getTextContent())) {
             $tws = $shapes['square'][$btn->getSize()];
-        } elseif ($btn->getShape() === 'circle' && ($btn->getIcon() && !$btn->htmlContent)) {
+        } elseif ($btn->getShape() === 'circle' && ($btn->getIcon() && !$btn->getTextContent())) {
             $tws = Tw::from($shapes['square'][$btn->getSize()])->merge($shapes['circle'])();
         } else {
             $tws = Tw::from($sizes[$btn->getSize()])->merge($btn->getShape() === 'circle' ? $shapes['circle'] : [])();

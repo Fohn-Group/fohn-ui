@@ -33,12 +33,12 @@ class SectionHeader extends View
         // left content hold icon or image.
         $this->leftContentView = View::addTo($this, [], 'leftContent')->appendCssClasses('section-left-content contents');
 
-        $title = $this->title ?: $this->htmlContent ?: null;
+        $title = $this->title ?: $this->getTextContent() ?: null;
         if ($title) {
             $this->addHeader($title, $this->headerSize);
         }
 
-        $this->htmlContent = null;
+        $this->setTextContent(null);
 
         if ($this->subTitle) {
             $this->addSubTitle($this->subTitle);
@@ -98,7 +98,9 @@ class SectionHeader extends View
 
     public function addSubTitle(string $subTitle, string $textColor = 'text-slate-600'): View
     {
-        return View::addTo($this->contentView, ['htmlContent' => $subTitle])->appendTailwind($textColor);
+        return View::addTo($this->contentView)
+            ->setTextContent($subTitle)
+            ->appendTailwind($textColor);
     }
 
     public function setHeaderSize(int $size, string $variant = ''): self

@@ -69,8 +69,8 @@ class View extends AbstractView
 
     public string $defaultTemplate = 'view/element.html';
 
-    /** Set html contents of this view. */
-    public ?string $htmlContent = null;
+    /** Set text content of main region. */
+    private ?string $textContent = null;
 
     /** Default html tag. */
     public string $htmlTag = 'div';
@@ -156,11 +156,21 @@ class View extends AbstractView
         return $this;
     }
 
-    public function setHtmlContent(string $htmlContent): self
+    /**
+     * Set main region with text.
+     * In order to use html markup, $useHtmlSpecialChars needs to be false.
+     * textContent is set in template at rendering if set. 
+     */
+    public function setTextContent(?string $text, bool $useHtmlSepcialChars = true): self
     {
-        $this->htmlContent = $htmlContent;
+        $this->textContent = ($text && $useHtmlSepcialChars) ? Ui::service()->htmlSpecialChars($text) : $text;
 
         return $this;
+    }
+
+    public function getTextContent(): ?string
+    {
+        return $this->textContent;
     }
 
     /**
@@ -225,7 +235,6 @@ class View extends AbstractView
 
     /**
      * Add View inside a template region.
-     * formally View::add().
      */
     public function addView(self $view, string $region = self::MAIN_TEMPLATE_REGION): self
     {
@@ -337,8 +346,8 @@ class View extends AbstractView
         $this->getTemplate()->trySet(self::CLASS_TEMPLATE_TAG, $css);
         $this->getTemplate()->trySet(self::TAG_TEMPLATE_TAG, $this->htmlTag);
 
-        if ($this->htmlContent !== null) {
-            $this->getTemplate()->tryDangerouslySetHtml(self::MAIN_TEMPLATE_REGION, $this->htmlContent);
+        if ($this->textContent !== null) {
+            $this->getTemplate()->tryDangerouslySetHtml(self::MAIN_TEMPLATE_REGION, $this->textContent);
         }
 
         $this->renderStyles();
