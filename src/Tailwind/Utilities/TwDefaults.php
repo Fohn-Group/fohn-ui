@@ -226,4 +226,154 @@ class TwDefaults
 
         return $output;
     }
+
+    public static function getCursorDefault(array $screens): string
+    {
+        $cursorTypes = ['auto', 'default', 'pointer', 'wait', 'text', 'move', 'help', 'not-allowed', 'none', 'context-menu',
+            'progress', 'cell', 'crosshair', 'vertical-text', 'alias', 'copy', 'no-drop', 'grab', 'grabbing', 'all-scroll',
+            'col-resize', 'row-resize', 'n-resize', 'e-resize', 's-resize', 'w-resize', 'ne-resize', 'nw-resize', 'sw-resize', 'ew-resize',
+            'ns-resize', 'nesw-resize', 'nwse-resize', 'zoom-in', 'zoom-out', ];
+
+        $output = '';
+
+        foreach ($cursorTypes as $type) {
+            foreach ($screens as $screen) {
+                $output .= Tw::utility('cursor', $type, $screen) . self::SEPARATOR;
+            }
+        }
+        $output .= \PHP_EOL . '-- end cursor --' . \PHP_EOL;
+
+        return $output;
+    }
+
+    public static function getFontDefault(array $screens): string
+    {
+        $allFonts = [
+            'family' => ['font-sans', 'font-serif', 'font-mono'],
+            'smoothing' => ['antialiased', 'subpixel-antialiased'],
+            'style' => ['italic', 'non-italic'],
+            'weight' => ['font-thin', 'font-extralight', 'font-light', 'font-normal', 'font-medium', 'font-semibold', 'font-bold', 'font-extrabold', 'font-black'],
+            'variant_numeric' => ['normal-nums', 'ordinal', 'slashed-zero', 'lining-nums', 'oldstyle-nums', 'proportional-nums', 'tabular-nums', 'diagonal-fractions', 'stacked-fractions'],
+            'spacing' => ['tracking-tighter', 'tracking-light', 'tracking-normal', 'tracking-wide', 'tracking-widest'],
+            'clamp' => ['line-clamp-1', 'line-clamp-2', 'line-clamp-3', 'line-clamp-4', 'line-clamp-5', 'line-clamp-6', 'line-clamp-none'],
+            'height' => ['leading-3', 'leading-4', 'leading-5', 'leading-6', 'leading-7',
+                'leading-8', 'leading-9', 'leading-10', 'leading-none', 'leading-tight', 'leading-snug', 'leading-normal',
+                'leading-relaxed', 'leading-loose'],
+            'transform' => ['uppercase', 'lowercase', 'capitalize', 'normal-case'],
+            'overflow' => ['truncate', 'text-ellipsis', 'text-clip'],
+            'whitespace' => ['whitespace-normal', 'whitespace-nowrap', 'whitespace-pre', 'whitespace-pre-line', 'whitespace-pre-wrap', 'whitespace-break-spaces'],
+            'word_break' => ['break-normal', 'break-words', 'break-all', 'break-keep'],
+            'hyphens' => ['hyphens-none', 'hyphens-manual', 'hyphens-auto'],
+        ];
+
+        $output = '';
+        foreach ($allFonts as $utility => $bases) {
+            foreach ($bases as $base) {
+                foreach ($screens as $screen) {
+                    $output .= Tw::utility($base, '', $screen) . self::SEPARATOR;
+                }
+            }
+            $output .= \PHP_EOL . '-- end font ' . $utility . ' --' . \PHP_EOL;
+        }
+
+        return $output;
+    }
+
+    public static function getFlexDefault(array $screens, array $sizes): string
+    {
+        $allFlexs = [
+            'direction' => ['flex-row', 'flex-row-reverse', 'flex-col', 'flex-col-reverse'],
+            'wrap' => ['flex-wrap', 'flex-wrap-reverse', 'flex-nowrap'],
+            'flex' => ['flex-1', 'flex-auto', 'flex-initial', 'flex-none'],
+            'grow' => ['grow', 'grow-0'],
+            'shrink' => ['shrink', 'shrink-0'],
+        ];
+
+        $orderSizes = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', 'first', 'last', 'none'];
+
+        $output = '';
+        // Basis
+        foreach ($screens as $screen) {
+            foreach ($sizes as $size) {
+                $output .= Tw::utility('basis', $size, $screen) . self::SEPARATOR;
+            }
+            $output .= \PHP_EOL;
+        }
+
+        $output .= '-- end flex basis --' . \PHP_EOL;
+
+        foreach ($allFlexs as $utility => $bases) {
+            foreach ($bases as $base) {
+                foreach ($screens as $screen) {
+                    $output .= Tw::utility($base, '', $screen) . self::SEPARATOR;
+                }
+            }
+            $output .= \PHP_EOL . '-- end flex ' . $utility . ' --' . \PHP_EOL;
+        }
+
+        foreach ($orderSizes as $size) {
+            foreach ($screens as $screen) {
+                $output .= Tw::utility('order', $size, $screen) . self::SEPARATOR;
+            }
+            $output .= \PHP_EOL;
+        }
+
+        $output .= '-- end order --' . \PHP_EOL;
+
+        return $output;
+    }
+
+    public static function getJustifyDefault(array $screens): string
+    {
+        $utilities = ['', 'items', 'self'];
+        $positions = ['auto', 'normal', 'start', 'end', 'center', 'between', 'around', 'evenly', 'stretch'];
+
+        $output = '';
+
+        foreach ($utilities as $utility) {
+            foreach ($screens as $screen) {
+                foreach ($positions as $position) {
+                    $base = $utility ? 'justify-' . $utility : 'justify';
+                    $output .= Tw::utility($base, $position, $screen) . self::SEPARATOR;
+                }
+                $output .= \PHP_EOL;
+            }
+            $output .= \PHP_EOL;
+        }
+
+        $output .= \PHP_EOL . '-- end justify --' . \PHP_EOL;
+
+        return $output;
+    }
+
+    public static function getAlignDefault(array $screens): string
+    {
+        return self::getAlignPlaceDefault($screens);
+    }
+
+    public static function getPlaceDefault(array $screens): string
+    {
+        return self::getAlignPlaceDefault($screens, true);
+    }
+
+    private static function getAlignPlaceDefault(array $screens, bool $isPlace = false): string
+    {
+        $alignUtilities = ['content', 'items', 'self'];
+        $positions = ['auto', 'normal', 'start', 'end', 'center', 'between', 'stretch', 'around', 'evenly', 'baseline'];
+
+        $output = '';
+        foreach ($alignUtilities as $utility) {
+            foreach ($screens as $screen) {
+                foreach ($positions as $position) {
+                    $base = $isPlace ? 'place-' . $utility : $utility;
+                    $output .= Tw::utility($base, $position, $screen) . self::SEPARATOR;
+                }
+            }
+            $output .= \PHP_EOL;
+        }
+        $endOutput = $isPlace ? '-- end place --' : '-- end align --';
+        $output .= \PHP_EOL . $endOutput . \PHP_EOL;
+
+        return $output;
+    }
 }

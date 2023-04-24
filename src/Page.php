@@ -47,7 +47,7 @@ class Page extends View
             'url' => 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css',
         ],
         'fohn-css' => [
-            'url' => 'https://unpkg.com/fohn-ui-css@1.0.0/dist/fohn-ui.min.css',
+            'url' => 'https://unpkg.com/fohn-ui-css@1.2.0/dist/fohn-ui.min.css',
         ],
     ];
 
