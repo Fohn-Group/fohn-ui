@@ -1,5 +1,7 @@
 # Fohn-ui
- PHP Framework using TailwindCss.
+ PHP Framework using Tailwind Css.
+
+[Demo site](https://fohn-ui.com)
 
 [Join Discord Channel](https://discord.gg/VwrPA8Nb3t)
 
