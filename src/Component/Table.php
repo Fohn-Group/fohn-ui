@@ -79,7 +79,7 @@ class Table extends View implements VueInterface
         'w-full',
         'border',
         'border-collapse',
-        'table-auto'
+        'table-auto',
     ];
 
     protected array $rowTws = [

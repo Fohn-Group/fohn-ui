@@ -9,7 +9,6 @@ use Fohn\Ui\Component\Form\Control\Select;
 use Fohn\Ui\Component\Table;
 use Fohn\Ui\Js\Js;
 use Fohn\Ui\Js\JsFunction;
-use Fohn\Ui\Js\JsReload;
 use Fohn\Ui\Service\Ui;
 use Fohn\Ui\Tailwind\Theme\TwConstant;
 use Fohn\Ui\Tailwind\Tw;
@@ -46,7 +45,7 @@ $select->setItems($locales);
 $table = Table::addTo($grid, ['hasTableSearch' => false, 'hasPaginator' => false]);
 $table->setCaption(AppTest::tableCaptionFactory('Sales Report'));
 $select->onChange(JsFunction::arrow([Js::var('selectLocale')])->executes([
-    $table->jsDataRequest(['loc' => Js::var('selectLocale')])
+    $table->jsDataRequest(['loc' => Js::var('selectLocale')]),
 ]));
 
 // Locale get argument to table callback.

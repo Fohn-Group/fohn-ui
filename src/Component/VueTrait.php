@@ -23,7 +23,7 @@ trait VueTrait
 
     protected function getPiniaStoreId(string $prefix = ''): string
     {
-        return $prefix . Ui::service()->factoryId(Ui::serverRequest()->getServerParams()['REQUEST_URI'])  . '-' . $this->getIdAttribute();
+        return $prefix . Ui::service()->factoryId(Ui::serverRequest()->getServerParams()['REQUEST_URI']) . '-' . $this->getIdAttribute();
     }
 
     public function isRootComponent(): bool
