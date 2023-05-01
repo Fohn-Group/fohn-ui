@@ -119,6 +119,15 @@ class Table extends View implements VueInterface
         return $column;
     }
 
+    public function addColumns(array $columns): self
+    {
+        foreach ($columns as $name => $column) {
+            $this->addColumn($name, $column);
+        }
+
+        return $this;
+    }
+
     public function hasColumn(string $name): bool
     {
         return isset($this->columns[$name]);
@@ -196,6 +205,11 @@ class Table extends View implements VueInterface
     public function jsDeleteRow(string $id): JsRenderInterface
     {
         return $this->getStoreChain()->deleteRow($id);
+    }
+
+    public function jsDataRequest(array $args = []): JsRenderInterface
+    {
+        return $this->getStoreChain()->fetchItems(Js::object($args));
     }
 
     private function getStoreChain(): JsRenderInterface
