@@ -108,7 +108,7 @@
                                         </button>
                                     </li>
                                     <li class="w-8 h-8 table-cell">
-                                        <button @click="goToPage(currentPage - 1)"
+                                        <button @click="goToPage(currentPage - 1)" @click.alt="goToPage(currentPage - range.length)"
                                                 :disabled="currentPage === 1"
                                                 class="disabled:text-gray-400  hover:bg-blue-100 w-full h-full transition duration-100 ease-in-out focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50">
                                             <i class="bi bi-chevron-left"></i>
@@ -124,7 +124,7 @@
                                         </li>
                                     </template>
                                     <li class="w-8 h-8 table-cell">
-                                        <button @click="goToPage(currentPage + 1)"
+                                        <button @click="goToPage(currentPage + 1)" @click.alt="goToPage(currentPage + range.length)"
                                                 :disabled="currentPage === totalPages"
                                                 class="disabled:text-gray-400 hover:bg-blue-100 w-full h-full transition duration-100 ease-in-out focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50">
                                             <i class="bi bi-chevron-right"></i>
