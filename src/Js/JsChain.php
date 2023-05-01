@@ -28,10 +28,10 @@ class JsChain implements JsRenderInterface
     /** @var Chainable[] The remaining chaining methods or property. */
     protected array $chains = [];
 
-    final protected function __construct(string $library, JsRenderInterface $selector = null)
+    final protected function __construct(string $library, JsRenderInterface $variable = null)
     {
-        if ($selector) {
-            $this->arguments[] = $selector;
+        if ($variable) {
+            $this->arguments[] = $variable;
         }
 
         $this->libraryName = $library;
@@ -39,20 +39,16 @@ class JsChain implements JsRenderInterface
 
     /**
      * Start of the chain.
-     * ex: Js::with('flatpickr') translate into flatpickr().
+     * ex: Js::with('flatpickr', Js::var('')) translate into flatpickr().
      */
-    public static function with(string $library, string $selector = null): self
+    public static function with(string $library, JsRenderInterface $variable = null): self
     {
-        if ($selector) {
-            return new static($library, Js::string($selector));
-        }
-
-        return new static($library);
+        return new static($library, $variable);
     }
 
-    public static function withUiLibrary(string $selector = null): self
+    public static function withUiLibrary(JsRenderInterface $variable = null): self
     {
-        return self::with(Ui::service()->jsLibrary, $selector);
+        return self::with(Ui::service()->jsLibrary, $variable);
     }
 
     /**

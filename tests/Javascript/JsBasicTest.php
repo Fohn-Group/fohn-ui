@@ -59,8 +59,28 @@ class JsBasicTest extends TestCase
         $chain = JsChain::with('myLibrary')->doMyLibraryFunction();
         $this->assertSame('myLibrary.doMyLibraryFunction()', $chain->jsRender());
 
+        // Test calling chain function with var selector.
+        $chain = JsChain::with('myLibrary', Js::var('selector'))->doMyLibraryFunction();
+        $this->assertSame('myLibrary(selector).doMyLibraryFunction()', $chain->jsRender());
+
+        // Test calling chain function with string selector.
+        $chain = JsChain::with('myLibrary', Js::string('selector'))->doMyLibraryFunction();
+        $this->assertSame('myLibrary(\'selector\').doMyLibraryFunction()', $chain->jsRender());
+
+        // Test calling chain function with object selector.
+        $chain = JsChain::with('myLibrary', Js::object(['aProp' => 'aValue']))->doMyLibraryFunction();
+        $this->assertSame('myLibrary({aProp:\'aValue\'}).doMyLibraryFunction()', $chain->jsRender());
+
+        // Test calling chain function with array selector.
+        $chain = JsChain::with('myLibrary', Js::array(['a', 'b']))->doMyLibraryFunction();
+        $this->assertSame('myLibrary([\'a\',\'b\']).doMyLibraryFunction()', $chain->jsRender());
+
+        // Test calling chain function with empty var selector.
+        $chain = JsChain::with('myLibrary', Js::var(''))->doMyLibraryFunction();
+        $this->assertSame('myLibrary().doMyLibraryFunction()', $chain->jsRender());
+
         // Test chaining.
-        $chain->callAnotherFunction();
+        $chain = JsChain::with('myLibrary')->doMyLibraryFunction()->callAnotherFunction();
         $this->assertSame('myLibrary.doMyLibraryFunction().callAnotherFunction()', $chain->jsRender());
 
         // test chain property
