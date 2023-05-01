@@ -8,6 +8,7 @@
                 ref="root"
                 class="invisible"
                 :actions="{$tableActions}"
+                :keep-table-state="{$keepTableState}"
                 #default="@{isFetching,
                 query,
                 columns,
@@ -46,6 +47,7 @@
                     </div>
                 </div>
                 {/TableSearch}
+                <div class="overflow-auto">
                 <table class="{$tableTws}" >
                     <caption>{$caption}</caption>
                     {TableHeaders}
@@ -75,6 +77,7 @@
                         </template>
                     </tbody>
                 </table>
+                </div>
                 {$afterTable}
                 {Paginator}
                 <div class="py-4">
