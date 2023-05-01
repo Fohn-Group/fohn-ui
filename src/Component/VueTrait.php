@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace Fohn\Ui\Component;
 
 use Fohn\Ui\Js\JsChain;
+use Fohn\Ui\Service\Ui;
 use Fohn\Ui\View;
 
 trait VueTrait
@@ -22,7 +23,7 @@ trait VueTrait
 
     protected function getPiniaStoreId(string $prefix = ''): string
     {
-        return $prefix . $this->getIdAttribute();
+        return $prefix . Ui::service()->factoryId(Ui::serverRequest()->getServerParams()['REQUEST_URI'])  . '-' . $this->getIdAttribute();
     }
 
     public function isRootComponent(): bool
