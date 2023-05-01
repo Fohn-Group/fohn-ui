@@ -212,6 +212,7 @@ class Table extends View implements VueInterface
 
     public function jsDataRequest(array $args = []): JsRenderInterface
     {
+        // @phpstan-ignore-next-line
         return $this->getStoreChain()->fetchItems(Js::object($args));
     }
 
