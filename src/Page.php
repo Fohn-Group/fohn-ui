@@ -34,7 +34,7 @@ class Page extends View
             'url' => 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js',
         ],
         'fohn-js' => [
-            'url' => 'https://unpkg.com/fohn-ui@1.0.1/dist/fohn-ui.min.js',
+            'url' => 'https://unpkg.com/fohn-ui@1.1.0/dist/fohn-ui.min.js',
         ],
     ];
 

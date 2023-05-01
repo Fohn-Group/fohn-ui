@@ -58,6 +58,9 @@ class Table extends View implements VueInterface
     public bool $hasColumnsHeader = true;
     public bool $hasTableSearch = true;
 
+    /** Will keep table state on refresh. */
+    public bool $keepTableState = true;
+
     public bool $hasPaginator = true;
     public int $paginatorLimit = 5;
     public int $paginatorItemsPerPage = 10;
@@ -76,7 +79,7 @@ class Table extends View implements VueInterface
         'w-full',
         'border',
         'border-collapse',
-        'table-fixed',
+        'table-auto',
     ];
 
     protected array $rowTws = [
@@ -117,6 +120,15 @@ class Table extends View implements VueInterface
         $this->columns[$name] = $column;
 
         return $column;
+    }
+
+    public function addColumns(array $columns): self
+    {
+        foreach ($columns as $name => $column) {
+            $this->addColumn($name, $column);
+        }
+
+        return $this;
     }
 
     public function hasColumn(string $name): bool
@@ -198,6 +210,12 @@ class Table extends View implements VueInterface
         return $this->getStoreChain()->deleteRow($id);
     }
 
+    public function jsDataRequest(array $args = []): JsRenderInterface
+    {
+        // @phpstan-ignore-next-line
+        return $this->getStoreChain()->fetchItems(Js::object($args));
+    }
+
     private function getStoreChain(): JsRenderInterface
     {
         return JsChain::withUiLibrary()
@@ -271,6 +289,7 @@ class Table extends View implements VueInterface
     {
         $this->getTemplate()->set('storeId', $this->getPiniaStoreId(self::PINIA_PREFIX));
         $this->getTemplate()->set('dataUrl', $this->tableDataCb->getUrl());
+        $this->getTemplate()->setJs('keepTableState', Js::boolean($this->keepTableState));
         $this->getTemplate()->setJs('columns', ArrayLiteral::set($this->getColumnsDefinition()));
         $this->getTemplate()->setJs('itemsPerPage', Integer::set($this->paginatorItemsPerPage));
         $this->getTemplate()->setJs('tableActions', ObjectLiteral::set($this->actions));

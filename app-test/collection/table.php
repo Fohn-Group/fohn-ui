@@ -41,12 +41,12 @@ $subtitles = [
 
 $select = Select::addTo($grid, ['controlName' => 'loc_select', 'allowNull' => false, 'caption' => 'Select locale for displaying data:'], 'rightContent');
 $select->setItems($locales);
-$select->onChange(JsFunction::arrow([Js::var('e')])->executes([
-    Ui::jsRedirect(Ui::parseRequestUrl(), ['loc' => Js::var('e')]),
-]));
 
 $table = Table::addTo($grid, ['hasTableSearch' => false, 'hasPaginator' => false]);
 $table->setCaption(AppTest::tableCaptionFactory('Sales Report'));
+$select->onChange(JsFunction::arrow([Js::var('selectLocale')])->executes([
+    $table->jsDataRequest(['loc' => Js::var('selectLocale')]),
+]));
 
 // Locale get argument to table callback.
 $locale = $table->stickyGet('loc', 'en_US');
