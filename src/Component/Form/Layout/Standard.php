@@ -18,7 +18,7 @@ class Standard extends View implements FormLayoutInterface
 
     public ?Button $submitButton = null;
     public array $defaultSubmitBtnSeed = [Button::class, 'label' => 'Save', 'color' => 'primary'];
-    public ?View $buttonContainer = null;
+    public bool $addSubmitBtnInLayout = true;
 
     public function addButton(Button $button): Button
     {
@@ -30,11 +30,9 @@ class Standard extends View implements FormLayoutInterface
         return $this->submitButton;
     }
 
-    public function setButtonContainer(View $view): self
+    public function addSubmitButton(bool $add): void
     {
-        $this->buttonContainer = $view;
-
-        return $this;
+        $this->addSubmitBtnInLayout = false;
     }
 
     public function setSubmitButton(Button $button = null): self
@@ -60,10 +58,7 @@ class Standard extends View implements FormLayoutInterface
 
     protected function beforeHtmlRender(): void
     {
-        if (isset($this->buttonContainer)) {
-            // Button need to be rendered somewhere else.
-            $this->buttonContainer->getTemplate()->tryDangerouslySetHtml('Buttons', $this->submitButton->getHtml());
-        } else {
+        if ($this->addSubmitBtnInLayout) {
             $this->addView($this->submitButton, 'Buttons');
         }
 
