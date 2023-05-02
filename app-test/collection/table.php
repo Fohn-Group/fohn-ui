@@ -110,7 +110,6 @@ $table->getTableColumn('sales')->applyCssCell(function ($v) {
 $table->onDataRequest(function (Table\Payload $payload, Table\Result\Set $result): void {
     $faker = Factory::create();
     $data = [];
-
     for ($i = 0; $i < 15; ++$i) {
         $first = $faker->firstName(random_int(0, 1) ? 'male' : 'female');
         $last = $faker->lastName;
