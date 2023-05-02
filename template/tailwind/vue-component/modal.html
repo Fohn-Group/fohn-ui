@@ -29,7 +29,7 @@
                 <div v-show="isOpen"
                      class=" overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full inset-0 h-full"
                      @click="closeModal">
-                    <div class="__fohn-modal relative top-20 mx-auto border w-1/2 shadow-lg rounded-md bg-white overflow-auto"
+                    <div class="__fohn-modal relative top-20 mx-auto border w-10/12 md:w-4/6 shadow-lg rounded-md bg-white overflow-auto"
                          @click.stop=""
                          :class="heightCss"
                     >
@@ -47,7 +47,7 @@
                             {$remoteContent}
                         </div>
                         {$Content}
-                        <div class="sticky border-t border-gray-200 bottom-0 p-1">
+                        <div class="sticky border-t border-gray-200 bottom-0 bg-white p-1">
                             <div class="grid place-content-end">
                                 <div>
                                     {$Buttons}

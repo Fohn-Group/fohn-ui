@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Fohn\Ui\AppTest;
 
 use Fohn\Ui\AppTest\Model\Country;
+use Fohn\Ui\AppTest\Model\FieldTest;
 use Fohn\Ui\Component\Form;
 use Fohn\Ui\Component\Modal;
 use Fohn\Ui\Component\Modal\AsDialog;
@@ -115,3 +116,32 @@ Jquery::addEventTo($btn, 'click')
     ->executes([
         $modalDynamic->jsOpen(),
     ]);
+
+// / AS Long Form
+
+$modelTestCtrl = new FormModelController(new FieldTest(Data::db()));
+
+$modalFieldTest = Modal\AsForm::addTo(Ui::layout(), ['title' => 'Add :']);
+
+$form = $modalFieldTest->addForm(new Form());
+$form->addControls($modelTestCtrl->factoryFormControls(null));
+$form->onControlsValueRequest(function ($id, Form\Response\Value $response) use ($modelTestCtrl) {
+    $response->mergeValues($modelTestCtrl->getFormInputValue((string) $id));
+});
+
+$form->onSubmit(function ($f, $id) use ($modalFieldTest) {
+    return JsStatements::with(
+        [
+            JsToast::success('Saved!'),
+            $modalFieldTest->jsClose(),
+        ]
+    );
+});
+
+$bar2 = View::addTo(Ui::layout())->appendTailwinds(['inline-block, my-4']);
+Button::addTo($bar2, ['label' => 'Field Test', 'color' => 'info', 'type' => 'outline', 'shape' => 'normal'])
+    ->appendHtmlAttribute('data-name', 'Italy');
+
+Jquery::jqCallback($bar2, 'click', function ($j, $payload) use ($modalFieldTest) {
+    return JsStatements::with($modalFieldTest->jsOpenWithId(Js::var('')));
+}, ['name' => Jquery::withThis()->data('name')], '.fohn-btn');

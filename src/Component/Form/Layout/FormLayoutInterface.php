@@ -18,5 +18,10 @@ interface FormLayoutInterface
 
     public function getSubmitButton(): ?Button;
 
-    public function setButtonContainer(View $view): self;
+    /**
+     * Prevent submit button from rendering in Layout.
+     * User is responsible to render Form::submitButton into another
+     * view than Form Layout.
+     */
+    public function addSubmitButton(bool $add): void;
 }

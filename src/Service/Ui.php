@@ -326,7 +326,7 @@ class Ui implements UiInterface
     {
         set_exception_handler(function (\Throwable $exception) use ($page): void {
             if ($this->isAjaxRequest()) {
-                static::app()->terminateJson([static::EXCEPTION_OUTPUT_KEY => static::service()->renderExceptionAsHtml($exception)], 500);
+                static::app()->terminateJson(['success' => false, static::EXCEPTION_OUTPUT_KEY => static::service()->renderExceptionAsHtml($exception)], 500);
             } else {
                 try {
                     $page->invokeInitRenderTree();

@@ -23,9 +23,13 @@ class AsForm extends Modal
     public function addForm(Form $form): Form
     {
         $this->form = $form;
-        $this->content->addView($this->form);
-        $this->form->getLayout()->setButtonContainer($this);
-        $this->form->getLayout()->getSubmitButton()->appendHtmlAttribute('form', $this->form->getId());
+        $this->addContent($this->form);
+        /** @var Form\Layout\Standard $layout */
+        $layout = $this->form->getLayout();
+        $layout->appendTailwinds(['m-4']);
+        $layout->addSubmitButton(false);
+        $this->addView($this->form->getSubmitButton(), 'Buttons');
+        $this->form->getSubmitButton()->appendHtmlAttribute('form', $this->form->getId());
 
         return $this->form;
     }
