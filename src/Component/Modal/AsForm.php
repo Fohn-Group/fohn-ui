@@ -24,8 +24,10 @@ class AsForm extends Modal
     {
         $this->form = $form;
         $this->addContent($this->form);
-        $this->form->getLayout()->appendTailwinds(['m-4']);
-        $this->form->getLayout()->addSubmitButton(false);
+        /** @var Form\Layout\Standard $layout */
+        $layout = $this->form->getLayout();
+        $layout->appendTailwinds(['m-4']);
+        $layout->addSubmitButton(false);
         $this->addView($this->form->getSubmitButton(), 'Buttons');
         $this->form->getSubmitButton()->appendHtmlAttribute('form', $this->form->getId());
 
