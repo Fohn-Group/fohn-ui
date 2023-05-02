@@ -155,7 +155,7 @@ class App
     protected function handleException(\Throwable $exception): void
     {
         if (Ui::service()->isAjaxRequest()) {
-            $this->terminateJson([Ui::EXCEPTION_OUTPUT_KEY => Ui::service()->renderExceptionAsHtml($exception)], 500);
+            $this->terminateJson(['success' => false, Ui::EXCEPTION_OUTPUT_KEY => Ui::service()->renderExceptionAsHtml($exception)], 500);
         } else {
             $output = Ui::service()->renderExceptionAsHtml($exception);
             $this->terminateHtml($output, 500);
