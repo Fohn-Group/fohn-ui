@@ -129,8 +129,7 @@ $form->onControlsValueRequest(function ($id, Form\Response\Value $response) use 
     $response->mergeValues($modelTestCtrl->getFormInputValue((string) $id));
 });
 
-$form->onSubmit(function ($f, $id) use ($modalFieldTest, $modelTestCtrl) {
-
+$form->onSubmit(function ($f, $id) use ($modalFieldTest) {
     return JsStatements::with(
         [
             JsToast::success('Saved!'),
@@ -143,7 +142,6 @@ $bar2 = View::addTo(Ui::layout())->appendTailwinds(['inline-block, my-4']);
 Button::addTo($bar2, ['label' => 'Field Test', 'color' => 'info', 'type' => 'outline', 'shape' => 'normal'])
     ->appendHtmlAttribute('data-name', 'Italy');
 
-Jquery::jqCallback($bar2, 'click', function ($j, $payload) use ($modalFieldTest, $modelTestCtrl) {
-
+Jquery::jqCallback($bar2, 'click', function ($j, $payload) use ($modalFieldTest) {
     return JsStatements::with($modalFieldTest->jsOpenWithId(Js::var('')));
 }, ['name' => Jquery::withThis()->data('name')], '.fohn-btn');
