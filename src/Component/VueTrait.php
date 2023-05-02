@@ -21,6 +21,12 @@ trait VueTrait
         return '#' . $this->getIdAttribute();
     }
 
+    /**
+     * Generate a unique store id. Uses script_name in order
+     * to avoid duplicate. If a page is duplicate, using the same views,
+     * then it is possible to have the same store id.
+     * This is critical for component that save it's store state in LocalStorage.
+     */
     protected function getPiniaStoreId(string $prefix = ''): string
     {
         return $prefix . Ui::service()->factoryId(Ui::serverRequest()->getServerParams()['SCRIPT_NAME']) . '-' . $this->getIdAttribute();
