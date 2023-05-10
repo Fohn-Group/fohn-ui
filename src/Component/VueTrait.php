@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace Fohn\Ui\Component;
 
 use Fohn\Ui\Js\JsChain;
+use Fohn\Ui\Js\JsRenderInterface;
 use Fohn\Ui\Service\Ui;
 use Fohn\Ui\View;
 
@@ -44,8 +45,9 @@ trait VueTrait
         return $isRoot;
     }
 
-    protected function jsGetStore(string $prefix)
+    protected function jsGetStore(string $prefix): JsRenderInterface
     {
+        // @phpstan-ignore-next-line
         return JsChain::withUiLibrary()->vueService->getStore($this->getPiniaStoreId($prefix));
     }
 

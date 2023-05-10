@@ -97,17 +97,19 @@ class Modal extends View implements VueInterface
                     implode('/', self::JS_OPEN_OPTIONS)
                 );
         }
-
+        // @phpstan-ignore-next-line
         return $this->jsGetStore(self::PINIA_PREFIX)->openModal(Js::object($options));
     }
 
     public function jsClose(): JsRenderInterface
     {
+        // @phpstan-ignore-next-line
         return $this->jsGetStore(self::PINIA_PREFIX)->closeModal();
     }
 
     public function jsSetTitle(string $title): JsRenderInterface
     {
+        // @phpstan-ignore-next-line
         $js = $this->jsGetStore(self::PINIA_PREFIX)->setTitle($title);
         $this->content->appendJsAction($js);
 
