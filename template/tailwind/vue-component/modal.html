@@ -29,7 +29,7 @@
                 <div v-show="isOpen"
                      class=" overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full inset-0 h-full"
                      @click="closeModal">
-                    <div class="__fohn-modal relative top-20 mx-auto border w-10/12 md:w-4/6 shadow-lg rounded-md bg-white overflow-auto"
+                    <div class="__fohn-modal {$modalClassAttr}"
                          @click.stop=""
                          :class="heightCss"
                     >

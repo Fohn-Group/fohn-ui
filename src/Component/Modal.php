@@ -14,6 +14,7 @@ use Fohn\Ui\Js\JsChain;
 use Fohn\Ui\Js\JsRenderInterface;
 use Fohn\Ui\Js\Type\Type;
 use Fohn\Ui\Service\Ui;
+use Fohn\Ui\Tailwind\Tw;
 use Fohn\Ui\View;
 use Fohn\Ui\View\Button;
 
@@ -37,6 +38,20 @@ class Modal extends View implements VueInterface
     public View $content;
     public View $remoteContent;
 
+    public array $defaultModalTws = [
+        'relative',
+        'top-20',
+        'mx-auto',
+        'border',
+        'shadow-lg',
+        'rounded-md',
+        'bg-white',
+        'overflow-auto',
+    ];
+
+    public array $modalTwsWidth = ['w-10/12', 'md:w-4/6', 'lg:w-1/2'];
+
+    // w-10/12 md:w-4/6 lg:w-1/2
     protected function initRenderTree(): void
     {
         parent::initRenderTree();
@@ -102,6 +117,7 @@ class Modal extends View implements VueInterface
 
     protected function beforeHtmlRender(): void
     {
+        $this->getTemplate()->trySet('modalClassAttr', Tw::from($this->defaultModalTws)->merge($this->modalTwsWidth)->toString());
         $this->getTemplate()->trySetJs('storeId', Type::factory($this->getPiniaStoreId(self::PINIA_PREFIX)));
         $this->getTemplate()->trySetJs('title', Type::factory($this->title));
         $this->getTemplate()->trySetJs('isClosable', Type::factory($this->isClosable));
