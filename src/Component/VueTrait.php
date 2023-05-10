@@ -44,6 +44,11 @@ trait VueTrait
         return $isRoot;
     }
 
+    protected function jsGetStore(string $prefix)
+    {
+        return JsChain::withUiLibrary()->vueService->getStore($this->getPiniaStoreId($prefix));
+    }
+
     /**
      * Create Vue root app component.
      * Only component at top most level is created by vueService except when specify with forceRoot property.
