@@ -140,7 +140,7 @@ class Table extends View implements VueInterface
     {
         $idVar = self::CELL_PROP_NAME . '.' . $this->idColumnName;
 
-        return $this->getStoreChain()->getCellValue(Js::var($idVar), Js::string($colName));
+        return $this->jsGetStore(self::PINIA_PREFIX)->getCellValue(Js::var($idVar), Js::string($colName));
     }
 
     public function addActionColumn(string $columnName, string $actionName, View\Button $button, Header $header = null, string $eventName = 'click'): JsFunction
@@ -202,25 +202,18 @@ class Table extends View implements VueInterface
      */
     public function jsUpdateRow(?string $id, array $row): JsRenderInterface
     {
-        return $this->getStoreChain()->updateRow($id, $row);
+        return $this->jsGetStore(self::PINIA_PREFIX)->updateRow($id, $row);
     }
 
     public function jsDeleteRow(string $id): JsRenderInterface
     {
-        return $this->getStoreChain()->deleteRow($id);
+        return $this->jsGetStore(self::PINIA_PREFIX)->deleteRow($id);
     }
 
     public function jsDataRequest(array $args = []): JsRenderInterface
     {
         // @phpstan-ignore-next-line
-        return $this->getStoreChain()->fetchItems(Js::object($args));
-    }
-
-    private function getStoreChain(): JsRenderInterface
-    {
-        return JsChain::withUiLibrary()
-            ->store()
-            ->getTableStore($this->getPiniaStoreId(self::PINIA_PREFIX));
+        return $this->jsGetStore(self::PINIA_PREFIX)->fetchItems(Js::object($args));
     }
 
     public function getTableColumn(string $name): Column
