@@ -10,7 +10,6 @@ namespace Fohn\Ui\Component;
 use Fohn\Ui\Callback\Generic;
 use Fohn\Ui\Core\Exception;
 use Fohn\Ui\Js\Js;
-use Fohn\Ui\Js\JsChain;
 use Fohn\Ui\Js\JsRenderInterface;
 use Fohn\Ui\Js\Type\Type;
 use Fohn\Ui\Service\Ui;

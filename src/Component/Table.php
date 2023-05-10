@@ -22,7 +22,6 @@ use Fohn\Ui\Core\HookFn;
 use Fohn\Ui\Core\HookTrait;
 use Fohn\Ui\Js\Jquery;
 use Fohn\Ui\Js\Js;
-use Fohn\Ui\Js\JsChain;
 use Fohn\Ui\Js\JsFunction;
 use Fohn\Ui\Js\JsRenderInterface;
 use Fohn\Ui\Js\Type\ArrayLiteral;
