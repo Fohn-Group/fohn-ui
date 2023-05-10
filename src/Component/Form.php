@@ -128,14 +128,7 @@ class Form extends View implements VueInterface
      */
     public function jsRequestControlsValue(JsRenderInterface $id): JsRenderInterface
     {
-        return $this->getStoreChain()->setDataId($id);
-    }
-
-    private function getStoreChain(): JsRenderInterface
-    {
-        return JsChain::withUiLibrary()
-            ->store()
-            ->getFormStore($this->getPiniaStoreId(self::PINIA_PREFIX));
+        return $this->jsGetStore(self::PINIA_PREFIX)->setDataId($id);
     }
 
     public function getLayout(string $layoutName = self::MAIN_LAYOUT): ?FormLayoutInterface
