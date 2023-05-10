@@ -114,7 +114,7 @@ class Tw
 
     public function filter(\Closure $fn): self
     {
-        $this->tw = array_filter($this->tw, $fn);
+        $this->tw = array_values(array_filter($this->tw, $fn));
 
         return $this;
     }
