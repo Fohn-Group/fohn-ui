@@ -14,7 +14,7 @@ use Fohn\Ui\View;
  */
 class SideNavigation extends Layout
 {
-    public string $defaultTemplate = 'layout/admin.html';
+    public string $defaultTemplate = 'layout/side-navigation.html';
     public string $topBarTitle = '';
     public string $navigationWidth = '52';
     public string $navigationBreakPoint = 'lg';
@@ -26,10 +26,10 @@ class SideNavigation extends Layout
     protected function initRenderTree(): void
     {
         parent::initRenderTree();
-        $this->initAdmin();
+        $this->initNavigation();
     }
 
-    protected function initAdmin(): void
+    protected function initNavigation(): void
     {
         $this->topBarContent = View::addTo($this, ['defaultTailwind' => ['mx-2']], 'topBarContent');
 
