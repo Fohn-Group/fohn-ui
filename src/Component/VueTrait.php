@@ -17,6 +17,15 @@ trait VueTrait
     /** Force Js vueService to create component. */
     public bool $forceRoot = false;
 
+    /**
+     * Unique store id. If not provided, then a unique id will be generated.
+     * Providing an id help when realtime update is needed. This way you can
+     * use the known id in order to get the component store and call function in it within your javascript.
+     * Ex: when updating table data after a pusher notification in js:
+     *  fohn.vueService.getStore('myId').fetchItems().
+     */
+    protected ?string $storeId = null;
+
     protected function getDefaultSelector(): string
     {
         return '#' . $this->getIdAttribute();
@@ -30,6 +39,10 @@ trait VueTrait
      */
     protected function getPiniaStoreId(string $prefix = ''): string
     {
+        if ($this->storeId) {
+            return $this->storeId;
+        }
+
         return $prefix . Ui::service()->factoryId(Ui::serverRequest()->getServerParams()['SCRIPT_NAME']) . '-' . $this->getIdAttribute();
     }
 
