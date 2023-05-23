@@ -3,18 +3,17 @@
   <head>
     <title>{title}Fohn UI - Untitled Project{/}</title>{$meta}
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {$head}
-    {$includeJs}
+    {$includeHeadJs}
     {$includeCss}
   </head>
-  <body class="{$classAttr}">{$Content}
-    <div class="fohn-side-panels">{$RightPanel}</div>
-    <div class="fohn-modal">{$Modals}</div>
-    <div id="fohn-toast"></div>
-  <script type="application/javascript">{$InitJsBundle}</script>
-  <script type="application/javascript">{$documentReady}</script>
+  <body class="{$classAttr}">
+  {$Content}
+  <div id="fohn-toast"></div>
   <div id="fohn-modals"></div>
-  </body>
   <div id="fohn-exception-dialog" class="invisible"></div>
+  {$includeJs}
+  <script type="application/javascript">{$documentReady}</script>
+  </body>
 </html>
