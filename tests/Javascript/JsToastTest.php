@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 /**
- * JsToast
+ * JsToast.
  */
 
 namespace Fohn\Ui\Tests\Javascript;

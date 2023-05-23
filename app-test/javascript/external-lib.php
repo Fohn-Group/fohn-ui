@@ -1,6 +1,7 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Fohn\Ui\AppTest;
 
 use Fohn\Ui\Js\Jquery;
@@ -11,7 +12,6 @@ use Fohn\Ui\Service\Ui;
 use Fohn\Ui\View;
 
 require_once __DIR__ . '/../init-ui.php';
-
 
 Ui::page()->includeJsPackage('dayjs', 'https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js');
 
