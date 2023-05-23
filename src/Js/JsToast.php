@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 namespace Fohn\Ui\Js;
 
+use Fohn\Ui\Js\Type\Boolean;
 use Fohn\Ui\Js\Type\ObjectLiteral;
 use Fohn\Ui\Js\Type\StringLiteral;
 
@@ -40,37 +41,37 @@ class JsToast
      *   return JsToast::notify('Save');
      * });.
      */
-    public static function notify(string $title, string $message = '', array $options = []): JsRenderInterface
+    public static function notify(string $title, string $message = '', array $options = [], bool $sanitize = true): JsRenderInterface
     {
-        return static::notifyWithJs(StringLiteral::set($title), StringLiteral::set($message), ObjectLiteral::set($options));
+        return static::notifyWithJs(StringLiteral::set($title), StringLiteral::set($message), ObjectLiteral::set($options), $sanitize);
     }
 
-    public static function success(string $title, string $message = '', array $options = []): JsRenderInterface
+    public static function success(string $title, string $message = '', array $options = [], bool $sanitize = true): JsRenderInterface
     {
         $options = array_merge($options, ['type' => 'success']);
 
-        return static::notify($title, $message, $options);
+        return static::notify($title, $message, $options, $sanitize);
     }
 
-    public static function error(string $title, string $message = '', array $options = []): JsRenderInterface
+    public static function error(string $title, string $message = '', array $options = [], bool $sanitize = true): JsRenderInterface
     {
         $options = array_merge($options, ['type' => 'error']);
 
-        return static::notify($title, $message, $options);
+        return static::notify($title, $message, $options, $sanitize);
     }
 
-    public static function warning(string $title, string $message = '', array $options = []): JsRenderInterface
+    public static function warning(string $title, string $message = '', array $options = [], bool $sanitize = true): JsRenderInterface
     {
         $options = array_merge($options, ['type' => 'warning']);
 
-        return static::notify($title, $message, $options);
+        return static::notify($title, $message, $options, $sanitize);
     }
 
-    public static function info(string $title, string $message = '', array $options = []): JsRenderInterface
+    public static function info(string $title, string $message = '', array $options = [], bool $sanitize = true): JsRenderInterface
     {
         $options = array_merge($options, ['type' => 'info']);
 
-        return static::notify($title, $message, $options);
+        return static::notify($title, $message, $options, $sanitize);
     }
 
     /**
@@ -83,9 +84,9 @@ class JsToast
      *       fohn.toastService.notify($(this).text(),{});
      *   });.
      */
-    public static function notifyWithJs(JsRenderInterface $title, JsRenderInterface $message = null, JsRenderInterface $options = null): JsRenderInterface
+    public static function notifyWithJs(JsRenderInterface $title, JsRenderInterface $message = null, JsRenderInterface $options = null, bool $sanitize = true): JsRenderInterface
     {
         // / @phpstan-ignore-next-line
-        return (new static())->toastService->notify($title, $message ?? StringLiteral::set(''), $options ?? ObjectLiteral::set([]));
+        return (new static())->toastService->notify($title, $message ?? StringLiteral::set(''), $options ?? ObjectLiteral::set([]), Boolean::set($sanitize));
     }
 }
