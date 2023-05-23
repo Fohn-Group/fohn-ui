@@ -18,6 +18,7 @@ Ui::page()->includeJsPackage('dayjs', 'https://cdn.jsdelivr.net/npm/dayjs@1/dayj
 View\Heading\Header::addTo(Ui::layout(), ['title' => 'Load external library test:', 'size' => 5]);
 $clock = View::addTo(Ui::layout())->setTextContent((new \DateTime())->format('H:i:s'))->appendCssClasses('js-clock');
 // Use Js::var('') to start a chain with a function call with no parameter: "dayjs()".
+// @phpstan-ignore-next-line
 $getDayJsDate = JsChain::with('dayjs', Js::var(''))->format('HH:mm:ss');
 $fn = JsFunction::anonymous()->execute(Jquery::withView($clock)->text($getDayJsDate));
 $useInterval = Js::from('setInterval({{fn}}, 1000)', ['fn' => $fn]);
