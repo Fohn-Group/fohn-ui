@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace Fohn\Ui\Component;
 
 use Fohn\Ui\Js\JsChain;
+use Fohn\Ui\Js\JsRenderInterface;
 use Fohn\Ui\Service\Ui;
 use Fohn\Ui\View;
 
@@ -16,19 +17,29 @@ trait VueTrait
     /** Force Js vueService to create component. */
     public bool $forceRoot = false;
 
+    /** Vue Pinia store id. Must be unique. */
+    protected ?string $storeId = null;
+
     protected function getDefaultSelector(): string
     {
         return '#' . $this->getIdAttribute();
     }
 
     /**
-     * Generate a unique store id. Uses script_name in order
-     * to avoid duplicate. If a page is duplicate, using the same views,
-     * then it is possible to have the same store id.
-     * This is critical for component that save it's store state in LocalStorage.
+     * Generate a unique store id unless already set.
+     * Uses script_name in order to avoid duplicate. This is critical for component that save it's store
+     * state in LocalStorage.
+     *
+     * Providing a custom id will help when realtime update of a component is needed.
+     * Ex: When updating table data after a pusher notification in js:
+     *  fohn.vueService.getStore('myId').fetchItems().
      */
     protected function getPiniaStoreId(string $prefix = ''): string
     {
+        if ($this->storeId) {
+            return $this->storeId;
+        }
+
         return $prefix . Ui::service()->factoryId(Ui::serverRequest()->getServerParams()['SCRIPT_NAME']) . '-' . $this->getIdAttribute();
     }
 
@@ -42,6 +53,12 @@ trait VueTrait
         }
 
         return $isRoot;
+    }
+
+    protected function jsGetStore(string $prefix): JsRenderInterface
+    {
+        // @phpstan-ignore-next-line
+        return JsChain::withUiLibrary()->vueService->getStore($this->getPiniaStoreId($prefix));
     }
 
     /**

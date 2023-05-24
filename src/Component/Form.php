@@ -11,7 +11,6 @@ use Fohn\Ui\Component\Form\Layout\FormLayoutInterface;
 use Fohn\Ui\Core\Exception;
 use Fohn\Ui\Core\HookFn;
 use Fohn\Ui\Core\HookTrait;
-use Fohn\Ui\Js\JsChain;
 use Fohn\Ui\Js\JsRenderInterface;
 use Fohn\Ui\Js\Type\Type;
 use Fohn\Ui\Service\Ui;
@@ -128,14 +127,7 @@ class Form extends View implements VueInterface
      */
     public function jsRequestControlsValue(JsRenderInterface $id): JsRenderInterface
     {
-        return $this->getStoreChain()->setDataId($id);
-    }
-
-    private function getStoreChain(): JsRenderInterface
-    {
-        return JsChain::withUiLibrary()
-            ->store()
-            ->getFormStore($this->getPiniaStoreId(self::PINIA_PREFIX));
+        return $this->jsGetStore(self::PINIA_PREFIX)->setDataId($id);
     }
 
     public function getLayout(string $layoutName = self::MAIN_LAYOUT): ?FormLayoutInterface

@@ -10,7 +10,6 @@ namespace Fohn\Ui\Component;
 use Fohn\Ui\Callback\Generic;
 use Fohn\Ui\Core\Exception;
 use Fohn\Ui\Js\Js;
-use Fohn\Ui\Js\JsChain;
 use Fohn\Ui\Js\JsRenderInterface;
 use Fohn\Ui\Js\Type\Type;
 use Fohn\Ui\Service\Ui;
@@ -98,18 +97,20 @@ class Modal extends View implements VueInterface
                     implode('/', self::JS_OPEN_OPTIONS)
                 );
         }
-
-        return JsChain::withUiLibrary()->store()->getModalStore($this->getPiniaStoreId(self::PINIA_PREFIX))->openModal(Js::object($options));
+        // @phpstan-ignore-next-line
+        return $this->jsGetStore(self::PINIA_PREFIX)->openModal(Js::object($options));
     }
 
     public function jsClose(): JsRenderInterface
     {
-        return JsChain::withUiLibrary()->store()->getModalStore($this->getPiniaStoreId(self::PINIA_PREFIX))->closeModal();
+        // @phpstan-ignore-next-line
+        return $this->jsGetStore(self::PINIA_PREFIX)->closeModal();
     }
 
     public function jsSetTitle(string $title): JsRenderInterface
     {
-        $js = JsChain::withUiLibrary()->store()->getModalStore($this->getPiniaStoreId(self::PINIA_PREFIX))->setTitle($title);
+        // @phpstan-ignore-next-line
+        $js = $this->jsGetStore(self::PINIA_PREFIX)->setTitle($title);
         $this->content->appendJsAction($js);
 
         return $js;
