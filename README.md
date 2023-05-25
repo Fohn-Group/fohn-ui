@@ -177,13 +177,12 @@ When using this specific annotation, the template engine will render the content
 For example, use '@' or double brace '{{}}' in order to render brace content for Vue component.
 ```
 <fohn-component #default=@{props}>
-    <div>{{props}}</di>
+    <div>{{props}}</div>
 </fohn-component>
 ```
 Template engine will render it as below prior to be rendered by Vue js.
 ```
 <fohn-component #default={props}>
-    <div>{{props}}</di>
+    <div>{{props}}</div>
 </fohn-component>
 ```
-
