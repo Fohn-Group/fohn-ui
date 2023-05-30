@@ -23,11 +23,7 @@ abstract class Control extends View implements VueInterface
 
     /** @var mixed */
     private $value;
-    protected string $caption = '';
-    protected string $hint = '';
-    protected bool $isRequired = false;
-    protected bool $isDisabled = false;
-    protected bool $isReadonly = false;
+
     public string $formStoreId = '';
 
     /** The name of this control. */
@@ -119,66 +115,6 @@ abstract class Control extends View implements VueInterface
     public function getControlName(): string
     {
         return $this->controlName;
-    }
-
-    public function getCaption(): string
-    {
-        return $this->caption;
-    }
-
-    public function setCaption(string $caption): self
-    {
-        $this->caption = $caption;
-
-        return $this;
-    }
-
-    public function setHint(string $hint): self
-    {
-        $this->hint = $hint;
-
-        return $this;
-    }
-
-    public function getHint(): ?string
-    {
-        return $this->hint;
-    }
-
-    public function isRequired(): bool
-    {
-        return $this->isRequired;
-    }
-
-    public function required(): self
-    {
-        $this->isRequired = true;
-
-        return $this;
-    }
-
-    public function isReadonly(): bool
-    {
-        return $this->isReadonly;
-    }
-
-    public function readonly(): self
-    {
-        $this->isReadonly = true;
-
-        return $this;
-    }
-
-    public function isDisabled(): bool
-    {
-        return $this->isDisabled;
-    }
-
-    public function disabled(): self
-    {
-        $this->isDisabled = true;
-
-        return $this;
     }
 
     protected function beforeHtmlRender(): void
