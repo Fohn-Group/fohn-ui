@@ -7,8 +7,6 @@ declare(strict_types=1);
 
 namespace Fohn\Ui\Component\Form\Control;
 
-use Fohn\Ui\Js\Js;
-
 class Number extends Input
 {
     public string $defaultTemplate = 'vue-component/form/control/number.html';

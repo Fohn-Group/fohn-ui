@@ -7,7 +7,6 @@ declare(strict_types=1);
 
 namespace Fohn\Ui\Component\Form\Control;
 
-use Fohn\Ui\Js\Js;
 use Fohn\Ui\Tailwind\Tw;
 
 class Range extends Input
