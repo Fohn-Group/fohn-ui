@@ -1,19 +1,10 @@
 <div id="{$idAttr}" class="{$classAttr}" {$attribute}>
     <fohn-control
-            :ctrl-name="{$name}"
             :caption="{$caption}"
-            :type="{$type}"
-            :placeholder="{$placeholder}"
-            :ctrl-value="{$value}"
+            :html-input-attrs="{$inputAttrs}"
             :hint="{$hint}"
-            :is-required="{$isRequired}"
-            :is-read-only="{$isReadOnly}"
-            :is-disabled="{$isDisabled}"
             :on-changes="{$onChanges}"
             :form-store-id="{$formStoreId}"
-            :step="{$step}"
-            :min="{$min}"
-            :max="{$max}"
             #default="@{inputAttrs, caption, hint, errorMsg}"
     >
         <label class="relative block my-4">

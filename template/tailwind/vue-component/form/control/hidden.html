@@ -1,11 +1,6 @@
 <div id="{$idAttr}" {$attributes}>
     <fohn-control
-        :ctrl-name="{$name}"
-        :type="{$type}"
-        :ctrl-value="{$value}"
-        :is-required="{$isRequired}"
-        :is-read-only="{$isReadOnly}"
-        :is-disabled="{$isDisabled}"
+        :html-input-attrs="{$inputAttrs}"
         :form-store-id="{$formStoreId}"
         #default="@{inputAttrs}"
         >
