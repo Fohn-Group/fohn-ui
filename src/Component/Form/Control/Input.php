@@ -18,6 +18,14 @@ class Input extends Control
     public string $inputType = 'text';
     public string $placeholder = '';
 
+    protected array $inputAttrs = [];
+
+    protected string $caption = '';
+    protected string $hint = '';
+    protected bool $isRequired = false;
+    protected bool $isDisabled = false;
+    protected bool $isReadonly = false;
+
     public ?Tw $inputTws = null;
     public array $inputDefaultTws = [
         'mt-1',
@@ -32,6 +40,107 @@ class Input extends Control
         'focus:ring-opacity-50',
     ];
 
+    protected function initRenderTree(): void
+    {
+        parent::initRenderTree();
+        if (!$this->inputTws) {
+            $this->inputTws = Tw::from([]);
+        }
+        if ($this->placeholder) {
+            $this->appendInputHtmlAttribute('placeholder', $this->placeholder);
+        }
+
+        if ($this->isRequired) {
+            $this->required();
+        }
+
+        if ($this->isReadonly) {
+            $this->readonly();
+        }
+
+        if ($this->isDisabled) {
+            $this->disabled();
+        }
+
+        $this->inputTws = $this->inputTws->merge($this->inputDefaultTws);
+    }
+
+    public function getCaption(): string
+    {
+        return $this->caption;
+    }
+
+    public function setCaption(string $caption): self
+    {
+        $this->caption = $caption;
+
+        return $this;
+    }
+
+    public function setHint(string $hint): self
+    {
+        $this->hint = $hint;
+
+        return $this;
+    }
+
+    public function getHint(): ?string
+    {
+        return $this->hint;
+    }
+
+    public function isRequired(): bool
+    {
+        return isset($this->inputAttrs['required']) && $this->inputAttrs['required'] === 'true';
+    }
+
+    public function required(): self
+    {
+        $this->appendInputHtmlAttribute('required', 'true');
+
+        return $this;
+    }
+
+    public function isReadonly(): bool
+    {
+        return isset($this->inputAttrs['readonly']) && $this->inputAttrs['readonly'] === 'true';
+    }
+
+    public function readonly(): self
+    {
+        $this->appendInputHtmlAttribute('readonly', 'true');
+
+        return $this;
+    }
+
+    public function isDisabled(): bool
+    {
+        return isset($this->inputAttrs['disabled']) && $this->inputAttrs['disabled'] === 'true';
+    }
+
+    public function disabled(): self
+    {
+        $this->appendInputHtmlAttribute('disabled', 'true');
+
+        return $this;
+    }
+
+    public function appendInputHtmlAttribute(string $attributeName, ?string $value): self
+    {
+        $this->inputAttrs[$attributeName] = $value;
+
+        return $this;
+    }
+
+    public function removeInputHtmlAttribute(string $attributeName): self
+    {
+        if (isset($this->inputAttrs[$attributeName])) {
+            unset($this->inputAttrs[$attributeName]);
+        }
+
+        return $this;
+    }
+
     public function setWithPostValue(?string $value): void
     {
         if ($value !== null) {
@@ -39,32 +148,24 @@ class Input extends Control
         }
     }
 
-    protected function initRenderTree(): void
-    {
-        parent::initRenderTree();
-        if (!$this->inputTws) {
-            $this->inputTws = Tw::from([]);
-        }
-
-        $this->inputTws = $this->inputTws->merge($this->inputDefaultTws);
-    }
-
     protected function beforeHtmlRender(): void
     {
-        $this->getTemplate()->trySet('inputTws', $this->inputTws->toString());
-        $this->getTemplate()->trySetJs('name', Js::string($this->controlName));
-        $this->getTemplate()->trySetJs('value', Type::factory($this->getInputValue()));
+        $this->getTemplate()->trySetJs('inputAttrs', Js::object($this->normalizeInputAttrs($this->inputAttrs)));
         $this->getTemplate()->trySetJs('hint', Js::string($this->hint));
         $this->getTemplate()->trySetJs('caption', Js::string($this->caption));
-        $this->getTemplate()->trySetJs('isRequired', Js::boolean($this->isRequired()));
-        $this->getTemplate()->trySetJs('isReadOnly', Js::boolean($this->isReadonly()));
-        $this->getTemplate()->trySetJs('isDisabled', Js::boolean($this->isDisabled()));
         $this->getTemplate()->trySetJs('onChanges', Type::factory($this->onChangeHandlers));
-
-        $this->getTemplate()->trySetJs('type', Js::string($this->inputType));
-        $this->getTemplate()->trySetJs('placeholder', Js::string($this->placeholder));
-        $this->getTemplate()->trySetJs('formStoreId', Js::string($this->formStoreId));
+        $this->getTemplate()->setJs('formStoreId', Js::string($this->formStoreId));
+        $this->getTemplate()->trySet('inputTws', $this->inputTws->toString());
 
         parent::beforeHtmlRender();
+    }
+
+    private function normalizeInputAttrs(array $inputAttrs): array
+    {
+        $inputAttrs['type'] = $this->inputType;
+        $inputAttrs['name'] = $this->controlName;
+        $inputAttrs['value'] = $this->getInputValue();
+
+        return $inputAttrs;
     }
 }

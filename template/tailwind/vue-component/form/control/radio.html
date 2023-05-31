@@ -1,25 +1,19 @@
 <div id="{$idAttr}" class="{$classAttr}" {$attributes}>
-    <fohn-control :ctrl-name="{$name}"
-                  :caption="{$caption}"
-                  :type="{$type}"
-                  :placeholder="{$placeholder}"
-                  :ctrl-value="{$value}"
-                  :hint="{$hint}"
-                  :is-required="{$isRequired}"
-                  :is-read-only="{$isReadOnly}"
-                  :is-disabled="{$isDisabled}"
-                  :on-changes="{$onChanges}"
-                  :form-store-id="{$formStoreId}"
-                  #default="@{inputAttrs, caption, hint, errorMsg}"
+    <fohn-control
+        :caption="{$caption}"
+        :html-input-attrs="{$inputAttrs}"
+        :hint="{$hint}"
+        :on-changes="{$onChanges}"
+        :form-store-id="{$formStoreId}"
+        #default="@{inputAttrs, caption, hint, errorMsg}"
     >
         <div class="mb-2" :class="@{'font-bold': inputAttrs.required, 'text-red-900': errorMsg}">{{caption}}</div>
         <fohn-radio v-model="inputAttrs.value" :items="{$items}" #default="@{items, value, setCtrlValue}">
-            <template v-for="item in items">
+            <template v-for="(item, idx) in items">
                 <label class="flex items-center mx-4">
                     <input
+                            v-bind="inputAttrs"
                             v-model="inputAttrs.value"
-                            type="radio"
-                            :name="{$name}"
                            class="{$inputTws}"
                            :value="item.key"
                            @change="setCtrlValue(item.key)"

@@ -7,7 +7,6 @@ declare(strict_types=1);
 
 namespace Fohn\Ui\Component\Form\Control;
 
-use Fohn\Ui\Js\Js;
 use Fohn\Ui\Tailwind\Tw;
 
 class Range extends Input
@@ -29,9 +28,9 @@ class Range extends Input
 
     protected function beforeHtmlRender(): void
     {
-        $this->getTemplate()->trySetJs('step', Js::string((string) $this->step));
-        $this->getTemplate()->trySetJs('max', Js::integer($this->maxValue));
-        $this->getTemplate()->trySetJs('min', Js::integer($this->minValue));
+        $this->appendInputHtmlAttribute('step', (string) $this->step);
+        $this->appendInputHtmlAttribute('max', (string) $this->maxValue);
+        $this->appendInputHtmlAttribute('min', (string) $this->minValue);
 
         $this->inputTws->merge([Tw::colour($this->color, 'accent')]);
 

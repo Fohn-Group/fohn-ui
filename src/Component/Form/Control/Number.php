@@ -7,8 +7,6 @@ declare(strict_types=1);
 
 namespace Fohn\Ui\Component\Form\Control;
 
-use Fohn\Ui\Js\Js;
-
 class Number extends Input
 {
     public string $defaultTemplate = 'vue-component/form/control/number.html';
@@ -21,7 +19,7 @@ class Number extends Input
 
     protected function beforeHtmlRender(): void
     {
-        $this->getTemplate()->trySetJs('step', Js::string($this->precision !== null ? $this->getStep() : 'any'));
+        $this->appendInputHtmlAttribute('step', $this->precision !== null ? $this->getStep() : 'any');
 
         parent::beforeHtmlRender();
     }
@@ -48,6 +46,8 @@ class Number extends Input
             $v = (10 ** $this->precision) * $this->precision;
 
             $step = ($this->precision / $v) * $this->incrementBy;
+        } elseif ($this->precision === 0) {
+            $step = $this->incrementBy;
         }
 
         return (string) $step;
