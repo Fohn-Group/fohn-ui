@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Fohn\Ui\Component\Form\Control;
 
+use Fohn\Ui\Core\Exception;
 use Fohn\Ui\Js\Js;
 use Fohn\Ui\Tailwind\Tw;
 
@@ -26,6 +27,19 @@ class Radio extends Selection
         'focus:ring-opacity-50',
     ];
 
+    public function setValue($value): self
+    {
+        $items = $this->getItems();
+        if (!$this->checkItemExist($value)) {
+            throw (new Exception('Trying to set Radio value with a non existing item.'))
+                ->addMoreInfo('item', $value);
+        }
+
+        parent::setValue($value);
+
+        return $this;
+    }
+
     public function getValue()
     {
         if (!parent::getValue()) {
@@ -41,5 +55,17 @@ class Radio extends Selection
 
         $this->getTemplate()->trySetJs('items', Js::array($this->getItems()));
         parent::beforeHtmlRender();
+    }
+
+    private function checkItemExist(string $keyValue): bool
+    {
+        $exist = false;
+        foreach ($this->getItems() as $item) {
+            if ($item[Selection::KEY] === $keyValue) {
+                $exist = true;
+            }
+        }
+
+        return $exist;
     }
 }
