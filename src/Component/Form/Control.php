@@ -46,10 +46,7 @@ abstract class Control extends View implements VueInterface
      */
     public function setValue($value): self
     {
-        if ($this->setValueFx) {
-            $value = ($this->setValueFx)($value);
-        }
-        $this->value = $value;
+        $this->value = $this->setValueFx ? ($this->setValueFx)($value) : $value;
 
         return $this;
     }
@@ -59,12 +56,7 @@ abstract class Control extends View implements VueInterface
      */
     public function validate(): ?string
     {
-        $resp = null;
-        if ($this->validateFx) {
-            $resp = ($this->validateFx)($this->getValue());
-        }
-
-        return $resp;
+        return $this->validateFx ? ($this->validateFx)($this->getValue()) : null;
     }
 
     public function onValidate(\Closure $fx): self
