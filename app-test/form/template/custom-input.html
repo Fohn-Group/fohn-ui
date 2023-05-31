@@ -12,6 +12,7 @@
             <input  v-model="inputAttrs.value"
                     v-bind="inputAttrs"
                     :id="inputAttrs.name"
+                    placeholder="-"
                     class="placeholder-transparent block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     :class="@{'border-red-900': errorMsg, 'bg-red-100': errorMsg, 'text-gray-400': inputAttrs.disabled}"
             />
