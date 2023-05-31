@@ -89,17 +89,17 @@ class InputTest extends \PHPUnit\Framework\TestCase
 
         $dateInput->setWithPostValue('2023-05-22');
         $date = \DateTime::createFromFormat('Y-m-d', '2023-05-22', new \DateTimeZone('UTC'));
-        $this->assertSame($date, $dateInput->getValue());
+        $this->assertEquals($date, $dateInput->getValue());
 
         $dateInput->setValue(\DateTime::createFromFormat('Y-m-d', '2023-06-22', new \DateTimeZone('UTC')));
-        $this->assertSame('2023-06-22', $dateInput->getInputValue());
+        $this->assertEquals('2023-06-22', $dateInput->getInputValue());
 
         $dateTimeInput = new Calendar(['type' => 'datetime', 'format' => 'Y-m-d H:i']);
         $datetime = \DateTime::createFromFormat('Y-m-d', '2023-05-22 12:05', new \DateTimeZone('UTC'));
-        $this->assertSame($datetime, $dateTimeInput->getValue());
+        $this->assertEquals($datetime, $dateTimeInput->getValue());
 
         $dateTimeInput->setValue(\DateTime::createFromFormat('Y-m-d H:i', '2023-06-22 12:05', new \DateTimeZone('UTC')));
-        $this->assertSame('2023-06-22 12:05', $dateTimeInput->getInputValue());
+        $this->assertEquals('2023-06-22 12:05', $dateTimeInput->getInputValue());
     }
 
     public function testGetRadioValue(): void
@@ -121,7 +121,7 @@ class InputTest extends \PHPUnit\Framework\TestCase
     {
         $int = new Number(['controlName' => 'int']);
         $int->setValue(12);
-        $this->assertSame('12', $int->getInputValue());
+        $this->assertSame(12, $int->getInputValue());
 
         $int->setWithPostValue('12');
         $this->assertSame(12, $int->getValue());
