@@ -8,13 +8,12 @@
         #default="@{inputAttrs, caption, hint, errorMsg}"
     >
         <div class="mb-2" :class="@{'font-bold': inputAttrs.required, 'text-red-900': errorMsg}">{{caption}}</div>
-        <fohn-radio v-model="inputAttrs.value" :items="{$items}" :input-name="inputAttrs.name" #default="@{items, value, setCtrlValue, inputName}">
+        <fohn-radio v-model="inputAttrs.value" :items="{$items}" #default="@{items, value, setCtrlValue}">
             <template v-for="(item, idx) in items">
                 <label class="flex items-center mx-4">
                     <input
-                            :name="inputName"
+                            v-bind="inputAttrs"
                             v-model="inputAttrs.value"
-                            type="radio"
                            class="{$inputTws}"
                            :value="item.key"
                            @change="setCtrlValue(item.key)"
