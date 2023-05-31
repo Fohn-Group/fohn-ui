@@ -28,9 +28,9 @@ class Range extends Input
 
     protected function beforeHtmlRender(): void
     {
-        $this->appendInputAttrs('step', (string) $this->step);
-        $this->appendInputAttrs('max', (string) $this->maxValue);
-        $this->appendInputAttrs('min', (string) $this->minValue);
+        $this->appendInputHtmlAttribute('step', (string) $this->step);
+        $this->appendInputHtmlAttribute('max', (string) $this->maxValue);
+        $this->appendInputHtmlAttribute('min', (string) $this->minValue);
 
         $this->inputTws->merge([Tw::colour($this->color, 'accent')]);
 

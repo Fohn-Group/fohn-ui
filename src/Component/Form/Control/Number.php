@@ -19,7 +19,7 @@ class Number extends Input
 
     protected function beforeHtmlRender(): void
     {
-        $this->appendInputAttrs('step', $this->precision !== null ? $this->getStep() : 'any');
+        $this->appendInputHtmlAttribute('step', $this->precision !== null ? $this->getStep() : 'any');
 
         parent::beforeHtmlRender();
     }
