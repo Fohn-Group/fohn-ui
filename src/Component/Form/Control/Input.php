@@ -46,6 +46,21 @@ class Input extends Control
         if (!$this->inputTws) {
             $this->inputTws = Tw::from([]);
         }
+        if ($this->placeholder) {
+            $this->appendInputHtmlAttribute('placeholder', $this->placeholder);
+        }
+
+        if ($this->isRequired) {
+            $this->required();
+        }
+
+        if ($this->isReadonly) {
+            $this->readonly();
+        }
+
+        if ($this->isDisabled) {
+            $this->disabled();
+        }
 
         $this->inputTws = $this->inputTws->merge($this->inputDefaultTws);
     }
@@ -76,43 +91,52 @@ class Input extends Control
 
     public function isRequired(): bool
     {
-        return $this->isRequired;
+        return isset($this->inputAttrs['required']) && $this->inputAttrs['required'] === 'true';
     }
 
     public function required(): self
     {
-        $this->isRequired = true;
+        $this->appendInputHtmlAttribute('required', 'true');
 
         return $this;
     }
 
     public function isReadonly(): bool
     {
-        return $this->isReadonly;
+        return isset($this->inputAttrs['readonly']) && $this->inputAttrs['readonly'] === 'true';
     }
 
     public function readonly(): self
     {
-        $this->isReadonly = true;
+        $this->appendInputHtmlAttribute('readonly', 'true');
 
         return $this;
     }
 
     public function isDisabled(): bool
     {
-        return $this->isDisabled;
+        return isset($this->inputAttrs['disabled']) && $this->inputAttrs['disabled'] === 'true';
     }
 
     public function disabled(): self
     {
-        $this->isDisabled = true;
+        $this->appendInputHtmlAttribute('disabled', 'true');
 
         return $this;
     }
 
-    public function appendInputAttrs(string $attribute, ?string $value): self
+    public function appendInputHtmlAttribute(string $attributeName, ?string $value): self
     {
-        $this->inputAttrs[$attribute] = $value;
+        $this->inputAttrs[$attributeName] = $value;
+
+        return $this;
+    }
+
+    public function removeInputHtmlAttribute(string $attributeName): self
+    {
+        if (isset($this->inputAttrs[$attributeName])) {
+            unset($this->inputAttrs[$attributeName]);
+        }
 
         return $this;
     }
@@ -141,22 +165,6 @@ class Input extends Control
         $inputAttrs['type'] = $this->inputType;
         $inputAttrs['name'] = $this->controlName;
         $inputAttrs['value'] = $this->getInputValue();
-
-        if ($this->placeholder) {
-            $inputAttrs['placeholder'] = $this->placeholder;
-        }
-
-        if ($this->isDisabled()) {
-            $inputAttrs['disabled'] = true;
-        }
-
-        if ($this->isReadonly()) {
-            $inputAttrs['readonly'] = true;
-        }
-
-        if ($this->isRequired()) {
-            $inputAttrs['required'] = true;
-        }
 
         return $inputAttrs;
     }
