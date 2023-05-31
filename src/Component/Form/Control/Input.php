@@ -127,11 +127,11 @@ class Input extends Control
     protected function beforeHtmlRender(): void
     {
         $this->getTemplate()->trySetJs('inputAttrs', Js::object($this->normalizeInputAttrs($this->inputAttrs)));
-        $this->getTemplate()->trySet('inputTws', $this->inputTws->toString());
         $this->getTemplate()->trySetJs('hint', Js::string($this->hint));
         $this->getTemplate()->trySetJs('caption', Js::string($this->caption));
         $this->getTemplate()->trySetJs('onChanges', Type::factory($this->onChangeHandlers));
-        $this->getTemplate()->trySetJs('formStoreId', Js::string($this->formStoreId));
+        $this->getTemplate()->setJs('formStoreId', Js::string($this->formStoreId));
+        $this->getTemplate()->trySet('inputTws', $this->inputTws->toString());
 
         parent::beforeHtmlRender();
     }
