@@ -132,7 +132,7 @@ class Request extends AbstractView
 
     protected function getPostRequestPayload(): array
     {
-        return json_decode(file_get_contents('php://input'), true) ?? [];
+        return Ui::service()->getInput();
     }
 
     /**

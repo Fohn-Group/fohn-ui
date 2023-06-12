@@ -289,6 +289,11 @@ class Ui implements UiInterface
         return htmlspecialchars($html, \ENT_NOQUOTES | \ENT_HTML5, 'UTF-8');
     }
 
+    public function getInput(): array
+    {
+        return json_decode(file_get_contents('php://input'), true) ?? [];
+    }
+
     /**
      * @param string|array $tag
      * @param string|array $attributes

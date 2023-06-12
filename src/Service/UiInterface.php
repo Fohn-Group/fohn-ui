@@ -92,6 +92,9 @@ interface UiInterface
     /** Return a Form Layout Interface. Called by Form for its default layout. */
     public function getFormLayout(): FormLayoutInterface;
 
+    /** Return request php/input content as array. */
+    public function getInput(): array;
+
     /**
      * Generate Html tag.
      *
