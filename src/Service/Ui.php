@@ -284,7 +284,7 @@ class Ui implements UiInterface
         return Utils::generateId($viewName, $keep, $lenght);
     }
 
-    public function htmlSpecialChars(string $html): string
+    public function sanitize(string $html): string
     {
         return htmlspecialchars($html, \ENT_NOQUOTES | \ENT_HTML5, 'UTF-8');
     }
