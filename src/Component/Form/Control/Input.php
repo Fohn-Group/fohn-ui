@@ -26,6 +26,8 @@ class Input extends Control
     protected bool $isDisabled = false;
     protected bool $isReadonly = false;
 
+    protected bool $sanitizePostValue = true;
+
     public ?Tw $inputTws = null;
     public array $inputDefaultTws = [
         'mt-1',
@@ -63,6 +65,11 @@ class Input extends Control
         }
 
         $this->inputTws = $this->inputTws->merge($this->inputDefaultTws);
+    }
+
+    public function needSanitize(): bool
+    {
+        return $this->sanitizePostValue;
     }
 
     public function getCaption(): string
