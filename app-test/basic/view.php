@@ -15,14 +15,19 @@ View::addTo(Ui::layout())->setTextContent('Test View Method');
 
 // Test View method
 
-// add Outside view to the grid.
-$view = View::addTo(Ui::layout())->setTextContent('View Text');
+View::addTo(Ui::layout())->setTextContent('Output should not have p4 in class.');
+
+$view = (new View())->setTextContent('View Text');
 $view->appendTailwinds(['m-6', 'p-4', 'w-1/2']);
 $view->appendCssClasses('test');
 $view->removeTailwind('p-4');
-$view->setTextContent('div text <b>content</b>', false);
-View::addTo($view)->setTextContent('paragraph text')->setHtmlTag('p');
 
 $tView = View::addTo(Ui::layout());
 Fohn::styleAs(Base::CONSOLE, [$tView]);
 $tView->setTextContent($view->getHtml());
+
+// display sanitize content.
+View::addTo(Ui::layout())->setTextContent('Output sanitized <b>content</b>.')->setHtmlTag('p');
+
+// display as html content.
+View::addTo(Ui::layout())->setTextContent('Ouput un-sanitize <b>content</b>', false);
