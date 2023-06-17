@@ -34,6 +34,8 @@ interface UiInterface
 
     public static function theme(): ThemeInterface;
 
+    public static function session(): SessionInterface;
+
     public static function page(): Page;
 
     public static function serverRequest(): ServerRequestInterface;
