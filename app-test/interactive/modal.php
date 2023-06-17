@@ -92,11 +92,12 @@ Button::addTo($bar, ['label' => 'Italy', 'color' => 'info', 'type' => 'outline',
 Button::addTo($bar, ['label' => 'Norway', 'color' => 'info', 'type' => 'outline', 'shape' => 'normal'])->appendHtmlAttribute('data-name', 'Norway');
 Button::addTo($bar, ['label' => 'Sweden', 'color' => 'info', 'type' => 'outline', 'shape' => 'normal'])->appendHtmlAttribute('data-name', 'Sweden');
 
-Jquery::jqCallback($bar, 'click', function ($j, $payload) use ($modalForm, $modelCtrl) {
+$fx = Jquery::jqCallback($bar, 'click', function ($j, $payload) use ($modalForm, $modelCtrl) {
     $id = $modelCtrl->getModel()->tryLoadBy('name', $payload['name'])->get('id');
 
     return JsStatements::with($modalForm->jsOpenWithId(Js::var((string) $id)));
 }, ['name' => Jquery::withThis()->data('name')], '.fohn-btn');
+$fx->execute(Js::from("console.log(jQuery(this).data('name'))"));
 
 // / Dynamic
 
@@ -139,8 +140,7 @@ $form->onSubmit(function ($f, $id) use ($modalFieldTest) {
 });
 
 $bar2 = View::addTo(Ui::layout())->appendTailwinds(['inline-block, my-4']);
-Button::addTo($bar2, ['label' => 'Field Test', 'color' => 'info', 'type' => 'outline', 'shape' => 'normal'])
-    ->appendHtmlAttribute('data-name', 'Italy');
+Button::addTo($bar2, ['label' => 'Form Overflow', 'color' => 'info', 'type' => 'outline', 'shape' => 'large']);
 
 Jquery::jqCallback($bar2, 'click', function ($j, $payload) use ($modalFieldTest) {
     return JsStatements::with($modalFieldTest->jsOpenWithId(Js::var('')));
