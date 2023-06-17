@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace Fohn\Ui;
 
+use Fohn\Ui\Callback\Request;
+use Fohn\Ui\Core\Utils;
 use Fohn\Ui\Js\Jquery;
 use Fohn\Ui\Js\Js;
 use Fohn\Ui\Js\JsChain;
@@ -20,6 +22,7 @@ use Fohn\Ui\Tailwind\Theme\Base;
 
 class Page extends View
 {
+    public const TOKEN_KEY_NAME = '_csfr_token';
     public string $defaultTemplate = 'page.html';
 
     public string $title = '';
@@ -27,6 +30,7 @@ class Page extends View
 
     public ?string $toastSelector = '#fohn-toast';
     public string $jsBundleLocation = '/public';
+    private ?string $csfrToken = null;
 
     /** An array of Js packages to include in Page. */
     public array $jsPackages = [
@@ -34,7 +38,7 @@ class Page extends View
             'url' => 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js',
         ],
         'fohn-js' => [
-            'url' => 'https://unpkg.com/fohn-ui@1.2.1/dist/fohn-ui.min.js',
+            'url' => 'https://unpkg.com/fohn-ui@1.3.0/dist/fohn-ui.min.js',
         ],
     ];
 
@@ -51,11 +55,27 @@ class Page extends View
         ],
     ];
 
+    public array $metaTags = [];
+
     protected function initRenderTree(): void
     {
         parent::initRenderTree();
 
         Ui::theme()::styleAs(Base::PAGE, [$this]);
+    }
+
+    /**
+     * Protect all callback request, coming from this page, from CSFR attack.
+     */
+    public function csfrProtect(string $secret, string $redirectTo = null, int $strenght = 16): void
+    {
+        Request::protect($redirectTo);
+
+        if (!Ui::service()->isAjaxRequest()) {
+            $csfrToken = Utils::generateToken($secret, $strenght);
+            $this->appendMetaTag(Ui::service()->buildHtmlTag('meta', ['name' => 'csfr-token', 'content' => $csfrToken]));
+            Ui::session()->set(static::TOKEN_KEY_NAME, $csfrToken);
+        }
     }
 
     /**
@@ -81,7 +101,16 @@ class Page extends View
             $this->appendJsAction(JsChain::withUiLibrary()->toastService->enableToastNotification($this->toastSelector));
         }
 
+        foreach ($this->metaTags as $htmlTag) {
+            $this->getTemplate()->tryDangerouslyAppendHtml('meta', $htmlTag);
+        }
+
         parent::beforeHtmlRender();
+    }
+
+    public function appendMetaTag(string $htmlTag): void
+    {
+        $this->metaTags[] = $htmlTag;
     }
 
     /**
