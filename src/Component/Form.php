@@ -81,13 +81,6 @@ class Form extends View implements VueInterface
         $this->valuesCb = Data::addAbstractTo($this);
     }
 
-    protected function initValueCallback(): void
-    {
-        if (!$this->valuesCb) {
-            $this->valuesCb = Data::addAbstractTo($this);
-        }
-    }
-
     /**
      * Get unique form identifier.
      * Use this identifier for element outside this form
@@ -107,7 +100,6 @@ class Form extends View implements VueInterface
      */
     public function onControlsValueRequest(\Closure $fx): self
     {
-        //        $this->initValueCallback();
         $this->onHooks(self::HOOKS_GET_VALUES, $fx);
 
         $this->valuesCb->onDataRequest(function (array $payload = []): array {
