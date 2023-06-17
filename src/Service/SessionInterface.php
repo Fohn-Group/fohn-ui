@@ -3,7 +3,6 @@
 declare(strict_types=1);
 /**
  * Session Interface.
- * @method getInstance()
  */
 
 namespace Fohn\Ui\Service;
