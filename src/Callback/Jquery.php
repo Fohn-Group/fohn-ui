@@ -9,7 +9,7 @@ namespace Fohn\Ui\Callback;
 use Fohn\Ui\Js;
 use Fohn\Ui\Js\JsRenderInterface;
 
-class Jquery extends Request implements JsRenderInterface
+class Jquery extends Request implements JsRenderInterface, GuardInterface
 {
     protected string $type = self::JQUERY_TYPE;
 
@@ -20,8 +20,6 @@ class Jquery extends Request implements JsRenderInterface
     /** Text to display as a confirmation. Set with setConfirm(..). */
     public ?string $confirm = null;
 
-    // TODO confirm for axios
-    /** Use this . */
     public array $apiConfig = [];
 
     /** Include web storage data item (key) value to be include in the request. */
@@ -46,12 +44,18 @@ class Jquery extends Request implements JsRenderInterface
         $this->requestPayload = $requestPayload;
 
         $this->execute(function () use ($fx) {
+            $this->verifyCSRF();
             $response = $fx($this->getPostRequestPayload());
 
             $this->terminateJson(['jsRendered' => $response->jsRender()]);
         });
 
         return $this;
+    }
+
+    public function verifyCSRF(): void
+    {
+        $this->assertSafeRequest();
     }
 
     public function jsRender(): string
