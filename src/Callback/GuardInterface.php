@@ -1,8 +1,8 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 /**
- * Guard
+ * Guard.
  */
 
 namespace Fohn\Ui\Callback;

@@ -103,6 +103,7 @@ class Request extends AbstractView
             if (self::$csfrRedirectUrl) {
                 $this->terminateJson(['success' => true, 'jsRendered' => Ui::jsRedirect(self::$csfrRedirectUrl)->jsRender()]);
             }
+
             throw new Exception('Access denied.');
         }
     }
