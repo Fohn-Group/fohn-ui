@@ -30,7 +30,6 @@ class Page extends View
 
     public ?string $toastSelector = '#fohn-toast';
     public string $jsBundleLocation = '/public';
-    private ?string $csfrToken = null;
 
     /** An array of Js packages to include in Page. */
     public array $jsPackages = [

@@ -104,7 +104,7 @@ class Ui implements UiInterface
 
     public static function session(): SessionInterface
     {
-        /** @var SessionInterface $class */
+        /** @var Session $class */
         $class = static::service()->sessionServiceClass;
 
         return $class::getInstance();
