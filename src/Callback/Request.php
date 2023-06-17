@@ -24,6 +24,10 @@ class Request extends AbstractView
     public const GENERIC_TYPE = '__cb';
     public const SERVER_EVENT_TYPE = '__sse';
 
+    /** Redirect url if csfr verification fail. */
+    private static ?string $csfrRedirectUrl = null;
+    private static bool $guard = false;
+
     protected string $type = self::GENERIC_TYPE;
 
     /** Specify a custom GET trigger. */
@@ -35,6 +39,12 @@ class Request extends AbstractView
     public static function getRunningCallbackArgs(): array
     {
         return static::$runningCallbackArgs;
+    }
+
+    public static function protect(string $redirectUrl = null): void
+    {
+        self::$guard = true;
+        self::$csfrRedirectUrl = $redirectUrl;
     }
 
     /**
@@ -78,6 +88,23 @@ class Request extends AbstractView
         }
 
         return null;
+    }
+
+    protected function assertSafeRequest(): void
+    {
+        if (!self::$guard) {
+            return;
+        }
+
+        $requestToken = Ui::service()->serverRequest()->getHeaderLine('X-CSFR-TOKEN');
+        $saveToken = Ui::session()->get(Ui::TOKEN_KEY_NAME);
+
+        if (!$requestToken || ($requestToken !== $saveToken)) {
+            if (self::$csfrRedirectUrl) {
+                $this->terminateJson(['success' => true, 'jsRendered' => Ui::jsRedirect(self::$csfrRedirectUrl)->jsRender()]);
+            }
+            throw new Exception('Access denied.');
+        }
     }
 
     /**
