@@ -7,6 +7,7 @@ namespace Fohn\Ui\Component\Form;
 use Fohn\Ui\Component\VueInterface;
 use Fohn\Ui\Component\VueTrait;
 use Fohn\Ui\Js\JsFunction;
+use Fohn\Ui\Service\Ui;
 use Fohn\Ui\View;
 
 /**

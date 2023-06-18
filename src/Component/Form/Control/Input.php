@@ -7,6 +7,7 @@ namespace Fohn\Ui\Component\Form\Control;
 use Fohn\Ui\Component\Form\Control;
 use Fohn\Ui\Js\Js;
 use Fohn\Ui\Js\Type\Type;
+use Fohn\Ui\Service\Ui;
 use Fohn\Ui\Tailwind\Tw;
 
 /**
@@ -67,9 +68,9 @@ class Input extends Control
         $this->inputTws = $this->inputTws->merge($this->inputDefaultTws);
     }
 
-    public function needSanitize(): bool
+    public function sanitize(?string $value): ?string
     {
-        return $this->sanitizePostValue;
+        return ($value && $this->sanitizePostValue) ? Ui::service()->sanitize($value) : $value;
     }
 
     public function getCaption(): string

@@ -296,11 +296,7 @@ class Form extends View implements VueInterface
     private function setControlsWithPostValue(array $payload): void
     {
         foreach ($this->getControls() as $controlName => $control) {
-            $controlPostValue = $payload[$controlName] ?? null;
-            if ($controlPostValue && $control->needSanitize()) {
-                $controlPostValue = Ui::service()->sanitize($controlPostValue);
-            }
-            $control->setWithPostValue($controlPostValue);
+            $control->setWithPostValue($control->sanitize($payload[$controlName] ?? null));
             if ($errorMsg = $control->validate()) {
                 $this->addValidationError($controlName, $errorMsg);
             }
