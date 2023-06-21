@@ -9,8 +9,7 @@ namespace Fohn\Ui\Service;
 
 interface SessionInterface
 {
-
-    public static function getInstance(): SessionInterface;
+    public static function getInstance(): self;
 
     /**
      * Set session option.
