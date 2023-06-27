@@ -1,19 +1,14 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 /**
  * Session test.
- *
  */
 
 namespace Fohn\Ui\Tests\Session;
 
-use Fohn\Ui\App;
-use Fohn\Ui\Service\Session;
-
 class SessionTest extends \PHPUnit\Framework\TestCase
 {
-
     public function testNamespace(): void
     {
         $session = new MockSession();
@@ -28,9 +23,9 @@ class SessionTest extends \PHPUnit\Framework\TestCase
 
         $session->set('k', 'v', false);
         $this->assertSame('v', $session->get('k'));
-        $this->assertSame($_SESSION[$session->namespace]['k'], 'v' );
+        $this->assertSame($_SESSION[$session->namespace]['k'], 'v');
 
-        $this->assertSame(null, $session->get('noKey'));
+        $this->assertNull($session->get('noKey'));
         $this->assertSame('value', $session->get('noKey', 'value'));
     }
 
@@ -64,6 +59,4 @@ class SessionTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('v', $session->retrieve('k'));
         $this->assertFalse(isset($_SESSION[$session->namespace]['k']));
     }
-
 }
-

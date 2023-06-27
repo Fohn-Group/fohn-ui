@@ -109,6 +109,7 @@ class Ui implements UiInterface
     {
         $this->session = $session;
     }
+
     public static function session(): SessionInterface
     {
         if (!self::service()->session) {

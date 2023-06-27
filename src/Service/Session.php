@@ -137,14 +137,13 @@ class Session implements SessionInterface
 
     protected function closeSession(): void
     {
-        if ($this->hasStatus(PHP_SESSION_ACTIVE)) {
+        if ($this->hasStatus(\PHP_SESSION_ACTIVE)) {
             $status = session_write_close();
 
             if (!$status) {
                 throw new Exception('Unable to close session.');
             }
         }
-
     }
 
     private function hasStatus(int $status): bool
