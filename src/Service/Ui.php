@@ -76,6 +76,9 @@ class Ui implements UiInterface
         'datetime' => 'M d, Y H:i:s',
     ];
 
+    /** The current session. */
+    protected ?SessionInterface $session = null;
+
     /** The top view of the app. */
     private Page $page;
     private App $app;
@@ -102,12 +105,17 @@ class Ui implements UiInterface
         return static::$instance;
     }
 
+    protected function setSession(SessionInterface $session): void
+    {
+        $this->session = $session;
+    }
     public static function session(): SessionInterface
     {
-        /** @var SessionInterface $class */
-        $class = static::service()->sessionServiceClass;
+        if (!self::service()->session) {
+            self::service()->setSession(new (static::service()->sessionServiceClass));
+        }
 
-        return $class::getInstance();
+        return self::service()->session;
     }
 
     public static function getDisplayFormat(string $name): string

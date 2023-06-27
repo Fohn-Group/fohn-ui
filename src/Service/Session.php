@@ -18,20 +18,6 @@ class Session implements SessionInterface
     private array $sessionOptions = [];
     private string $namespace = '__fohn_ui';
 
-    final protected function __construct()
-    {
-        // singleton
-    }
-
-    public static function getInstance(): SessionInterface
-    {
-        if (static::$instance === null) {
-            static::$instance = new static();
-        }
-
-        return static::$instance;
-    }
-
     public function setOptions(array $options): void
     {
         $this->sessionOptions = $options;
@@ -86,13 +72,6 @@ class Session implements SessionInterface
         }
     }
 
-    public function regenerate(bool $clear = false): bool
-    {
-        $this->startSession($this->sessionOptions);
-
-        return session_regenerate_id($clear);
-    }
-
     public function get(string $key, string $default = null): ?string
     {
         $this->startSession(array_merge($this->sessionOptions, [self::READ_ONLY_OPTION => true]));
@@ -107,7 +86,7 @@ class Session implements SessionInterface
     }
 
     /**
-     * Get all session key set for this namespace.
+     * Get all session keys set for this namespace.
      */
     public function body(bool $clear = false): array
     {
@@ -127,6 +106,13 @@ class Session implements SessionInterface
         }
 
         return $body;
+    }
+
+    public function regenerate(bool $clear = false): bool
+    {
+        $this->startSession($this->sessionOptions);
+
+        return session_regenerate_id($clear);
     }
 
     public function destroy(): void
@@ -151,11 +137,14 @@ class Session implements SessionInterface
 
     protected function closeSession(): void
     {
-        $status = session_write_close();
+        if ($this->hasStatus(PHP_SESSION_ACTIVE)) {
+            $status = session_write_close();
 
-        if (!$status) {
-            throw new Exception('Unable to close session.');
+            if (!$status) {
+                throw new Exception('Unable to close session.');
+            }
         }
+
     }
 
     private function hasStatus(int $status): bool
