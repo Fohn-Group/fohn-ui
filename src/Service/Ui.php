@@ -78,6 +78,7 @@ class Ui implements UiInterface
 
     /** The current session. */
     protected ?SessionInterface $session = null;
+    protected ?ThemeInterface $theme = null;
 
     /** The top view of the app. */
     private Page $page;
@@ -113,7 +114,7 @@ class Ui implements UiInterface
     public static function session(): SessionInterface
     {
         if (!self::service()->session) {
-            self::service()->setSession(new (static::service()->sessionServiceClass));
+            self::service()->setSession(new (static::service()->sessionServiceClass)());
         }
 
         return self::service()->session;
@@ -124,12 +125,18 @@ class Ui implements UiInterface
         return static::service()->displayformat[$name];
     }
 
+    protected function setTheme(ThemeInterface $theme): void
+    {
+        $this->theme = $theme;
+    }
+
     public static function theme(): ThemeInterface
     {
-        /** @var ThemeInterface $class */
-        $class = static::service()->themeClass;
+       if (!static::service()->theme) {
+           static::service()->setTheme(new (static::service()->themeClass)());
+       }
 
-        return $class::getInstance();
+        return static::service()->theme;
     }
 
     public static function app(): App

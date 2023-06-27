@@ -65,11 +65,6 @@ class Base implements ThemeInterface
     /** @var static|null */
     protected static $instance;
 
-    final protected function __construct()
-    {
-        // singleton
-    }
-
     /**
      * Override this method for your own theme initialization.
      */

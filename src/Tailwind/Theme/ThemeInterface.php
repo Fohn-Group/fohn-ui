@@ -14,11 +14,6 @@ interface ThemeInterface
 {
     public function init(): void;
 
-    /**
-     * @return static
-     */
-    public static function getInstance();
-
     public static function colorAs(string $color, View $view, string $type): void;
 
     public static function styleAs(string $component, array $args): void;
