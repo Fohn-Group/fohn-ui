@@ -66,12 +66,12 @@ class Page extends View
     /**
      * Protect all callback request, coming from this page, from CSFR attack.
      */
-    public function csfrProtect(string $secret, string $redirectTo = null, int $strenght = 16): void
+    public function csfrProtect(string $secret, string $redirectTo = null, int $strength = 16): void
     {
         Request::protect($redirectTo);
 
         if (!Ui::service()->isAjaxRequest()) {
-            $csfrToken = Utils::generateToken($secret, $strenght);
+            $csfrToken = Utils::generateToken($secret, $strength);
             $this->appendMetaTag(Ui::service()->buildHtmlTag('meta', ['name' => 'csfr-token', 'content' => $csfrToken]));
             Ui::session()->set(static::TOKEN_KEY_NAME, $csfrToken);
         }
