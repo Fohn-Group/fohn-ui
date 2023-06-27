@@ -45,6 +45,8 @@ class Ui implements UiInterface
     public const PROD_ENV = 'production';
     public const TEST_ENV = 'test';
 
+    public const TOKEN_KEY_NAME = '_csfr_token';
+
     /** AJAX custom header key-pair value as set in apiService. */
     public const AJAX_HEADER_KEY = 'x-custom-header';
     public const AJAX_HEADER_VALUE = '__fohn-ajax-request';
@@ -62,6 +64,7 @@ class Ui implements UiInterface
     public string $templateEngineClass = HtmlTemplate::class;
     public string $rendererClass = ViewRenderer::class;
     public array $formLayoutSeed = [Standard::class];
+    public string $sessionServiceClass = Session::class;
 
     public string $timezone = 'UTC';
     public string $locale = 'en_CA';
@@ -73,6 +76,9 @@ class Ui implements UiInterface
         'datetime' => 'M d, Y H:i:s',
     ];
 
+    /** The current session. */
+    protected ?SessionInterface $session = null;
+
     /** The top view of the app. */
     private Page $page;
     private App $app;
@@ -83,7 +89,10 @@ class Ui implements UiInterface
 
     final private function __construct()
     {
-        $this->templateDirectories[] = dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'template' . \DIRECTORY_SEPARATOR . 'tailwind';
+        $this->templateDirectories[] = dirname(
+            __DIR__,
+            2
+        ) . \DIRECTORY_SEPARATOR . 'template' . \DIRECTORY_SEPARATOR . 'tailwind';
     }
 
     public static function service(): self
@@ -94,6 +103,20 @@ class Ui implements UiInterface
         }
 
         return static::$instance;
+    }
+
+    protected function setSession(SessionInterface $session): void
+    {
+        $this->session = $session;
+    }
+
+    public static function session(): SessionInterface
+    {
+        if (!self::service()->session) {
+            self::service()->setSession(new (static::service()->sessionServiceClass));
+        }
+
+        return self::service()->session;
     }
 
     public static function getDisplayFormat(string $name): string
@@ -166,8 +189,9 @@ class Ui implements UiInterface
             throw new Exception('Trying to factory from seed but $seed[0] is not set.');
         }
         if (!is_string($seed[0])) {
-            throw (new Exception('Trying to factory from seed but $seed[0] is not a class name (string).'))
-                ->addMoreInfo('$seed[0]', $seed[0]);
+            throw (new Exception(
+                'Trying to factory from seed but $seed[0] is not a class name (string).'
+            ))->addMoreInfo('$seed[0]', $seed[0]);
         }
 
         $className = $seed[0];
@@ -284,9 +308,14 @@ class Ui implements UiInterface
         return Utils::generateId($viewName, $keep, $lenght);
     }
 
-    public function htmlSpecialChars(string $html): string
+    public function sanitize(string $html): string
     {
         return htmlspecialchars($html, \ENT_NOQUOTES | \ENT_HTML5, 'UTF-8');
+    }
+
+    public function getInput(): array
+    {
+        return json_decode(file_get_contents('php://input'), true) ?? [];
     }
 
     /**

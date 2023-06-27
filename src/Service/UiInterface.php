@@ -34,6 +34,8 @@ interface UiInterface
 
     public static function theme(): ThemeInterface;
 
+    public static function session(): SessionInterface;
+
     public static function page(): Page;
 
     public static function serverRequest(): ServerRequestInterface;
@@ -87,10 +89,13 @@ interface UiInterface
     /** Generate View::attributeId property. */
     public function factoryId(string $viewName): string;
 
-    public function htmlSpecialChars(string $html): string;
+    public function sanitize(string $html): string;
 
     /** Return a Form Layout Interface. Called by Form for its default layout. */
     public function getFormLayout(): FormLayoutInterface;
+
+    /** Return request php/input content as array. */
+    public function getInput(): array;
 
     /**
      * Generate Html tag.

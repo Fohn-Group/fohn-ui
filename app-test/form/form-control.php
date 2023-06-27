@@ -58,9 +58,7 @@ $form = Form::addTo(
     ]
 );
 
-foreach ($controls as $control) {
-    $form->addControl($control);
-}
+$form->addControls($controls);
 
 /** @var Form\Control\Select $countrySelect */
 $countrySelect = $form->getControl('country');

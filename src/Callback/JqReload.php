@@ -11,7 +11,7 @@ namespace Fohn\Ui\Callback;
 use Fohn\Ui\Js;
 use Fohn\Ui\Js\JsRenderInterface;
 
-class JqReload extends Jquery
+class JqReload extends Jquery implements GuardInterface
 {
     /** Javascript to execute after reload is complete and onSuccess is executed. */
     private ?JsRenderInterface $afterSuccess = null;
@@ -34,12 +34,18 @@ class JqReload extends Jquery
         $this->requestPayload = $requestPayload;
 
         $this->execute(function () use ($fx) {
+            $this->verifyCSRF();
             $response = $fx($this->getPostRequestPayload());
 
             $this->terminateJson($this->getOwner()->renderToJsonArr());
         });
 
         return $this;
+    }
+
+    public function verifyCSRF(): void
+    {
+        $this->assertSafeRequest();
     }
 
     public function jsRender(): string

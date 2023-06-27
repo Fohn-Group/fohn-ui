@@ -161,9 +161,9 @@ class View extends AbstractView
      * In order to use html markup, $useHtmlSpecialChars needs to be false.
      * textContent is set in template at rendering if set.
      */
-    public function setTextContent(?string $text, bool $useHtmlSepcialChars = true): self
+    public function setTextContent(?string $text, bool $sanitize = true): self
     {
-        $this->textContent = ($text && $useHtmlSepcialChars) ? Ui::service()->htmlSpecialChars($text) : $text;
+        $this->textContent = ($text && $sanitize) ? Ui::service()->sanitize($text) : $text;
 
         return $this;
     }

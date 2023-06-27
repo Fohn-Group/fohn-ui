@@ -15,11 +15,6 @@
             <directory>tests/Javascript</directory>
         </testsuite>
     </testsuites>
-    <groups>
-        <exclude>
-            <group>demos_http</group>
-        </exclude>
-    </groups>
     <listeners>
         <listener class="JohnKary\PHPUnit\Listener\SpeedTrapListener" />
     </listeners>

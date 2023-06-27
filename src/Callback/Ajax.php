@@ -8,18 +8,24 @@ declare(strict_types=1);
 
 namespace Fohn\Ui\Callback;
 
-class Ajax extends Request
+class Ajax extends Request implements GuardInterface
 {
     protected string $type = self::AJAX_TYPE;
 
     public function onAjaxPostRequest(\Closure $fx): self
     {
         $this->execute(function () use ($fx) {
+            $this->verifyCSRF();
             $response = $fx($this->getPostRequestPayload());
 
             $this->terminateJson(['jsRendered' => $response->jsRender()]);
         });
 
         return $this;
+    }
+
+    public function verifyCSRF(): void
+    {
+        $this->assertSafeRequest();
     }
 }

@@ -13,7 +13,7 @@ class Value
 
     private function encodeValueToHtml(string $value): string
     {
-        return Ui::service()->htmlSpecialChars($value);
+        return Ui::service()->sanitize($value);
     }
 
     public function set(string $value): self

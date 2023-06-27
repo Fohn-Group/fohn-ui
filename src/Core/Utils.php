@@ -100,6 +100,11 @@ class Utils
         return $arguments + $injection;
     }
 
+    public static function generateToken(string $secret, int $strength = 16): string
+    {
+        return bin2hex($secret . '.' . random_bytes($strength));
+    }
+
     public static function decodeJson(string $json, bool $isAssociative = true): array
     {
         $data = json_decode($json, $isAssociative, 512, \JSON_THROW_ON_ERROR);
