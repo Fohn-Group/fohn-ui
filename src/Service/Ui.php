@@ -115,7 +115,8 @@ class Ui implements UiInterface
     {
         if (!self::service()->session) {
             $class = static::service()->sessionClass;
-            self::service()->setSession(new $class());        }
+            self::service()->setSession(new $class());
+        }
 
         return self::service()->session;
     }
@@ -132,11 +133,11 @@ class Ui implements UiInterface
 
     public static function theme(): ThemeInterface
     {
-       if (!static::service()->theme) {
-           /** @var Base $class */
-           $class = static::service()->themeClass;
-           self::service()->setTheme($class::getInstance());
-       }
+        if (!static::service()->theme) {
+            /** @var Base $class */
+            $class = static::service()->themeClass;
+            self::service()->setTheme($class::getInstance());
+        }
 
         return static::service()->theme;
     }
