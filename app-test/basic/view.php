@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Fohn\Ui\AppTest;
 
+use Fohn\Ui\Service\Theme\Base;
+use Fohn\Ui\Service\Theme\Fohn;
 use Fohn\Ui\Service\Ui;
-use Fohn\Ui\Tailwind\Theme\Base;
-use Fohn\Ui\Tailwind\Theme\Fohn;
 use Fohn\Ui\View;
 
 require_once __DIR__ . '/../init-ui.php';

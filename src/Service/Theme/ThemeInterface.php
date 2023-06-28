@@ -6,7 +6,7 @@ declare(strict_types=1);
  * Theme Interface.
  */
 
-namespace Fohn\Ui\Tailwind\Theme;
+namespace Fohn\Ui\Service\Theme;
 
 use Fohn\Ui\View;
 

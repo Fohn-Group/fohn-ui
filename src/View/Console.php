@@ -12,8 +12,8 @@ use Fohn\Ui\Core\Exception;
 use Fohn\Ui\Js\Jquery;
 use Fohn\Ui\Js\JsRenderInterface;
 use Fohn\Ui\Js\JsStatements;
+use Fohn\Ui\Service\Theme\Base;
 use Fohn\Ui\Service\Ui;
-use Fohn\Ui\Tailwind\Theme\Base;
 use Fohn\Ui\View;
 use Psr\Log\LoggerInterface;
 

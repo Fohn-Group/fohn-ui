@@ -9,7 +9,7 @@ declare(strict_types=1);
  * in order to make sure default tailwinds css include them.
  */
 
-namespace Fohn\Ui\Tailwind\Theme;
+namespace Fohn\Ui\Service\Theme;
 
 use Fohn\Ui\Tailwind\Tw;
 use Fohn\Ui\View;

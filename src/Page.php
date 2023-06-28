@@ -17,8 +17,8 @@ use Fohn\Ui\Js\Js;
 use Fohn\Ui\Js\JsChain;
 use Fohn\Ui\Js\JsFunction;
 use Fohn\Ui\PageLayout\Layout;
+use Fohn\Ui\Service\Theme\Base;
 use Fohn\Ui\Service\Ui;
-use Fohn\Ui\Tailwind\Theme\Base;
 
 class Page extends View
 {
