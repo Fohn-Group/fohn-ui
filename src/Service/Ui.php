@@ -27,6 +27,7 @@ use Fohn\Ui\Js\JsRenderInterface;
 use Fohn\Ui\Js\Type\Type;
 use Fohn\Ui\Page;
 use Fohn\Ui\PageLayout\Layout;
+use Fohn\Ui\Tailwind\Theme\Base;
 use Fohn\Ui\Tailwind\Theme\Fohn;
 use Fohn\Ui\Tailwind\Theme\ThemeInterface;
 use Fohn\Ui\View;
@@ -64,7 +65,7 @@ class Ui implements UiInterface
     public string $templateEngineClass = HtmlTemplate::class;
     public string $rendererClass = ViewRenderer::class;
     public array $formLayoutSeed = [Standard::class];
-    public string $sessionServiceClass = Session::class;
+    public string $sessionClass = Session::class;
 
     public string $timezone = 'UTC';
     public string $locale = 'en_CA';
@@ -114,8 +115,8 @@ class Ui implements UiInterface
     public static function session(): SessionInterface
     {
         if (!self::service()->session) {
-            self::service()->setSession(new (static::service()->sessionServiceClass)());
-        }
+            $class = static::service()->sessionClass;
+            self::service()->setSession(new $class());        }
 
         return self::service()->session;
     }
@@ -133,7 +134,9 @@ class Ui implements UiInterface
     public static function theme(): ThemeInterface
     {
        if (!static::service()->theme) {
-           static::service()->setTheme(new (static::service()->themeClass)());
+           /** @var Base $class */
+           $class = static::service()->themeClass;
+           self::service()->setTheme($class::getInstance());
        }
 
         return static::service()->theme;
