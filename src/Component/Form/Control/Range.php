@@ -19,6 +19,11 @@ class Range extends Input
     public int $maxValue = 100;
     public int $step = 1;
 
+    public function getInputValue()
+    {
+        return parent::getInputValue() ?? '0';
+    }
+
     public function setWithPostValue(?string $value): void
     {
         if ($value !== null) {
