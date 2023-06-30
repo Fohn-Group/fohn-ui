@@ -21,14 +21,14 @@ use Fohn\Ui\Core\Exception;
 use Fohn\Ui\Core\ExceptionRenderer\Html;
 use Fohn\Ui\Core\Utils;
 use Fohn\Ui\HtmlTemplate;
-use Fohn\Ui\Js\Js;
 use Fohn\Ui\Js\JsChain;
 use Fohn\Ui\Js\JsRenderInterface;
 use Fohn\Ui\Js\Type\Type;
 use Fohn\Ui\Page;
 use Fohn\Ui\PageLayout\Layout;
-use Fohn\Ui\Tailwind\Theme\Fohn;
-use Fohn\Ui\Tailwind\Theme\ThemeInterface;
+use Fohn\Ui\Service\Theme\Base;
+use Fohn\Ui\Service\Theme\Fohn;
+use Fohn\Ui\Service\Theme\ThemeInterface;
 use Fohn\Ui\View;
 use Fohn\Ui\ViewRenderer;
 use GuzzleHttp\Psr7\Query;
@@ -64,7 +64,7 @@ class Ui implements UiInterface
     public string $templateEngineClass = HtmlTemplate::class;
     public string $rendererClass = ViewRenderer::class;
     public array $formLayoutSeed = [Standard::class];
-    public string $sessionServiceClass = Session::class;
+    public string $sessionClass = Session::class;
 
     public string $timezone = 'UTC';
     public string $locale = 'en_CA';
@@ -78,6 +78,7 @@ class Ui implements UiInterface
 
     /** The current session. */
     protected ?SessionInterface $session = null;
+    protected ?ThemeInterface $theme = null;
 
     /** The top view of the app. */
     private Page $page;
@@ -113,7 +114,8 @@ class Ui implements UiInterface
     public static function session(): SessionInterface
     {
         if (!self::service()->session) {
-            self::service()->setSession(new (static::service()->sessionServiceClass));
+            $class = static::service()->sessionClass;
+            self::service()->setSession(new $class());
         }
 
         return self::service()->session;
@@ -124,12 +126,20 @@ class Ui implements UiInterface
         return static::service()->displayformat[$name];
     }
 
+    protected function setTheme(ThemeInterface $theme): void
+    {
+        $this->theme = $theme;
+    }
+
     public static function theme(): ThemeInterface
     {
-        /** @var ThemeInterface $class */
-        $class = static::service()->themeClass;
+        if (!static::service()->theme) {
+            /** @var Base $class */
+            $class = static::service()->themeClass;
+            self::service()->setTheme($class::getInstance());
+        }
 
-        return $class::getInstance();
+        return static::service()->theme;
     }
 
     public static function app(): App

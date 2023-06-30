@@ -6,18 +6,13 @@ declare(strict_types=1);
  * Theme Interface.
  */
 
-namespace Fohn\Ui\Tailwind\Theme;
+namespace Fohn\Ui\Service\Theme;
 
 use Fohn\Ui\View;
 
 interface ThemeInterface
 {
     public function init(): void;
-
-    /**
-     * @return static
-     */
-    public static function getInstance();
 
     public static function colorAs(string $color, View $view, string $type): void;
 

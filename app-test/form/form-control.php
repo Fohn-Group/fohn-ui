@@ -44,7 +44,7 @@ $controls = [
     (new Form\Control\Calendar(['controlName' => 'time', 'caption' => 'Time', 'format' => Ui::getDisplayFormat('time'), 'type' => 'time']))->setValue(new \DateTime()),
     (new Form\Control\Calendar(['controlName' => 'datetime', 'caption' => 'DateTime', 'format' => Ui::getDisplayFormat('datetime'), 'type' => 'datetime']))->setValue(new \DateTime()),
     (new Form\Control\Textarea(['controlName' => 'text', 'rows' => '4', 'caption' => 'Textarea']))->setValue(Utils::getLoremIpsum(12)),
-    new Form\Control\Range(['controlName' => 'range', 'caption' => 'Range (0-100)']),
+    (new Form\Control\Range(['controlName' => 'range', 'caption' => 'Range (0-100)']))->setValue(50),
 ];
 
 // Use a custom html template.

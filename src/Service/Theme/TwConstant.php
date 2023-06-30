@@ -11,7 +11,7 @@ declare(strict_types=1);
  * these constants.
  */
 
-namespace Fohn\Ui\Tailwind\Theme;
+namespace Fohn\Ui\Service\Theme;
 
 class TwConstant
 {

@@ -13,7 +13,7 @@ use Fohn\Ui\Component\Form\Layout\FormLayoutInterface;
 use Fohn\Ui\HtmlTemplate;
 use Fohn\Ui\Page;
 use Fohn\Ui\PageLayout\Layout;
-use Fohn\Ui\Tailwind\Theme\ThemeInterface;
+use Fohn\Ui\Service\Theme\ThemeInterface;
 use Fohn\Ui\View;
 use Fohn\Ui\ViewRenderer;
 use Psr\Http\Message\ServerRequestInterface;

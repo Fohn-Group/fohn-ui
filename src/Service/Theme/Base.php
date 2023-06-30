@@ -6,7 +6,7 @@ declare(strict_types=1);
  * Base theme configuration.
  */
 
-namespace Fohn\Ui\Tailwind\Theme;
+namespace Fohn\Ui\Service\Theme;
 
 use Fohn\Ui\Tailwind\Tw;
 use Fohn\Ui\Tailwind\Utilities\TwDefaults;
@@ -67,7 +67,6 @@ class Base implements ThemeInterface
 
     final protected function __construct()
     {
-        // singleton
     }
 
     /**

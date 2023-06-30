@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Fohn\Ui\View;
 
+use Fohn\Ui\Service\Theme\Base;
 use Fohn\Ui\Service\Ui;
-use Fohn\Ui\Tailwind\Theme\Base;
 use Fohn\Ui\View;
 
 class Tag extends View
