@@ -8,6 +8,7 @@ use Fohn\Ui\Component\Table;
 use Fohn\Ui\Component\Table\Column;
 use Fohn\Ui\Core\HookFn;
 use Fohn\Ui\Core\HookTrait;
+use Fohn\Ui\Js\JsStatements;
 
 /**
  * Table data result set.
@@ -22,11 +23,15 @@ class Set
     /** @var array[] */
     public array $dataSet = [];
 
+    /** Javascript to execute with the results set. */
+    public JsStatements $jsStatements;
+
     public function __construct(Table $table, array $dataSet = [], int $totalItems = 0)
     {
         $this->table = $table;
         $this->dataSet = $dataSet;
         $this->totalItems = $totalItems;
+        $this->jsStatements = JsStatements::with([]);
     }
 
     public function outputData(array $columns, string $idColumnName): array
@@ -58,6 +63,7 @@ class Set
             }
             $results['rows'][] = ['id' => (string) $id, 'cells' => $cells, 'css' => $rowTws->toString()];
         }
+        $results['jsRendered'] = $this->jsStatements->jsRender();
 
         return $results;
     }

@@ -101,7 +101,7 @@ class Request extends AbstractView
 
         if (!$requestToken || ($requestToken !== $saveToken)) {
             if (self::$csfrRedirectUrl) {
-                $this->terminateJson(['success' => true, 'jsRendered' => Ui::jsRedirect(self::$csfrRedirectUrl)->jsRender()]);
+                $this->terminateJson(['success' => true, 'url' => self::$csfrRedirectUrl], 405);
             }
 
             throw new Exception('Access denied.');
@@ -151,10 +151,10 @@ class Request extends AbstractView
     /**
      * Terminate this callback using an array.
      */
-    public function terminateJson(array $output): void
+    public function terminateJson(array $output, int $statusCode = 200): void
     {
         if ($this->canTerminate()) {
-            Ui::service()->terminateJson(array_merge(['success' => true], $output));
+            Ui::service()->terminateJson(array_merge(['success' => true], $output), $statusCode);
         }
     }
 
