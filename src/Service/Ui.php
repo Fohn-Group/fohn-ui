@@ -111,11 +111,11 @@ class Ui implements UiInterface
         $this->session = $session;
     }
 
-    public static function session(): SessionInterface
+    public static function session(string $namespace = '__fohn-ui'): SessionInterface
     {
         if (!self::service()->session) {
             $class = static::service()->sessionClass;
-            self::service()->setSession(new $class());
+            self::service()->setSession(new $class($namespace));
         }
 
         return self::service()->session;

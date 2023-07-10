@@ -13,10 +13,13 @@ class Session implements SessionInterface
 {
     protected const READ_ONLY_OPTION = 'read_and_close';
 
-    protected static ?SessionInterface $instance = null;
-
     private array $sessionOptions = [];
-    private string $namespace = '__fohn_ui';
+    private string $namespace;
+
+    public function __construct(string $namespace = '__fohn_ui')
+    {
+        $this->namespace = $namespace;
+    }
 
     public function setOptions(array $options): void
     {
