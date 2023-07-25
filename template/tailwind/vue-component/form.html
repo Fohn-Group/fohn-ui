@@ -6,7 +6,9 @@
             :can-leave="{$canLeave}"
             :submit-url="{$submitUrl}"
             :values-url="{$valuesUrl}"
-            #default="@{isSubmitting, canLeave, formErrors, submitForm, setControlValue, isDirty, storeId}" ref="root" class="invisible">
+            #default="@{isSubmitting, canLeave, formErrors, submitForm, setControlValue, isDirty, storeId}"
+            ref="root"
+            class="invisible">
         <form id="{$formId}" @submit.prevent="submitForm">
             {$Layouts}
         </form>
