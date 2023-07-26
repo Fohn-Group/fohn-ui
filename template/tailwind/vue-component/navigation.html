@@ -5,8 +5,7 @@
             menu-width="{width}52{/width}"
             break-point="{breakPoint}lg{/breakPoint}"
             #default="@{title, icons, groups, navigationCss, isOpen, inMobileMode, fn}"
-            class="fohn-admin-side-navigation text-sm invisible"
-            ref="root">
+            class="fohn-admin-side-navigation text-sm">
         <div class="fixed z-20 h-full top-0 left-0 bg-gray-800 z-40 text-white" :class="navigationCss">
             <!-- nav toggle -->
             <div  id="fohn-navigation-toggle" @click="fn.closeNavigation()" class="pl-4 pt-4 h-12">

@@ -2,9 +2,7 @@
 <fohn-tabs
         :store-id="{$storeId}"
         :tabs-list="{$tabList}"
-        #default="@{activate, currentIndex, tabsList}"
-        ref="root"
-        class="invisible">
+        #default="@{activate, currentIndex, tabsList}">
     {TabMenu}
     <ul class="mb-5 flex list-none flex-row flex-wrap border-b-0 pl-0">
         <li v-for="(tab, index) in tabsList" :key="index" role="presentation" class="flex-auto text-center cursor-pointer">
