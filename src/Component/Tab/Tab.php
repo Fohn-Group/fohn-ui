@@ -7,10 +7,12 @@ declare(strict_types = 1);
 
 namespace Fohn\Ui\Component\Tab;
 
+use Fohn\Ui\Component\VueInterface;
 use Fohn\Ui\Component\VueTrait;
 use Fohn\Ui\Js\Js;
+use Fohn\Ui\View;
 
-class Tab extends \Fohn\Ui\View
+class Tab extends View implements VueInterface
 {
     use VueTrait;
 

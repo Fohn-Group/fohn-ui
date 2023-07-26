@@ -10,8 +10,9 @@ namespace Fohn\Ui\Component;
 use Fohn\Ui\Component\Tab\Tab;
 use Fohn\Ui\Core\Exception;
 use Fohn\Ui\Js\Type\Type;
+use Fohn\Ui\View;
 
-class Tabs extends \Fohn\Ui\View
+class Tabs extends View implements VueInterface
 {
     use VueTrait;
 
