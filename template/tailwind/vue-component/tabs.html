@@ -1,7 +1,9 @@
-<div id="{$idAttr}" {$attributes} class="{$classAttr}">
+
+<div id="{$idAttr}" {$attributes} class="{$classAttr} ">
 <fohn-tabs
         :store-id="{$storeId}"
         :tabs-list="{$tabList}"
+        :active-tab-idx="{$activeTabIdx}"
         #default="@{activate, currentIndex, tabsList}">
     {TabMenu}
     <ul class="mb-5 flex list-none flex-row flex-wrap border-b-0 pl-0">

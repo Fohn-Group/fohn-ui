@@ -86,7 +86,7 @@ class Tabs extends View implements VueInterface
             $tabList[] = ['name' => $tab->getName(), 'caption' => $tab->getCaption()];
         }
         $props['tabList'] = $tabList;
-        $props['initialTabIdx'] = array_search($this->activeTabName, array_keys($this->tabs)) ?: 0;
+        $props['activeTabIdx'] = array_search($this->activeTabName, array_keys($this->tabs)) ?: 0;
 
         foreach ($props as $key => $value) {
             $this->getTemplate()->setJs($key, Type::factory($value));
