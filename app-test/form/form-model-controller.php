@@ -85,8 +85,8 @@ $c->onChange(JsFunction::anonymous()
         )
     ), 500);
 
-$c = Form\Control\Input::addTo($formContainer, ['controlName' => 'std1'])->setValue('test');
-$c->onChange(JsFunction::anonymous()
+$c1 = Form\Control\Input::addTo($formContainer, ['controlName' => 'std1'])->setValue('test');
+$c1->onChange(JsFunction::anonymous()
     ->execute(
         JsToast::notifyWithJs(
             Jquery::withSelector('input[name=\'std1\']')->val()
@@ -94,3 +94,4 @@ $c->onChange(JsFunction::anonymous()
     ), 500);
 
 Ui::viewDump($f, 'form');
+Ui::viewDump($c, 'ctl');
