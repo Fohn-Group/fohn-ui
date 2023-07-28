@@ -27,6 +27,8 @@ class Tabs extends View implements VueInterface
     /** @var array<Tab> */
     protected array $tabs = [];
 
+    protected string $activeTabName = '';
+
     protected function initRenderTree(): void
     {
         parent::initRenderTree();
@@ -38,6 +40,13 @@ class Tabs extends View implements VueInterface
         $this->addView($tab, self::TAB_REGION_NAME);
 
         return $tab;
+    }
+
+    public function activateTabName(string $name): self
+    {
+        $this->activeTabName = $name;
+
+        return $this;
     }
 
     protected function registerTab(Tab $tab): void
@@ -77,6 +86,7 @@ class Tabs extends View implements VueInterface
             $tabList[] = ['name' => $tab->getName(), 'caption' => $tab->getCaption()];
         }
         $props['tabList'] = $tabList;
+        $props['initialTabIdx'] = array_search($this->activeTabName, array_keys($this->tabs)) ?: 0;
 
         foreach ($props as $key => $value) {
             $this->getTemplate()->setJs($key, Type::factory($value));
@@ -85,7 +95,6 @@ class Tabs extends View implements VueInterface
 
     protected function beforeHtmlRender(): void
     {
-        // todo move into props
         $this->setTemplateProps();
 
         $this->createVueApp(self::COMP_NAME, [], $this->getDefaultSelector());
