@@ -1,8 +1,8 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 /**
- * Tab Component
+ * Tab Component.
  */
 
 namespace Fohn\Ui\Component\Tab;
@@ -59,8 +59,6 @@ class Tab extends View implements VueInterface
         $this->getTemplate()->trySetJs('tabName', Js::string($this->getName()));
         $this->getTemplate()->trySetJs('tabStoreId', Js::string($this->tabStoreId));
 
-
         parent::beforeHtmlRender();
     }
-
 }

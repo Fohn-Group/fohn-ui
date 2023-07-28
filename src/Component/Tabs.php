@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 /**
  * Tabs component.
  */
@@ -20,7 +20,6 @@ class Tabs extends View implements VueInterface
     protected const TAB_REGION_NAME = 'tabs';
 
     private const PINIA_PREFIX = '__tabs_';
-
 
     public string $defaultTemplate = 'vue-component/tabs.html';
 
@@ -86,7 +85,7 @@ class Tabs extends View implements VueInterface
             $tabList[] = ['name' => $tab->getName(), 'caption' => $tab->getCaption()];
         }
         $props['tabList'] = $tabList;
-        $props['activeTabIdx'] = array_search($this->activeTabName, array_keys($this->tabs)) ?: 0;
+        $props['activeTabIdx'] = array_search($this->activeTabName, array_keys($this->tabs), true) ?: 0;
 
         foreach ($props as $key => $value) {
             $this->getTemplate()->setJs($key, Type::factory($value));

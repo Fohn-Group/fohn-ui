@@ -49,6 +49,7 @@ trait VueTrait
         foreach ($this->getOwners() as $owner) {
             if ($owner instanceof VueInterface) {
                 $isRoot = false;
+
                 break;
             }
         }
