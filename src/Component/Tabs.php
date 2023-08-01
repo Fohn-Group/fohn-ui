@@ -9,6 +9,7 @@ namespace Fohn\Ui\Component;
 
 use Fohn\Ui\Component\Tab\Tab;
 use Fohn\Ui\Core\Exception;
+use Fohn\Ui\Js\JsRenderInterface;
 use Fohn\Ui\Js\Type\Type;
 use Fohn\Ui\View;
 
@@ -48,6 +49,22 @@ class Tabs extends View implements VueInterface
         return $this;
     }
 
+    public function jsActivateTabName(string $name): JsRenderInterface
+    {
+        return $this->jsGetStore(self::PINIA_PREFIX)->activateByName($name);
+    }
+
+
+    public function jsEnableTabName(string $name): JsRenderInterface
+    {
+        return $this->jsGetStore(self::PINIA_PREFIX)->enableByName($name);
+    }
+
+    public function jsDisableTabName(string $name): JsRenderInterface
+    {
+        return $this->jsGetStore(self::PINIA_PREFIX)->disableByName($name);
+    }
+
     protected function registerTab(Tab $tab): void
     {
         $this->assertTabHasName($tab->getName());
@@ -82,7 +99,7 @@ class Tabs extends View implements VueInterface
 
         $tabList = [];
         foreach ($this->tabs as $tab) {
-            $tabList[] = ['name' => $tab->getName(), 'caption' => $tab->getCaption()];
+            $tabList[] = ['name' => $tab->getName(), 'caption' => $tab->getCaption(), 'disabled' => $tab->isDisabled()];
         }
         $props['tabList'] = $tabList;
         $props['activeTabIdx'] = array_search($this->activeTabName, array_keys($this->tabs), true) ?: 0;
