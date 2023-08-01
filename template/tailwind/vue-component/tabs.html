@@ -4,18 +4,24 @@
         :store-id="{$storeId}"
         :tabs-list="{$tabList}"
         :active-tab-idx="{$activeTabIdx}"
-        #default="@{activate, currentIndex, tabsList}">
+        #default="@{activate, currentIndex, tabs}">
     {TabMenu}
-    <ul class="mb-5 flex list-none flex-row flex-wrap border-b-0 pl-0">
-        <li v-for="(tab, index) in tabsList" :key="index" role="presentation" class="flex-auto text-center cursor-pointer">
-            <a
-                    @click="activate(index)"
-                    class="block border-x-0 border-b-2 border-t-0 border-transparent data-[active=true]:border-blue-400"
-                    :data-active="index === currentIndex"
-                    :data-name="tab.name"
-            >{{tab.caption}}</a>
-        </li>
-    </ul>
+    <div class="border-b border-gray-200 mb-8">
+        <ul class="flex flex-wrap -mb-px">
+            <template  v-for="(tab, index) in tabs" :key="index">
+                <li role="presentation" class="mr-4">
+                    <button
+                            @click="activate(index)"
+                            class="inline-block p-4 border-b-2  rounded-t-lg  disabled:text-gray-400 disabled:cursor-not-allowed"
+                            :class="{'border-blue-500 text-blue-500': index === currentIndex, 'border-transparent hover:text-gray-600 hover:border-gray-300': index !== currentIndex}"
+                            :data-active="index === currentIndex"
+                            :data-name="tab.name"
+                            :disabled="tab.disabled"
+                    >{{tab.caption}}</button>
+                </li>
+            </template>
+        </ul>
+    </div>
     {/TabMenu}
     {$tabs}
 </fohn-tabs>
