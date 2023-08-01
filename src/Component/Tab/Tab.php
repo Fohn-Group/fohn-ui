@@ -22,7 +22,6 @@ class Tab extends View implements VueInterface
     private const FN_SHOW_KEY = 'show';
     private const FN_HIDE_KEY = 'hide';
 
-
     public string $defaultTemplate = 'vue-component/tabs/tab.html';
 
     public string $tabStoreId;
@@ -112,7 +111,6 @@ class Tab extends View implements VueInterface
     {
         $this->onActiveHandlers[] = [$key => $fn];
     }
-
 
     protected function beforeHtmlRender(): void
     {

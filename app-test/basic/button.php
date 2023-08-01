@@ -11,7 +11,6 @@ use Fohn\Ui\View\Icon;
 
 require_once __DIR__ . '/../init-ui.php';
 
-
 $bar = View::addTo(Ui::layout(), ['defaultTailwind' => ['inline-block, my-4']]);
 Button::addTo($bar, ['label' => 'Link', 'type' => 'link']);
 

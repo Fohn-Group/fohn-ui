@@ -29,7 +29,6 @@ Jquery::addEventTo($btnGoTo, 'click')->execute($tabs->jsActivateTabName('country
 Jquery::addEventTo($btnEnableUser, 'click')->execute($tabs->jsEnableTabName('user'));
 Jquery::addEventTo($btnDisableUser, 'click')->execute($tabs->jsDisableTabName('user'));
 
-
 $homeTab = $tabs->addTab(new Tab(['name' => 'home']));
 $fn = $homeTab->jsOnInitTab(\Fohn\Ui\Js\JsFunction::arrow());
 $fn->execute(\Fohn\Ui\Js\Js::from('console.log(\'homeTab on init\')'));
