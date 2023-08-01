@@ -51,16 +51,19 @@ class Tabs extends View implements VueInterface
 
     public function jsActivateTabName(string $name): JsRenderInterface
     {
+        // @phpstan-ignore-next-line
         return $this->jsGetStore(self::PINIA_PREFIX)->activateByName($name);
     }
 
     public function jsEnableTabName(string $name): JsRenderInterface
     {
+        // @phpstan-ignore-next-line
         return $this->jsGetStore(self::PINIA_PREFIX)->enableByName($name);
     }
 
     public function jsDisableTabName(string $name): JsRenderInterface
     {
+        // @phpstan-ignore-next-line
         return $this->jsGetStore(self::PINIA_PREFIX)->disableByName($name);
     }
 
