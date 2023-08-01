@@ -20,13 +20,29 @@ require_once __DIR__ . '/../init-ui.php';
 $modelCtrl = new FormModelController(new Country(Data::db()));
 $id = (string) $modelCtrl->getModel()->tryLoadAny()->get('id');
 
+$btnGoTo = Button::addTo(Ui::layout(), ['label' => 'Go to country tab']);
+$btnEnableUser = Button::addTo(Ui::layout(), ['label' => 'Enable User Tab']);
+$btnDisableUser = Button::addTo(Ui::layout(), ['label' => 'Disable User Tab']);
+
 $tabs = Tabs::addTo(Ui::layout());
+Jquery::addEventTo($btnGoTo, 'click')->execute($tabs->jsActivateTabName('country'));
+Jquery::addEventTo($btnEnableUser, 'click')->execute($tabs->jsEnableTabName('user'));
+Jquery::addEventTo($btnDisableUser, 'click')->execute($tabs->jsDisableTabName('user'));
+
 
 $homeTab = $tabs->addTab(new Tab(['name' => 'home']));
+$fn = $homeTab->jsOnInitTab(\Fohn\Ui\Js\JsFunction::arrow());
+$fn->execute(\Fohn\Ui\Js\Js::from('console.log(\'homeTab on init\')'));
+
+$fn = $homeTab->jsOnShowTab(\Fohn\Ui\Js\JsFunction::arrow());
+$fn->execute(\Fohn\Ui\Js\Js::from('console.log(\'homeTab on show\')'));
+
+$fn = $homeTab->jsOnHideTab(\Fohn\Ui\Js\JsFunction::arrow());
+$fn->execute(\Fohn\Ui\Js\Js::from('console.log(\'homeTab on hide\')'));
 
 View::addTo($homeTab)->setTextContent('This is home tab content.');
 
-$profileTab = $tabs->addTab(new Tab(['name' => 'profile']));
+$profileTab = $tabs->addTab(new Tab(['name' => 'country']));
 
 $form = Form::addTo($profileTab);
 $form->addControls($modelCtrl->factoryFormControls($id));
@@ -43,6 +59,6 @@ View::addTo($userTab)->setTextContent('This is user tab content.');
 $b = Button::addTo($userTab, ['label' => 'Reload ' . ($_GET['test'] ?? 0)]);
 Jquery::addEventTo($b, 'click')->execute(JsReload::view($b, ['test ' => random_int(0, 100)]));
 
-$tabs->activateTabName('profile');
+$tabs->activateTabName('user');
 
 Ui::viewDump($tabs, 'tab');
