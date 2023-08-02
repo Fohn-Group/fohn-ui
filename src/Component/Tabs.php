@@ -7,8 +7,9 @@ declare(strict_types=1);
 
 namespace Fohn\Ui\Component;
 
-use Fohn\Ui\Component\Tab\Tab;
+use Fohn\Ui\Component\Tabs\Tab;
 use Fohn\Ui\Core\Exception;
+use Fohn\Ui\HtmlTemplate;
 use Fohn\Ui\Js\JsRenderInterface;
 use Fohn\Ui\Js\Type\Type;
 use Fohn\Ui\View;
@@ -67,6 +68,20 @@ class Tabs extends View implements VueInterface
         return $this->jsGetStore(self::PINIA_PREFIX)->disableByName($name);
     }
 
+    /**
+     * Replace Tabs menu template.
+     * The $view template must use Tab component template props:
+     *  - tabs, an array of {name: '', caption: '', disabled: false...}
+     *  - currentIndex, an integer value representing the current activated tab.
+     *  - activate, a function with an index argument that activate the tab.
+     */
+    public function setTabsMenuTemplate(HtmlTemplate $template, string $region = 'TabMenu'): self
+    {
+        $this->getTemplate()->dangerouslySetHtml($region, $template->renderToHtml());
+
+        return $this;
+    }
+
     protected function registerTab(Tab $tab): void
     {
         $this->assertTabHasName($tab->getName());
@@ -101,7 +116,7 @@ class Tabs extends View implements VueInterface
 
         $tabList = [];
         foreach ($this->tabs as $tab) {
-            $tabList[] = ['name' => $tab->getName(), 'caption' => $tab->getCaption(), 'disabled' => $tab->isDisabled()];
+            $tabList[] = $tab->getProperties();
         }
         $props['tabList'] = $tabList;
         $props['activeTabIdx'] = array_search($this->activeTabName, array_keys($this->tabs), true) ?: 0;
