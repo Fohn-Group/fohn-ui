@@ -47,7 +47,7 @@ class Page extends View
             'url' => 'https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.6/flatpickr.min.css',
         ],
         'icons' => [
-            'url' => 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css',
+            'url' => 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css',
         ],
         'fohn-css' => [
             'url' => 'https://unpkg.com/fohn-ui-css@1.3.0/dist/fohn-ui.min.css',
