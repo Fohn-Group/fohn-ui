@@ -29,7 +29,6 @@ Ui::service()->boot(function (Ui $ui) {
     $ui->setExceptionHandler(PageException::factory());
     // Set demos page.
     $ui->initAppPage(AppTest::createPage($ui->environment));
-
 });
 
 // Check for coverage
