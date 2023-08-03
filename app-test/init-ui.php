@@ -30,7 +30,6 @@ Ui::service()->boot(function (Ui $ui) {
     // Set demos page.
     $ui->initAppPage(AppTest::createPage($ui->environment));
 
-    $ui->page()->csfrProtect('my secret phrase', '/app-test/index.php');
 });
 
 // Check for coverage
