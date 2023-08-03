@@ -18,7 +18,11 @@ require_once __DIR__ . '/../init-ui.php';
 
 $vp = VirtualPage::with(AppTest::createPage());
 
-$vp->onPageRequest(function ($page) use ($vp) {
+$vp2 = VirtualPage::with(AppTest::createPage());
+// protect $vp2 page against csfr.
+$vp2->getPage()->csfrProtect('my secret phrase', '/app-test/index.php');
+
+$vp->onPageRequest(function ($page) use ($vp, $vp2) {
     $breadCrumb = View\Breadcrumb::addTo($page);
     $breadCrumb->addLink('Virtual Page Demo', Ui::parseRequestUrl());
     $breadCrumb->addLast('Top Virtual Page');
@@ -26,7 +30,6 @@ $vp->onPageRequest(function ($page) use ($vp) {
     View\Heading\Header::addTo($page, ['size' => 6, 'title' => 'Top Page Content']);
     View\Segment::addTo($page)->setTextContent(Utils::getLoremIpsum(12));
 
-    $vp2 = VirtualPage::with(AppTest::createPage());
     $vp2->onPageRequest(function ($page) use ($vp) {
         $breadCrumb = View\Breadcrumb::addTo($page);
         $breadCrumb->addLink('Virtual Page Demo', Ui::parseRequestUrl());

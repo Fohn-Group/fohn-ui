@@ -55,8 +55,6 @@ class AppTest
             }
         }
 
-        $page->csfrProtect('my secret phrase', '/app-test/index.php');
-
         return $page;
     }
 
