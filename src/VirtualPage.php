@@ -51,6 +51,11 @@ class VirtualPage extends AbstractView
         $this->cb = Generic::addAbstractTo($this->page, ['urlTrigger' => $this->trigger]);
     }
 
+    public function getPage(): Page
+    {
+        return $this->page;
+    }
+
     /**
      * Set Virtual page content when callback fire.
      */
