@@ -186,7 +186,7 @@ class Form extends View implements VueInterface
 
     protected function registerControl(Control $control): void
     {
-        $this->assertControlAsName($control->getControlName());
+        $this->assertControlHasName($control->getControlName());
         $this->assertControlIsUnique($control->getControlName());
         $control->formStoreId = $this->getPiniaStoreId(self::PINIA_PREFIX);
         $this->controls[$control->getControlName()] = $control;
@@ -282,7 +282,7 @@ class Form extends View implements VueInterface
         }
     }
 
-    private function assertControlAsName(string $controlName): void
+    private function assertControlHasName(string $controlName): void
     {
         if (!$controlName) {
             throw new Exception('Trying to add a form control without name.');

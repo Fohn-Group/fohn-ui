@@ -1,0 +1,16 @@
+<fohn-tab
+        :name="{$tabName}"
+        :tab-store-id="{$tabStoreId}"
+        :on-active-handlers="{$onActiveHandlers}"
+        #default="@{isActive, isDisabled}"
+>
+  <transition
+          enter-active-class="transition ease-linear duration-300"
+          enter-from-class="opacity-0"
+          enter-to-class="opacity-100"
+          leave-active-class="transition ease-linear duration-0"
+          leave-from-class="opacity-100"
+          leave-to-class="opacity-0">
+    <div v-show="isActive && ! isDisabled">{$Content}</div>
+  </transition>
+</fohn-tab>

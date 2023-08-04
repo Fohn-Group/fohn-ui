@@ -1,0 +1,16 @@
+<div class="mb-8 border-b border-gray-200">
+  <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500">
+    <template  v-for="(tab, index) in tabs" :key="index">
+      <li role="presentation" class="mr-4">
+        <button
+                @click="activate(index)"
+                class="inline-block p-4 rounded-t-lg disabled:text-gray-400 disabled:cursor-not-allowed"
+                :class="{'bg-gray-300 text-blue-500': index === currentIndex, 'hover:bg-gray-100': index !== currentIndex}"
+                :data-active="index === currentIndex"
+                :data-name="tab.name"
+                :disabled="tab.disabled"
+        >{{tab.caption}}</button>
+      </li>
+    </template>
+  </ul>
+</div>

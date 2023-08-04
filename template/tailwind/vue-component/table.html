@@ -5,8 +5,6 @@
                 data-url="{$dataUrl}"
                 :items-per-page="{$itemsPerPage}"
                 :columns="{$columns}"
-                ref="root"
-                class="invisible"
                 :actions="{$tableActions}"
                 :keep-table-state="{$keepTableState}"
                 #default="@{isFetching,
@@ -142,7 +140,7 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div class="invisible md:visible pb-2">{{fromItem}} - {{toItem}} / {{totalItems}}</div>
+                            <div class="hidden md:block pb-2">{{fromItem}} - {{toItem}} / {{totalItems}}</div>
                             <div class="pb-2">
                                 <select v-model="itemsPerPage" @change="setItemsPerPage(itemsPerPage)" class=" p-1 mb-1 w-24 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500">
                                     <option v-for="items in itemsPerPages" :value="items">{{items}}</option>

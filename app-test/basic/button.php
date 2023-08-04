@@ -12,14 +12,37 @@ use Fohn\Ui\View\Icon;
 require_once __DIR__ . '/../init-ui.php';
 
 $bar = View::addTo(Ui::layout(), ['defaultTailwind' => ['inline-block, my-4']]);
+Button::addTo($bar, ['label' => 'Link', 'type' => 'link']);
 
-Button::addTo($bar, ['label' => 'Primary']);
-Button::addTo($bar, ['label' => 'Secondary', 'color' => 'secondary', 'type' => 'outline']);
-Button::addTo($bar, ['label' => 'Info', 'color' => 'info', 'type' => 'link']);
-Button::addTo($bar, ['label' => 'Success', 'color' => 'success'])->setType('link');
-Button::addTo($bar, ['label' => 'Warning', 'color' => 'warning']);
-Button::addTo($bar, ['label' => 'Error', 'color' => 'error']);
-Button::addTo($bar, ['label' => 'Neutral', 'color' => 'neutral']);
+$type = 'contained';
+$bar = View::addTo(Ui::layout(), ['defaultTailwind' => ['inline-block, my-4']]);
+Button::addTo($bar, ['label' => 'Primary', 'type' => $type]);
+Button::addTo($bar, ['label' => 'Secondary', 'color' => 'secondary', 'type' => $type]);
+Button::addTo($bar, ['label' => 'Info', 'color' => 'info', 'type' => $type]);
+Button::addTo($bar, ['label' => 'Success', 'color' => 'success'])->setType($type);
+Button::addTo($bar, ['label' => 'Warning', 'color' => 'warning', 'type' => $type]);
+Button::addTo($bar, ['label' => 'Error', 'color' => 'error', 'type' => $type]);
+Button::addTo($bar, ['label' => 'Neutral', 'color' => 'neutral', 'type' => $type]);
+
+$type = 'outline';
+$bar = View::addTo(Ui::layout(), ['defaultTailwind' => ['inline-block, my-4']]);
+Button::addTo($bar, ['label' => 'Primary', 'type' => $type]);
+Button::addTo($bar, ['label' => 'Secondary', 'color' => 'secondary', 'type' => $type]);
+Button::addTo($bar, ['label' => 'Info', 'color' => 'info', 'type' => $type]);
+Button::addTo($bar, ['label' => 'Success', 'color' => 'success'])->setType($type);
+Button::addTo($bar, ['label' => 'Warning', 'color' => 'warning', 'type' => $type]);
+Button::addTo($bar, ['label' => 'Error', 'color' => 'error', 'type' => $type]);
+Button::addTo($bar, ['label' => 'Neutral', 'color' => 'neutral', 'type' => $type]);
+
+$type = 'text';
+$bar = View::addTo(Ui::layout(), ['defaultTailwind' => ['inline-block, my-4']]);
+Button::addTo($bar, ['label' => 'Primary', 'type' => $type]);
+Button::addTo($bar, ['label' => 'Secondary', 'color' => 'secondary', 'type' => $type]);
+Button::addTo($bar, ['label' => 'Info', 'color' => 'info', 'type' => $type]);
+Button::addTo($bar, ['label' => 'Success', 'color' => 'success'])->setType($type);
+Button::addTo($bar, ['label' => 'Warning', 'color' => 'warning', 'type' => $type]);
+Button::addTo($bar, ['label' => 'Error', 'color' => 'error', 'type' => $type]);
+Button::addTo($bar, ['label' => 'Neutral', 'color' => 'neutral', 'type' => $type]);
 
 $bar = View::addTo(Ui::layout(), ['defaultTailwind' => ['inline-block, my-4']]);
 Button::addTo($bar, ['label' => 'Home'])->addIcon(new Icon(['iconName' => 'bi-house-fill']));

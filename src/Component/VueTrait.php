@@ -49,6 +49,8 @@ trait VueTrait
         foreach ($this->getOwners() as $owner) {
             if ($owner instanceof VueInterface) {
                 $isRoot = false;
+
+                break;
             }
         }
 
@@ -72,6 +74,8 @@ trait VueTrait
             $chain = JsChain::withUiLibrary()->vueService->createVueApp($selector, $component, $rootData); // @phpstan-ignore-line
 
             $this->unshiftJsActions($chain);
+            // make root component invisible until mounted by VueService.
+            $this->appendTailwinds(['invisible', 'data-[v-app]:visible']);
         }
 
         return $this;
