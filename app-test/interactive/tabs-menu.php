@@ -2,18 +2,10 @@
 
 declare(strict_types=1);
 
-use Fohn\Ui\AppTest\Model\Country;
-use Fohn\Ui\Component\Form;
-use Fohn\Ui\Component\Tabs\Tab;
 use Fohn\Ui\Component\Tabs;
-use Fohn\Ui\Js\Jquery;
-use Fohn\Ui\Js\JsReload;
-use Fohn\Ui\Js\JsToast;
-use Fohn\Ui\Service\Atk\FormModelController;
-use Fohn\Ui\Service\Data;
+use Fohn\Ui\Component\Tabs\Tab;
 use Fohn\Ui\Service\Ui;
 use Fohn\Ui\View;
-use Fohn\Ui\View\Button;
 
 require_once __DIR__ . '/../init-ui.php';
 
@@ -32,7 +24,7 @@ View::addTo($userTab)->setTextContent('This is Preferences content.');
 $adminTab = $tabs->addTab(new Tab(['name' => 'admin']))->disabled();
 View::addTo($adminTab)->setTextContent('This is Admin content.');
 
-View\Divider::addTo(Ui::layout());
+View\Divider::addTo(Ui::layout(), ['verticalSpace' => '12']);
 
 $tabs = Tabs::addTo(Ui::layout());
 $tabs->setTabsMenuTemplate(Ui::templateFromFile(__DIR__ . '/template/tabs-menu-icon.html'));

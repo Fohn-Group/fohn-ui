@@ -111,6 +111,7 @@ class AppTest
                 'url' => $baseUrl . 'interactive/virtual.php',
                 'items' => [
                     new Item(['name' => 'Tabs', 'url' => $baseUrl . 'interactive/tabs.php']),
+                    new Item(['name' => 'Tabs Menu', 'url' => $baseUrl . 'interactive/tabs-menu.php']),
                     new Item(['name' => 'Modal', 'url' => $baseUrl . 'interactive/modal.php']),
                     new Item(['name' => 'Toast', 'url' => $baseUrl . 'interactive/toast.php']),
                     new Item(['name' => 'Virtual Page', 'url' => $baseUrl . 'interactive/virtual.php']),

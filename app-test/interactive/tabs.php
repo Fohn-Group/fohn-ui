@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 use Fohn\Ui\AppTest\Model\Country;
 use Fohn\Ui\Component\Form;
-use Fohn\Ui\Component\Tab\Tab;
 use Fohn\Ui\Component\Tabs;
+use Fohn\Ui\Component\Tabs\Tab;
 use Fohn\Ui\Js\Jquery;
 use Fohn\Ui\Js\JsReload;
 use Fohn\Ui\Js\JsToast;
@@ -20,9 +20,9 @@ require_once __DIR__ . '/../init-ui.php';
 $modelCtrl = new FormModelController(new Country(Data::db()));
 $id = (string) $modelCtrl->getModel()->tryLoadAny()->get('id');
 
-$btnGoTo = Button::addTo(Ui::layout(), ['label' => 'Go to country tab']);
-$btnEnableUser = Button::addTo(Ui::layout(), ['label' => 'Enable User Tab']);
-$btnDisableUser = Button::addTo(Ui::layout(), ['label' => 'Disable User Tab']);
+$btnGoTo = Button::addTo(Ui::layout(), ['label' => 'Go to country tab', 'type' => 'text']);
+$btnEnableUser = Button::addTo(Ui::layout(), ['label' => 'Enable User Tab', 'type' => 'text']);
+$btnDisableUser = Button::addTo(Ui::layout(), ['label' => 'Disable User Tab', 'type' => 'text']);
 
 $tabs = Tabs::addTo(Ui::layout());
 Jquery::addEventTo($btnGoTo, 'click')->execute($tabs->jsActivateTabName('country'));
@@ -55,7 +55,7 @@ $form->onSubmit(function (Form $f) use ($modelCtrl, $id) {
 
 $userTab = $tabs->addTab(new Tab(['name' => 'user']));
 View::addTo($userTab)->setTextContent('This is user tab content.');
-$b = Button::addTo($userTab, ['label' => 'Reload ' . ($_GET['test'] ?? 0)]);
+$b = Button::addTo($userTab, ['label' => 'Reload ' . ($_GET['test'] ?? 0), 'type' => 'text', 'size' => 'small']);
 Jquery::addEventTo($b, 'click')->execute(JsReload::view($b, ['test ' => random_int(0, 100)]));
 
 $tabs->activateTabName('user');

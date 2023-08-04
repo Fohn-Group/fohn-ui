@@ -13,7 +13,6 @@ use Fohn\Ui\Component\VueInterface;
 use Fohn\Ui\Component\VueTrait;
 use Fohn\Ui\Js\Js;
 use Fohn\Ui\Js\JsFunction;
-use Fohn\Ui\Js\JsRenderInterface;
 use Fohn\Ui\View;
 
 class Tab extends View implements VueInterface
