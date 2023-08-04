@@ -26,6 +26,9 @@ View::addTo($adminTab)->setTextContent('This is Admin content.');
 
 View\Divider::addTo(Ui::layout(), ['verticalSpace' => '12']);
 
+View::addTo(Ui::layout())->setTextContent('Show how a Vue property, like an icon name, can be added to Tab component and be available
+within the menu template.');
+
 $tabs = Tabs::addTo(Ui::layout());
 $tabs->setTabsMenuTemplate(Ui::templateFromFile(__DIR__ . '/template/tabs-menu-icon.html'));
 
