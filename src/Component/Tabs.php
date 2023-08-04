@@ -70,7 +70,7 @@ class Tabs extends View implements VueInterface
 
     /**
      * Replace Tabs menu template.
-     * The $view template must use Tab component template props:
+     * The template must use Tab component template props:
      *  - tabs, an array of {name: '', caption: '', disabled: false...}
      *  - currentIndex, an integer value representing the current activated tab.
      *  - activate, a function with an index argument that activate the tab.

@@ -18,7 +18,7 @@ class Divider extends View
         $this->setIdAttribute('');
     }
 
-    public function beforeHtmlRender(): void
+    protected function beforeHtmlRender(): void
     {
         $this->appendTailwinds(
             [
