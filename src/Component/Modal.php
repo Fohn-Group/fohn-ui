@@ -32,10 +32,7 @@ class Modal extends View implements VueInterface
 
     protected bool $isClosable = true;
 
-    protected ?Generic $cb = null;
-
-    public View $content;
-    public View $remoteContent;
+//    public ?View $content = null;
 
     public array $defaultModalTws = [
         'relative',
@@ -54,8 +51,7 @@ class Modal extends View implements VueInterface
     protected function initRenderTree(): void
     {
         parent::initRenderTree();
-        $this->content = View::addTo($this);
-        $this->remoteContent = View::addTo($this, [], 'remoteContent');
+//        $this->content = View::addTo($this);
     }
 
     public function addCloseButton(Button $closeBtn): self
@@ -66,19 +62,10 @@ class Modal extends View implements VueInterface
         return $this;
     }
 
-    public function onOpen(\Closure $fx): void
+    public function addContent(View $view, string $region = self::MAIN_TEMPLATE_REGION): View
     {
-        $this->cb = Generic::addAbstractTo($this);
 
-        $this->cb->onRequest(function () use ($fx) {
-            $fx($this->remoteContent);
-            $this->cb->terminateJson($this->remoteContent->renderToJsonArr());
-        });
-    }
-
-    public function addContent(View $view): View
-    {
-        return $this->content->addView($view);
+        return $this->addView($view, $region);
     }
 
     /**
@@ -122,9 +109,6 @@ class Modal extends View implements VueInterface
         $this->getTemplate()->trySetJs('storeId', Type::factory($this->getPiniaStoreId(self::PINIA_PREFIX)));
         $this->getTemplate()->trySetJs('title', Type::factory($this->title));
         $this->getTemplate()->trySetJs('isClosable', Type::factory($this->isClosable));
-        if ($this->cb) {
-            $this->getTemplate()->trySetJs('contentUrl', Type::factory($this->cb->getUrl()));
-        }
 
         $this->createVueApp(self::COMP_NAME, [], $this->getDefaultSelector());
 

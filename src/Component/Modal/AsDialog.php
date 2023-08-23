@@ -57,6 +57,10 @@ class AsDialog extends Modal
         return $this;
     }
 
+    public function jsSetMessage(string $msg) {
+
+    }
+
     protected function beforeHtmlRender(): void
     {
         $renderCallbacks = [];

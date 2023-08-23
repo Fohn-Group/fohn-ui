@@ -40,13 +40,11 @@
                                            @click="closeModal"></span></div>
                             </div>
                         </div>
-                        <div class="p-5" v-if="message">{{message}}</div>
-                        <div class="__fohn-modal-content p-5 min-h-[120px]" v-if="hasRemoteContent">
-                            <fohn-spinner :spin="isLoading" v-if="isLoading"
-                                          class="grid place-items-center"></fohn-spinner>
-                            {$remoteContent}
+                        <div class="__fohn-modal-content p-5" >
+                            <fohn-spinner v-if="hasRemoteContent && isLoading" :spin="isLoading" v-if="isLoading" class="grid place-items-center"></fohn-spinner>
+                            <div class="px-4" v-if="message">{{message}}</div>
+                            {$Content}
                         </div>
-                        {$Content}
                         <div class="sticky border-t border-gray-200 bottom-0 bg-white p-1">
                             <div class="grid place-content-end">
                                 <div>

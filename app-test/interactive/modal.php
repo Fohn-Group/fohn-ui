@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Fohn\Ui\AppTest;
 
+use Fohn\Ui\App;
 use Fohn\Ui\AppTest\Model\Country;
 use Fohn\Ui\AppTest\Model\FieldTest;
 use Fohn\Ui\Component\Form;
@@ -50,6 +51,7 @@ $confirm->onCallbackEvent('cancel', function (array $payload) use ($confirm) {
 
 $confirm->addCallbackEvent('confirm', new Button(['label' => 'Yes', 'type' => 'outline', 'color' => 'success', 'size' => 'small']));
 $confirm->onCallbackEvent('confirm', function (array $payload) use ($confirm) {
+
     return JsStatements::with([
         JsToast::info('All goods!', 'Operation confirm.'),
         $confirm->jsClose(),
@@ -101,7 +103,7 @@ $fx->execute(Js::from("console.log(jQuery(this).data('name'))"));
 
 // / Dynamic
 
-$modalDynamic = Modal::addTo(Ui::layout(), ['title' => 'Load on demand content.']);
+$modalDynamic = Modal\AsDynamic::addTo(Ui::layout(), ['title' => 'Load on demand content.']);
 $modalDynamic->addCloseButton(new Button(['label' => 'Close', 'type' => 'outline', 'color' => 'info', 'size' => 'small']));
 
 $modalDynamic->onOpen(function ($modal) {
