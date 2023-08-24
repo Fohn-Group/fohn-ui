@@ -364,7 +364,7 @@ class View extends AbstractView
             $attributes .= trim($attr) . '="' . trim((string) $val) . '" ';
         }
         if ($attributes) {
-            $this->getTemplate()->trySet(self::ATTR_TEMPLATE_TAG, trim($attributes));
+            $this->getTemplate()->tryDangerouslySetHtml(self::ATTR_TEMPLATE_TAG, trim($attributes));
         }
     }
 
