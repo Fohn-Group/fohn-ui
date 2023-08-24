@@ -418,8 +418,6 @@ class Ui implements UiInterface
         return JsChain::with(static::service()->jsLibrary)->utils()->browser()->redirect($url, Type::factory($param));
     }
 
-
-
     public static function copyView(View $view): View
     {
         /** @var View $viewCopy */

@@ -23,13 +23,27 @@ trait VueTrait
 
     /**
      * Bind a Vue v-on:event to a View via html attributes.
+     * <button v-on:click="do something"></button>.
      */
     public static function bindVueEvent(View $view, string $eventName, string $event): void
     {
-        if (!$view->getTemplate()->hasTag('attributes')) {
+        if (!$view->getTemplate()->hasTag(View::ATTR_TEMPLATE_TAG)) {
             throw new Exception('Unable to bind Vue event. Template for View does not have the attributes tag.');
         }
         $view->appendHtmlAttribute('v-on:' . $eventName, $event);
+    }
+
+    /**
+     * Bind a dynamic attribute to a view.
+     * <div :disabled="{isLoading}"></div>.
+     */
+    public static function bindVueAttr(View $view, string $attr, string $value): void
+    {
+        if (!$view->getTemplate()->hasTag(View::ATTR_TEMPLATE_TAG)) {
+            throw new Exception('Unable to bind Vue attribute. Template for View does not have the attributes tag.');
+        }
+
+        $view->appendHtmlAttribute(':' . $attr, $value);
     }
 
     protected function getDefaultSelector(): string
