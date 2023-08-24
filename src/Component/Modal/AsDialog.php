@@ -10,14 +10,12 @@ namespace Fohn\Ui\Component\Modal;
 
 use Fohn\Ui\Callback\Ajax;
 use Fohn\Ui\Component\Modal;
-use Fohn\Ui\Component\VueTrait;
 use Fohn\Ui\Core\HookTrait;
 use Fohn\Ui\Js\JsFunction;
 use Fohn\Ui\Js\JsRenderInterface;
 use Fohn\Ui\Js\Type\ObjectLiteral;
 use Fohn\Ui\Js\Type\StringLiteral;
 use Fohn\Ui\Js\Type\Variable;
-use Fohn\Ui\Service\Ui;
 use Fohn\Ui\View\Button;
 
 class AsDialog extends Modal
@@ -56,10 +54,6 @@ class AsDialog extends Modal
         });
 
         return $this;
-    }
-
-    public function jsSetMessage(string $msg) {
-
     }
 
     protected function beforeHtmlRender(): void
