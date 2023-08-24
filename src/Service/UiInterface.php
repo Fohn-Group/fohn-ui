@@ -57,8 +57,6 @@ interface UiInterface
 
     public static function renderException(\Throwable $exception): string;
 
-    public static function bindVueEvent(View $view, string $eventName, string $event): void;
-
     /**
      * Create View objects using seed.
      *

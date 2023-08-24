@@ -32,8 +32,6 @@ class Modal extends View implements VueInterface
 
     protected bool $isClosable = true;
 
-//    public ?View $content = null;
-
     public array $defaultModalTws = [
         'relative',
         'top-20',
@@ -47,17 +45,12 @@ class Modal extends View implements VueInterface
 
     public array $modalTwsWidth = ['w-10/12', 'md:w-4/6', 'lg:w-1/2'];
 
-    // w-10/12 md:w-4/6 lg:w-1/2
-    protected function initRenderTree(): void
-    {
-        parent::initRenderTree();
-//        $this->content = View::addTo($this);
-    }
+
 
     public function addCloseButton(Button $closeBtn): self
     {
         $this->addView($closeBtn, 'Buttons');
-        Ui::bindVueEvent($closeBtn, 'click', 'closeModal');
+        static::bindVueEvent($closeBtn, 'click', 'closeModal');
 
         return $this;
     }

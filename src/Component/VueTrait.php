@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Fohn\Ui\Component;
 
+use Fohn\Ui\Core\Exception;
 use Fohn\Ui\Js\JsChain;
 use Fohn\Ui\Js\JsRenderInterface;
 use Fohn\Ui\Service\Ui;
@@ -19,6 +20,17 @@ trait VueTrait
 
     /** Vue Pinia store id. Must be unique. */
     protected ?string $storeId = null;
+
+    /**
+     * Bind a Vue v-on:event to a View via html attributes.
+     */
+    public static function bindVueEvent(View $view, string $eventName, string $event): void
+    {
+        if (!$view->getTemplate()->hasTag('attributes')) {
+            throw new Exception('Unable to bind Vue event. Template for View does not have the attributes tag.');
+        }
+        $view->appendHtmlAttribute('v-on:' . $eventName, $event);
+    }
 
     protected function getDefaultSelector(): string
     {

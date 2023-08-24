@@ -10,6 +10,7 @@ namespace Fohn\Ui\Component\Modal;
 
 use Fohn\Ui\Callback\Ajax;
 use Fohn\Ui\Component\Modal;
+use Fohn\Ui\Component\VueTrait;
 use Fohn\Ui\Core\HookTrait;
 use Fohn\Ui\Js\JsFunction;
 use Fohn\Ui\Js\JsRenderInterface;
@@ -42,7 +43,7 @@ class AsDialog extends Modal
         $this->callbacks[$name] = Ajax::addAbstractTo($this);
         $eventFn = JsFunction::declareFunction('onCallback', [Variable::set('$event'), StringLiteral::set($name), ObjectLiteral::set($payload)]);
         $this->addView($trigger, 'Buttons');
-        Ui::bindVueEvent($trigger, $eventName, $eventFn->jsRender());
+        static::bindVueEvent($trigger, $eventName, $eventFn->jsRender());
 
         return $this;
     }
