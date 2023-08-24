@@ -39,6 +39,16 @@ $grid = View::addTo(Ui::layout(), ['template' => Ui::templateFromFile(
 $table = Table::addTo($grid);
 $table->setCaption(AppTest::tableCaptionFactory('Countries'));
 
+$actionDelete = (new Table\Action(['reloadTable' => true]))->setTrigger(Button::factory(['label' => 'do some', 'color' => 'neutral']));
+$table->addTableAction($actionDelete)->onTrigger(function ($ids) {
+    return JsStatements::with([JsToast::success('Delete Action! ' . implode(' / ', $ids))]);
+});
+
+$actionTest = (new Table\Action(['keepSelection' => true]))->setTrigger(Button::factory(['label' => 'do test', 'color' => 'neutral']));
+$table->addTableAction($actionTest)->onTrigger(function ($ids) {
+    return JsStatements::with([JsToast::success('Test Action! ' . implode(' / ', $ids))]);
+});
+
 $editDialog = Modal\AsForm::addTo(Ui::layout(), ['title' => 'Edit Country']);
 $deleteDialog = Modal\AsDialog::addTo(Ui::layout(), ['title' => 'Confirm country deletion:']);
 
