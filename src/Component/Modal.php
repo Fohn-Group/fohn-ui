@@ -7,7 +7,6 @@ declare(strict_types=1);
 
 namespace Fohn\Ui\Component;
 
-use Fohn\Ui\Callback\Generic;
 use Fohn\Ui\Core\Exception;
 use Fohn\Ui\Js\Js;
 use Fohn\Ui\Js\JsRenderInterface;
@@ -45,8 +44,6 @@ class Modal extends View implements VueInterface
 
     public array $modalTwsWidth = ['w-10/12', 'md:w-4/6', 'lg:w-1/2'];
 
-
-
     public function addCloseButton(Button $closeBtn): self
     {
         $this->addView($closeBtn, 'Buttons');
@@ -57,7 +54,6 @@ class Modal extends View implements VueInterface
 
     public function addContent(View $view, string $region = self::MAIN_TEMPLATE_REGION): View
     {
-
         return $this->addView($view, $region);
     }
 
@@ -91,7 +87,7 @@ class Modal extends View implements VueInterface
     {
         // @phpstan-ignore-next-line
         $js = $this->jsGetStore(self::PINIA_PREFIX)->setTitle($title);
-        $this->content->appendJsAction($js);
+        $this->appendJsAction($js);
 
         return $js;
     }
