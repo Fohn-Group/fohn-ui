@@ -40,7 +40,7 @@ class Table extends View implements VueInterface
     use VueTrait;
 
     public const CELL_PROP_NAME = 'cell';
-    public const SELECTABLE_ACTION_REGION = 'selectableActions';
+    public const TABLE_ACTION_REGION = 'tableActions';
 
     public string $defaultTemplate = 'vue-component/table.html';
     protected const HOOKS_DATA_REQUEST = self::class . '@data_request';
@@ -144,7 +144,7 @@ class Table extends View implements VueInterface
     public function addTableAction(Action $action): TriggerCtrl
     {
         $this->hasSelectableRows = true;
-        $this->addView($action, self::SELECTABLE_ACTION_REGION);
+        $this->addView($action, self::TABLE_ACTION_REGION);
 
         return new TriggerCtrl($action);
     }
@@ -304,7 +304,7 @@ class Table extends View implements VueInterface
         $this->getTemplate()->setJs('keepTableState', Js::boolean($this->keepTableState));
         $this->getTemplate()->setJs('columns', ArrayLiteral::set($this->getColumnsDefinition()));
         $this->getTemplate()->setJs('itemsPerPage', Integer::set($this->paginatorItemsPerPage));
-        $this->getTemplate()->setJs('tableActions', ObjectLiteral::set($this->actions));
+        $this->getTemplate()->setJs('tableRowActions', ObjectLiteral::set($this->actions));
     }
 
     private function getColumnsDefinition(): array
