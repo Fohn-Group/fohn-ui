@@ -8,8 +8,6 @@ declare(strict_types=1);
 
 namespace Fohn\Ui\Callback;
 
-use Fohn\Ui\Js\JsRenderInterface;
-
 class Ajax extends Request implements GuardInterface
 {
     protected string $type = self::AJAX_TYPE;
