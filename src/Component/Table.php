@@ -137,8 +137,8 @@ class Table extends View implements VueInterface
 
     /**
      * Add a table action to table action region in template.
-     * Return a TriggerCtrl where you can use onTrigger to perform
-     * the callback action.
+     * Return a TriggerCtrl where onTrigger is used to perform the callback action.
+     * The onTrigger closure function received the ids select by user.
      * ex: $table->addTableAction($myAction)->onTrigger(function($ids): JsRenderInterface {});.
      */
     public function addTableAction(Action $action): TriggerCtrl

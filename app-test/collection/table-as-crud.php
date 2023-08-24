@@ -39,8 +39,9 @@ $grid = View::addTo(Ui::layout(), ['template' => Ui::templateFromFile(
 $table = Table::addTo($grid);
 $table->setCaption(AppTest::tableCaptionFactory('Countries'));
 
-$actionDelete = (new Table\Action(['reloadTable' => true]))->setTrigger(Button::factory(['label' => 'do some', 'color' => 'neutral']));
+$actionDelete = (new Table\Action(['reloadTable' => true]))->setTrigger(Button::factory(['label' => 'Delete', 'color' => 'neutral']));
 $table->addTableAction($actionDelete)->onTrigger(function ($ids) {
+    // performs deletes on ids
     return JsStatements::with([JsToast::success('Delete Action! ' . implode(' / ', $ids))]);
 });
 
