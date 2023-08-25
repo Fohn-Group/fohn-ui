@@ -47,7 +47,7 @@ class Action extends View
     {
         $this->getTemplate()->set('actionUrl', $this->cb->getUrl());
         static::bindVueEvent($this->trigger, 'click', 'execute');
-        static::bindVueAttr($this->trigger, 'disabled', '!isEnable');
+        static::bindVueAttr($this->trigger, 'disabled', '!isEnable || isTableFetching');
 
         parent::beforeHtmlRender();
     }

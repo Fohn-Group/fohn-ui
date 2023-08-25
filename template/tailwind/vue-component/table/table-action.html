@@ -1,8 +1,8 @@
 <div id="{$idAttr}"  class="{$classAttr}" {$attributes}>
     <fohn-table-action
-            disabled
+        :is-table-fetching="isFetching"
         action-url="{$actionUrl}"
-        #default="@{execute, isEnable}">
+        #default="@{execute, isEnable, isTableFetching}">
        {$Content}
     </fohn-table-action>
 </div>
