@@ -24,7 +24,7 @@
                 setItemsPerPage,
                 hasSelectableRows,
                 executeRowAction}">
-            <div class="" :class="@{'animate-pulse': isFetching}">
+            <div class="" >
                 {$beforeTable}
                 <div class="flex justify-start">
                     {$tableActions}
@@ -42,6 +42,7 @@
                                 @keyup="searchItems(query)"
                                 class="block w-full py-2 pl-10 mt-1 rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring-0 focus:ring-blue-200 focus:ring-opacity-50"
                                 placeholder="Search..."
+                                :disabled="isFetching"
                                 required
                         >
                         <button v-if="query" type="button" @click="clearSearch()" class="flex absolute inset-y-0 right-0 items-center pr-3">
@@ -51,7 +52,7 @@
                 </div>
                 {/TableSearch}
                 <div class="overflow-auto">
-                <table class="{$tableTws}" >
+                <table class="{$tableTws}" :class="@{'animate-pulse': isFetching}">
                     <caption>{$caption}</caption>
                     {TableHeaders}
                     <thead>
