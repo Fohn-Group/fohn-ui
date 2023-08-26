@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace Fohn\Ui\Component\Table;
 
 use Fohn\Ui\Callback\Ajax;
+use Fohn\Ui\Component\Modal\AsDialog;
 use Fohn\Ui\Component\VueTrait;
 use Fohn\Ui\View;
 

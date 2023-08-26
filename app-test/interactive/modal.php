@@ -32,10 +32,7 @@ $msg = Message::addTo($infoDialog, ['title' => 'Note:', 'color' => 'error']);
 $msg->addText(Utils::getLoremIpsum(20));
 
 $btn = Button::addTo(Ui::layout(), ['label' => 'Display Info', 'color' => 'info', 'type' => 'outline']);
-Jquery::addEventTo($btn, 'click')
-    ->executes([
-        $infoDialog->jsOpen(),
-    ]);
+$infoDialog->jsOpenWith($btn);
 
 // // AS DIALOG
 
@@ -50,7 +47,7 @@ $dialog->addConfirmEvent(function (array $payload) use ($dialog) {
 });
 
 $btn = Button::addTo(Ui::layout(), ['label' => 'Open Dialog', 'color' => 'info', 'type' => 'outline']);
-$dialog->jsOpenWith($btn);
+$dialog->jsOpenWith($btn, ['message' => 'Are you sure?']);
 
 // / AS Form
 

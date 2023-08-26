@@ -48,7 +48,7 @@ class Modal extends View implements VueInterface
     /**
      * Add jQuery event to a View needed to open Modal.
      */
-    public function jsOpenWith(View $view, array $options = ['message' => 'Are you sure ?']): self
+    public function jsOpenWith(View $view, array $options = []): self
     {
         Jquery::addEventTo($view, 'click')
             ->executes([
