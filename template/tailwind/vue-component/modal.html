@@ -28,7 +28,7 @@
                     leave-to-class="opacity-0 translate-y-10 translate-y-0 scale-95">
                 <div v-show="isOpen"
                      class=" overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full inset-0 h-full"
-                     @click="closeModal">
+                     @click="() => closeModal(false)">
                     <div class="__fohn-modal {$modalClassAttr}"
                          @click.stop=""
                          :class="heightCss"
@@ -37,7 +37,7 @@
                             <div class="grid grid-cols-6 p-2">
                                 <div class="col-span-5">{{title}}</div>
                                 <div v-if="isClosable"><span class="bi bi-x float-right text-lg cursor-pointer"
-                                           @click="closeModal"></span></div>
+                                           @click="() => closeModal(false)"></span></div>
                             </div>
                         </div>
                         <div class="__fohn-modal-content p-5" >
