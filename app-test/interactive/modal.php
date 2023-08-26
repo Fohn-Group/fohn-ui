@@ -39,28 +39,18 @@ Jquery::addEventTo($btn, 'click')
 
 // // AS DIALOG
 
-$confirm = AsDialog::addTo(Ui::layout(), ['title' => 'Confirm this action', 'isClosable' => false]);
+$dialog = AsDialog::addTo(Ui::layout(), ['title' => 'Confirm this action', 'isClosable' => false]);
+$dialog->addCancelEvent();
 
-$confirm->addCallbackEvent('cancel', new Button(['label' => 'No', 'type' => 'outline', 'color' => 'error', 'size' => 'small']));
-$confirm->onCallbackEvent('cancel', function (array $payload) use ($confirm) {
-    return JsStatements::with([
-        $confirm->jsClose(),
-    ]);
-});
-
-$confirm->addCallbackEvent('confirm', new Button(['label' => 'Yes', 'type' => 'outline', 'color' => 'success', 'size' => 'small']));
-$confirm->onCallbackEvent('confirm', function (array $payload) use ($confirm) {
+$dialog->addConfirmEvent(function (array $payload) use ($dialog) {
     return JsStatements::with([
         JsToast::info('All goods!', 'Operation confirm.'),
-        $confirm->jsClose(),
+        $dialog->jsClose(),
     ]);
 });
 
 $btn = Button::addTo(Ui::layout(), ['label' => 'Open Dialog', 'color' => 'info', 'type' => 'outline']);
-Jquery::addEventTo($btn, 'click')
-    ->executes([
-        $confirm->jsOpen(['message' => 'Are you sure ?']),
-    ]);
+$dialog->jsOpenWith($btn);
 
 // / AS Form
 

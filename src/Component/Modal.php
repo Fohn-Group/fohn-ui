@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace Fohn\Ui\Component;
 
 use Fohn\Ui\Core\Exception;
+use Fohn\Ui\Js\Jquery;
 use Fohn\Ui\Js\Js;
 use Fohn\Ui\Js\JsRenderInterface;
 use Fohn\Ui\Js\Type\Type;
@@ -44,10 +45,23 @@ class Modal extends View implements VueInterface
 
     public array $modalTwsWidth = ['w-10/12', 'md:w-4/6', 'lg:w-1/2'];
 
+    /**
+     * Add jQuery event to a View needed to open Modal.
+     */
+    public function jsOpenWith(View $view, array $options = ['message' => 'Are you sure ?']): self
+    {
+        Jquery::addEventTo($view, 'click')
+            ->executes([
+                $this->jsOpen($options),
+            ]);
+
+        return $this;
+    }
+
     public function addCloseButton(Button $closeBtn): self
     {
         $this->addView($closeBtn, 'Buttons');
-        static::bindVueEvent($closeBtn, 'click', 'closeModal');
+        static::bindVueEvent($closeBtn, 'click', '() => closeModal(false)');
 
         return $this;
     }
