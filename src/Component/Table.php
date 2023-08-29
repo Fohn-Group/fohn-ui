@@ -60,7 +60,10 @@ class Table extends View implements VueInterface
     public bool $hasColumnsHeader = true;
     public bool $hasTableSearch = true;
 
-    protected bool $hasSelectableRows = true;
+    /** Will add checkmark for rows selection. */
+    public bool $hasSelectableRows = false;
+    /** Will keep user rows selection on page change. */
+    public bool $keepSelectionAcrossPage = false;
 
     /** Will keep table state on refresh. */
     public bool $keepTableState = true;
@@ -141,10 +144,16 @@ class Table extends View implements VueInterface
      * The onTrigger closure function received the ids of rows select by user.
      * ex: $table->addRowsAction($myAction)->onTrigger(function($ids): JsRenderInterface {});.
      */
-    public function addRowsAction(Action $action): TriggerCtrl
+    public function addRowsAction(Action $action, array $urlArgs = []): TriggerCtrl
     {
-        $this->hasSelectableRows = true;
+        if ($action->requireSelection && !$this->hasSelectableRows) {
+            $this->hasSelectableRows = true;
+        }
+
         $this->addView($action, self::TABLE_ACTION_REGION);
+        foreach ($urlArgs as $k => $v) {
+            $action->stickyGet($k, $v);
+        }
 
         return new TriggerCtrl($action);
     }
@@ -301,6 +310,7 @@ class Table extends View implements VueInterface
         $this->getTemplate()->set('storeId', $this->getPiniaStoreId(self::PINIA_PREFIX));
         $this->getTemplate()->set('dataUrl', $this->tableDataCb->getUrl());
         $this->getTemplate()->setJs('hasSelectableRows', Js::boolean($this->hasSelectableRows));
+        $this->getTemplate()->setJs('keepSelectionAcrossPage', Js::boolean($this->keepSelectionAcrossPage));
         $this->getTemplate()->setJs('keepTableState', Js::boolean($this->keepTableState));
         $this->getTemplate()->setJs('columns', ArrayLiteral::set($this->getColumnsDefinition()));
         $this->getTemplate()->setJs('itemsPerPage', Integer::set($this->paginatorItemsPerPage));
