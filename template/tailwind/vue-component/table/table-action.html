@@ -1,5 +1,6 @@
 <div id="{$idAttr}"  class="{$classAttr}" {$attributes}>
     <fohn-table-action
+        :table-rows-selected="selectedRowSize"
         :is-table-fetching="isFetching"
         action-url="{$actionUrl}"
         #default="@{execute, isEnable, isTableFetching}">
