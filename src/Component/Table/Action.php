@@ -8,7 +8,6 @@ declare(strict_types=1);
 namespace Fohn\Ui\Component\Table;
 
 use Fohn\Ui\Callback\Ajax;
-use Fohn\Ui\Component\Modal\AsDialog;
 use Fohn\Ui\Component\VueTrait;
 use Fohn\Ui\View;
 
@@ -18,6 +17,7 @@ class Action extends View
 
     public string $defaultTemplate = 'vue-component/table/table-action.html';
 
+    public bool $requireSelection = true;
     /** Keep selection after action is trigger. */
     public bool $keepSelection = false;
     /** Reload table data after action is trigger. */
