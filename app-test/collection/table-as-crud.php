@@ -36,17 +36,17 @@ $grid = View::addTo(Ui::layout(), ['template' => Ui::templateFromFile(
     dirname(__DIR__) . '/templates/split-columns.html'
 )]);
 
-$table = Table::addTo($grid);
+$table = Table::addTo($grid, ['keepSelectionAcrossPage' => true]);
 $table->setCaption(AppTest::tableCaptionFactory('Countries'));
 
 $actionDelete = (new Table\Action(['reloadTable' => true]))->setTrigger(Button::factory(['label' => 'Delete', 'color' => 'neutral']));
-$table->addTableAction($actionDelete)->onTrigger(function ($ids) {
+$table->addRowsAction($actionDelete)->onTrigger(function ($ids) {
     // performs deletes on ids
     return JsStatements::with([JsToast::success('Delete Action! ' . implode(' / ', $ids))]);
 });
 
-$actionTest = (new Table\Action(['keepSelection' => true]))->setTrigger(Button::factory(['label' => 'do test', 'color' => 'neutral']));
-$table->addTableAction($actionTest)->onTrigger(function ($ids) {
+$actionTest = (new Table\Action(['keepSelection' => true]))->setTrigger(Button::factory(['label' => 'Sleep', 'color' => 'neutral']));
+$table->addRowsAction($actionTest)->onTrigger(function ($ids) {
     return JsStatements::with([JsToast::success('Test Action! ' . implode(' / ', $ids))]);
 });
 
