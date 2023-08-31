@@ -1,12 +1,12 @@
 <div id="{$idAttr}" class="{$classAttr}" {$attributes}>
     <teleport to="#fohn-modals" class="invisible">
-        <fohn-modal
+        <fohn-modal {$events} {$properties}
                 :store-id="{$storeId}"
                 :title="{$title}"
                 :is-closable="{$isClosable}"
                 :callbacks="{callbacks}''{/}"
                 :content-url="{contentUrl}''{/}"
-                #default="@{heightCss, title, isOpen, isLoading, closeModal, openModal, onCallback, message, hasRemoteContent, isClosable}">
+                #default="@{heightCss, title, isOpen, isLoading, closeModal, openModal, onCallback, message, hasRemoteContent, isClosable, confirm, cancel}">
             <!-- Overlay     -->
             <transition
                     enter-active-class="transition ease-out duration-200 transform"
