@@ -21,6 +21,10 @@ trait VueTrait
     /** Vue Pinia store id. Must be unique. */
     protected ?string $storeId = null;
 
+    protected array $properties = [];
+
+    protected array $events = [];
+
     /**
      * Bind a Vue v-on:event to a View via html attributes.
      * <button v-on:click="do something"></button>.
@@ -81,6 +85,31 @@ trait VueTrait
         }
 
         return $isRoot;
+    }
+
+    protected function renderProperties(): void
+    {
+        $props = '';
+        foreach ($this->properties as $k => $v) {
+            $props .= $k . '="' . $v . '"';
+        }
+
+        $this->getTemplate()->tryDangerouslySetHtml('properties', $props);
+    }
+
+    public function addEvent(string $event, JsRenderInterface $declaration): void
+    {
+        $this->events['@' . $event] = $declaration->jsRender();
+    }
+
+    protected function renderEvents(): void
+    {
+        $props = '';
+        foreach ($this->events as $k => $v) {
+            $props .= $k . '="' . $v . '"';
+        }
+
+        $this->getTemplate()->tryDangerouslySetHtml('events', $props);
     }
 
     protected function jsGetStore(string $prefix): JsRenderInterface

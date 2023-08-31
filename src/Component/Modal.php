@@ -113,6 +113,7 @@ class Modal extends View implements VueInterface
         $this->getTemplate()->trySetJs('title', Type::factory($this->title));
         $this->getTemplate()->trySetJs('isClosable', Type::factory($this->isClosable));
 
+        $this->renderEvents();
         $this->createVueApp(self::COMP_NAME, [], $this->getDefaultSelector());
 
         parent::beforeHtmlRender();
