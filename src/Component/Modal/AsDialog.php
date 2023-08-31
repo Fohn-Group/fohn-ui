@@ -23,33 +23,39 @@ class AsDialog extends Modal
     /** @var array<string, Ajax> */
     private array $callbacks = [];
 
-    protected array $cancelButtonSeed = [Button::class, 'label' => 'No', 'type' => 'outline', 'color' => 'error', 'size' => 'small'];
-    protected array $confirmButtonSeed = [Button::class, 'label' => 'Yes', 'type' => 'outline', 'color' => 'success', 'size' => 'small'];
+    public array $cancelButtonSeed = [Button::class, 'label' => 'No', 'type' => 'outline', 'color' => 'error', 'size' => 'small'];
+    public array $confirmButtonSeed = [Button::class, 'label' => 'Yes', 'type' => 'outline', 'color' => 'success', 'size' => 'small'];
 
     /**
      * Add a close event to modal using Closure function.
      * When calling this method with no Closure function, the modal will
      * close without triggering a callback event.
      */
-    public function addCancelEvent(\Closure $fx = null): self
+    public function addCancelEvent(\Closure $fx = null, View $trigger = null): View
     {
+        $cancelTrigger = $trigger ?: View::factoryFromSeed($this->cancelButtonSeed);
         if ($fx) {
-            $this->addCallbackEvent('cancel', View::factoryFromSeed($this->cancelButtonSeed));
+            $this->addCallbackEvent('cancel', $cancelTrigger);
             $this->onCallbackEvent('cancel', $fx);
         } else {
-            $btn = $this->addView(View::factoryFromSeed($this->cancelButtonSeed), 'Buttons');
-            static::bindVueEvent($btn, 'click', 'closeModal(true)');
+            $this->addView($cancelTrigger, 'Buttons');
+            static::bindVueEvent($cancelTrigger, 'click', 'closeModal(true)');
         }
 
-        return $this;
+        return $cancelTrigger;
     }
 
-    public function addConfirmEvent(\Closure $fx): self
+    public function addConfirmEvent(\Closure $fx = null, View $trigger = null): View
     {
-        $this->addCallbackEvent('confirm', View::factoryFromSeed($this->confirmButtonSeed));
-        $this->onCallbackEvent('confirm', $fx);
+        $confirmTrigger = $trigger ?: View::factoryFromSeed($this->confirmButtonSeed);
+        if ($fx) {
+            $this->addCallbackEvent('confirm', $confirmTrigger);
+            $this->onCallbackEvent('confirm', $fx);
+        } else {
+            $this->addView($confirmTrigger, 'Buttons');
+        }
 
-        return $this;
+        return $confirmTrigger;
     }
 
     public function addCallbackEvent(string $name, View $trigger, array $payload = [], string $eventName = 'click'): View
