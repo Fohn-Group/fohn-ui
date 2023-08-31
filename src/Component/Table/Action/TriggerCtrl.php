@@ -23,7 +23,7 @@ class TriggerCtrl
     {
         $extra = ['state' => ['reload' => $this->tableAction->reloadTable, 'keepSelection' => $this->tableAction->keepSelection]];
         $this->tableAction->getCallback()->onAjaxPostRequest(function (array $payload) use ($fx): JsRenderInterface {
-            return $fx($payload['ids']);
+            return $fx($payload['ids'], $this->tableAction->getConfirmationModal());
         }, $extra);
     }
 }
