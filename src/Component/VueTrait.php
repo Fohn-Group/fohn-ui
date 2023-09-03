@@ -87,6 +87,13 @@ trait VueTrait
         return $isRoot;
     }
 
+    public function addProperty(string $property, JsRenderInterface $value, bool $isDynamic = true): self
+    {
+        $this->properties[($isDynamic ? ':' : '') . $property] = $value->jsRender();
+
+        return $this;
+    }
+
     protected function renderProperties(): void
     {
         $props = '';
