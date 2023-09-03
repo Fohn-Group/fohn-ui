@@ -21,11 +21,11 @@ class View extends AbstractView
     public const AFTER_TEMPLATE_REGION = HtmlTemplate::AFTER_TEMPLATE_TAG;
     public const BEFORE_TEMPLATE_REGION = HtmlTemplate::BEFORE_TEMPLATE_TAG;
 
-    protected const CLASS_TEMPLATE_TAG = 'classAttr';
-    protected const ID_TEMPLATE_TAG = 'idAttr';
-    protected const STYLE_TEMPLATE_TAG = 'styleAttr';
-    protected const ATTR_TEMPLATE_TAG = 'attributes';
-    protected const TAG_TEMPLATE_TAG = 'htmlTag';
+    public const CLASS_TEMPLATE_TAG = 'classAttr';
+    public const ID_TEMPLATE_TAG = 'idAttr';
+    public const STYLE_TEMPLATE_TAG = 'styleAttr';
+    public const ATTR_TEMPLATE_TAG = 'attributes';
+    public const TAG_TEMPLATE_TAG = 'htmlTag';
 
     /** @var JsRenderInterface[] */
     private array $jsActions = [];
@@ -364,7 +364,7 @@ class View extends AbstractView
             $attributes .= trim($attr) . '="' . trim((string) $val) . '" ';
         }
         if ($attributes) {
-            $this->getTemplate()->trySet(self::ATTR_TEMPLATE_TAG, trim($attributes));
+            $this->getTemplate()->tryDangerouslySetHtml(self::ATTR_TEMPLATE_TAG, trim($attributes));
         }
     }
 

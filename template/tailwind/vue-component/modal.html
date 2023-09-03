@@ -1,12 +1,12 @@
 <div id="{$idAttr}" class="{$classAttr}" {$attributes}>
     <teleport to="#fohn-modals" class="invisible">
-        <fohn-modal
+        <fohn-modal {$events} {$properties}
                 :store-id="{$storeId}"
                 :title="{$title}"
                 :is-closable="{$isClosable}"
                 :callbacks="{callbacks}''{/}"
                 :content-url="{contentUrl}''{/}"
-                #default="@{heightCss, title, isOpen, isLoading, closeModal, openModal, onCallback, message, hasRemoteContent, isClosable}">
+                #default="@{heightCss, title, isOpen, isLoading, closeModal, openModal, onCallback, message, hasRemoteContent, isClosable, confirm, cancel}">
             <!-- Overlay     -->
             <transition
                     enter-active-class="transition ease-out duration-200 transform"
@@ -28,7 +28,7 @@
                     leave-to-class="opacity-0 translate-y-10 translate-y-0 scale-95">
                 <div v-show="isOpen"
                      class=" overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full inset-0 h-full"
-                     @click="closeModal">
+                     @click="() => closeModal(false)">
                     <div class="__fohn-modal {$modalClassAttr}"
                          @click.stop=""
                          :class="heightCss"
@@ -37,16 +37,14 @@
                             <div class="grid grid-cols-6 p-2">
                                 <div class="col-span-5">{{title}}</div>
                                 <div v-if="isClosable"><span class="bi bi-x float-right text-lg cursor-pointer"
-                                           @click="closeModal"></span></div>
+                                           @click="() => closeModal(false)"></span></div>
                             </div>
                         </div>
-                        <div class="p-5" v-if="message">{{message}}</div>
-                        <div class="__fohn-modal-content p-5 min-h-[120px]" v-if="hasRemoteContent">
-                            <fohn-spinner :spin="isLoading" v-if="isLoading"
-                                          class="grid place-items-center"></fohn-spinner>
-                            {$remoteContent}
+                        <div class="__fohn-modal-content p-5" >
+                            <fohn-spinner v-if="hasRemoteContent && isLoading" :spin="isLoading" v-if="isLoading" class="grid place-items-center"></fohn-spinner>
+                            <div class="px-4" v-if="message">{{message}}</div>
+                            {$Content}
                         </div>
-                        {$Content}
                         <div class="sticky border-t border-gray-200 bottom-0 bg-white p-1">
                             <div class="grid place-content-end">
                                 <div>

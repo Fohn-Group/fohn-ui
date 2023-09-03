@@ -10,41 +10,62 @@ namespace Fohn\Ui\Component\Modal;
 
 use Fohn\Ui\Callback\Ajax;
 use Fohn\Ui\Component\Modal;
-use Fohn\Ui\Core\HookTrait;
 use Fohn\Ui\Js\JsFunction;
 use Fohn\Ui\Js\JsRenderInterface;
 use Fohn\Ui\Js\Type\ObjectLiteral;
 use Fohn\Ui\Js\Type\StringLiteral;
 use Fohn\Ui\Js\Type\Variable;
-use Fohn\Ui\Service\Ui;
+use Fohn\Ui\View;
 use Fohn\Ui\View\Button;
 
 class AsDialog extends Modal
 {
-    use HookTrait;
-
-    public const HOOK_CONFIRM = self::class . '@confirm';
-    public const HOOK_CANCEL = self::class . '@cancel';
-
     /** @var array<string, Ajax> */
     private array $callbacks = [];
 
-    protected ?Button $confirmButton = null;
-    protected ?Button $cancelButton = null;
+    public array $cancelButtonSeed = [Button::class, 'label' => 'Cancel', 'type' => 'outline', 'color' => 'error', 'size' => 'small'];
+    public array $confirmButtonSeed = [Button::class, 'label' => 'Confirm', 'type' => 'outline', 'color' => 'success', 'size' => 'small'];
 
-    protected function initRenderTree(): void
+    /**
+     * Add a close event to modal using Closure function.
+     * When calling this method with no Closure function, the modal will
+     * close without triggering a callback event.
+     */
+    public function addCancelEvent(\Closure $fx = null, View $trigger = null): View
     {
-        parent::initRenderTree();
+        $cancelTrigger = $trigger ?: View::factoryFromSeed($this->cancelButtonSeed);
+        if ($fx) {
+            $this->addCallbackEvent('cancel', $cancelTrigger);
+            $this->onCallbackEvent('cancel', $fx);
+        } else {
+            $this->addView($cancelTrigger, 'Buttons');
+            static::bindVueEvent($cancelTrigger, 'click', 'closeModal(true)');
+        }
+
+        return $cancelTrigger;
     }
 
-    public function addCallbackEvent(string $name, Button $trigger, array $payload = [], string $eventName = 'click'): self
+    public function addConfirmEvent(\Closure $fx = null, View $trigger = null): View
+    {
+        $confirmTrigger = $trigger ?: View::factoryFromSeed($this->confirmButtonSeed);
+        if ($fx) {
+            $this->addCallbackEvent('confirm', $confirmTrigger);
+            $this->onCallbackEvent('confirm', $fx);
+        } else {
+            $this->addView($confirmTrigger, 'Buttons');
+        }
+
+        return $confirmTrigger;
+    }
+
+    public function addCallbackEvent(string $name, View $trigger, array $payload = [], string $eventName = 'click'): View
     {
         $this->callbacks[$name] = Ajax::addAbstractTo($this);
         $eventFn = JsFunction::declareFunction('onCallback', [Variable::set('$event'), StringLiteral::set($name), ObjectLiteral::set($payload)]);
         $this->addView($trigger, 'Buttons');
-        Ui::bindVueEvent($trigger, $eventName, $eventFn->jsRender());
+        static::bindVueEvent($trigger, $eventName, $eventFn->jsRender());
 
-        return $this;
+        return $trigger;
     }
 
     public function onCallbackEvent(string $name, \Closure $fx): self

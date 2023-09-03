@@ -5,7 +5,9 @@
                 data-url="{$dataUrl}"
                 :items-per-page="{$itemsPerPage}"
                 :columns="{$columns}"
-                :actions="{$tableActions}"
+                :has-selectable-rows="{$hasSelectableRows}"
+                :keep-selection-across-page="{$keepSelectionAcrossPage}"
+                :row-actions="{$tableRowActions}"
                 :keep-table-state="{$keepTableState}"
                 #default="@{isFetching,
                 query,
@@ -21,36 +23,58 @@
                 sortTable,
                 clearSearch,
                 setItemsPerPage,
-                executeAction}">
-            <div class="" :class="@{'animate-pulse': isFetching}">
+                hasSelectableRows,
+                selectedRowSize,
+                togglePageRows,
+                pageSelectState,
+                clearSelectedRows,
+                executeRowAction}">
+            <div class="" >
                 {$beforeTable}
-                {TableSearch}
-                <div class="flex justify-end">
-                    <div class="flex relative w-64 py-2">
-                        <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                            <i class="bi bi-search"></i>
-                        </div>
-                        <input
-                                type="text"
-                                v-model="query"
-                                name="_q"
-                                @keyup="searchItems(query)"
-                                class="block w-full py-2 pl-10 mt-1 rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring-0 focus:ring-blue-200 focus:ring-opacity-50"
-                                placeholder="Search..."
-                                required
-                        >
-                        <button v-if="query" type="button" @click="clearSearch()" class="flex absolute inset-y-0 right-0 items-center pr-3">
-                            <i class="bi bi-x"></i>
-                        </button>
-                    </div>
+                <div class="flex justify-start">
+                    {$tableActions}
                 </div>
-                {/TableSearch}
+                <div class="grid grid-cols-2">
+                    <div  class="flex justify-start mx-2 my-auto">
+                        <div v-if="hasSelectableRows">
+                            <span class="text-sm italic">Selected row: {{selectedRowSize}}</span>
+                            <span v-if="selectedRowSize > 0" @click="clearSelectedRows"><i class="mx-1 bi bi-x-circle-fill text-red-600 cursor-pointer"></i></span>
+                        </div>
+                    </div>
+                    {TableSearch}
+                    <div class="flex justify-end">
+                        <div class="flex relative w-64 py-2">
+                            <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                                <i class="bi bi-search"></i>
+                            </div>
+                            <input
+                                    type="text"
+                                    v-model="query"
+                                    name="_q"
+                                    @keyup="searchItems(query)"
+                                    class="block w-full py-2 pl-10 mt-1 rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring-0 focus:ring-blue-200 focus:ring-opacity-50"
+                                    placeholder="Search..."
+                                    :disabled="isFetching"
+                                    required
+                            >
+                            <button v-if="query" type="button" @click="clearSearch()" class="flex absolute inset-y-0 right-0 items-center pr-3">
+                                <i class="bi bi-x"></i>
+                            </button>
+                        </div>
+                    </div>
+                    {/TableSearch}
+                </div>
                 <div class="overflow-auto">
-                <table class="{$tableTws}" >
+                <table class="{$tableTws}" :class="@{'animate-pulse': isFetching}">
                     <caption>{$caption}</caption>
                     {TableHeaders}
                     <thead>
                     <tr class="{$headRowTws} bg-gray-100">
+                        <td v-if="hasSelectableRows">
+                            <div class="flex items-center mx-1 cursor-pointer" @click="togglePageRows">
+                                <i :class="{'bi bi-square': pageSelectState.none, 'bi bi-check-square' : pageSelectState.all, 'bi bi-dash-square' : pageSelectState.partial} "></i>
+                            </div>
+                        </td>
                         <template v-for="column in columns" >
                             <fohn-header-cell :column="column" :sort-column="sortColumn" :sort-direction="sortDirection" @sort-table="sortTable">
                                 {$headers}
@@ -61,9 +85,14 @@
                     {/TableHeaders}
                     <tbody>
                         <template v-for="(row, idx) in rows" :key="idx">
-                            <fohn-table-row :row="row">
-                                <template #default="@{row}" >
-                                    <tr :data-id="row.id" :class="row.css" class="{$rowTws}">
+                            <fohn-table-row :row="row" :has-selection="hasSelectableRows">
+                                <template #default="@{row, isEvenRow, isActionable, isSelected, toggleRow}" >
+                                    <tr :data-id="row.id" :class="row.css" class="{$rowTws}" @click="toggleRow(row.id)">
+                                        <td v-if="isActionable">
+                                            <div class="flex items-center mx-1 cursor-pointer">
+                                                <i :class="{'bi bi-check-square': isSelected, 'bi bi-square': !isSelected}"></i>
+                                            </div>
+                                        </td>
                                         <template v-for="column in columns">
                                             <fohn-table-cell :cell="row.cells[column.name]">
                                                 {$cells}

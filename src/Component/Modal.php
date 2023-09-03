@@ -7,8 +7,8 @@ declare(strict_types=1);
 
 namespace Fohn\Ui\Component;
 
-use Fohn\Ui\Callback\Generic;
 use Fohn\Ui\Core\Exception;
+use Fohn\Ui\Js\Jquery;
 use Fohn\Ui\Js\Js;
 use Fohn\Ui\Js\JsRenderInterface;
 use Fohn\Ui\Js\Type\Type;
@@ -32,11 +32,6 @@ class Modal extends View implements VueInterface
 
     protected bool $isClosable = true;
 
-    protected ?Generic $cb = null;
-
-    public View $content;
-    public View $remoteContent;
-
     public array $defaultModalTws = [
         'relative',
         'top-20',
@@ -50,35 +45,30 @@ class Modal extends View implements VueInterface
 
     public array $modalTwsWidth = ['w-10/12', 'md:w-4/6', 'lg:w-1/2'];
 
-    // w-10/12 md:w-4/6 lg:w-1/2
-    protected function initRenderTree(): void
+    /**
+     * Add jQuery event to a View needed to open Modal.
+     */
+    public function jsOpenWith(View $view, array $options = []): self
     {
-        parent::initRenderTree();
-        $this->content = View::addTo($this);
-        $this->remoteContent = View::addTo($this, [], 'remoteContent');
+        Jquery::addEventTo($view, 'click')
+            ->executes([
+                $this->jsOpen($options),
+            ]);
+
+        return $this;
     }
 
     public function addCloseButton(Button $closeBtn): self
     {
         $this->addView($closeBtn, 'Buttons');
-        Ui::bindVueEvent($closeBtn, 'click', 'closeModal');
+        static::bindVueEvent($closeBtn, 'click', '() => closeModal(false)');
 
         return $this;
     }
 
-    public function onOpen(\Closure $fx): void
+    public function addContent(View $view, string $region = self::MAIN_TEMPLATE_REGION): View
     {
-        $this->cb = Generic::addAbstractTo($this);
-
-        $this->cb->onRequest(function () use ($fx) {
-            $fx($this->remoteContent);
-            $this->cb->terminateJson($this->remoteContent->renderToJsonArr());
-        });
-    }
-
-    public function addContent(View $view): View
-    {
-        return $this->content->addView($view);
+        return $this->addView($view, $region);
     }
 
     /**
@@ -111,7 +101,7 @@ class Modal extends View implements VueInterface
     {
         // @phpstan-ignore-next-line
         $js = $this->jsGetStore(self::PINIA_PREFIX)->setTitle($title);
-        $this->content->appendJsAction($js);
+        $this->appendJsAction($js);
 
         return $js;
     }
@@ -122,10 +112,9 @@ class Modal extends View implements VueInterface
         $this->getTemplate()->trySetJs('storeId', Type::factory($this->getPiniaStoreId(self::PINIA_PREFIX)));
         $this->getTemplate()->trySetJs('title', Type::factory($this->title));
         $this->getTemplate()->trySetJs('isClosable', Type::factory($this->isClosable));
-        if ($this->cb) {
-            $this->getTemplate()->trySetJs('contentUrl', Type::factory($this->cb->getUrl()));
-        }
 
+        $this->renderEvents();
+        $this->renderProperties();
         $this->createVueApp(self::COMP_NAME, [], $this->getDefaultSelector());
 
         parent::beforeHtmlRender();

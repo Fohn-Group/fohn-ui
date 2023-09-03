@@ -93,7 +93,7 @@ class Page extends View
         return $this->layout;
     }
 
-    public function beforeHtmlRender(): void
+    protected function beforeHtmlRender(): void
     {
         if ($this->toastSelector) {
             // @phpstan-ignore-next-line

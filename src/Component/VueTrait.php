@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Fohn\Ui\Component;
 
+use Fohn\Ui\Core\Exception;
 use Fohn\Ui\Js\JsChain;
 use Fohn\Ui\Js\JsRenderInterface;
 use Fohn\Ui\Service\Ui;
@@ -19,6 +20,35 @@ trait VueTrait
 
     /** Vue Pinia store id. Must be unique. */
     protected ?string $storeId = null;
+
+    protected array $properties = [];
+
+    protected array $events = [];
+
+    /**
+     * Bind a Vue v-on:event to a View via html attributes.
+     * <button v-on:click="do something"></button>.
+     */
+    public static function bindVueEvent(View $view, string $eventName, string $event): void
+    {
+        if (!$view->getTemplate()->hasTag(View::ATTR_TEMPLATE_TAG)) {
+            throw new Exception('Unable to bind Vue event. Template for View does not have the attributes tag.');
+        }
+        $view->appendHtmlAttribute('v-on:' . $eventName, $event);
+    }
+
+    /**
+     * Bind a dynamic attribute to a view.
+     * <div :disabled="{isLoading}"></div>.
+     */
+    public static function bindVueAttr(View $view, string $attr, string $value): void
+    {
+        if (!$view->getTemplate()->hasTag(View::ATTR_TEMPLATE_TAG)) {
+            throw new Exception('Unable to bind Vue attribute. Template for View does not have the attributes tag.');
+        }
+
+        $view->appendHtmlAttribute(':' . $attr, $value);
+    }
 
     protected function getDefaultSelector(): string
     {
@@ -55,6 +85,38 @@ trait VueTrait
         }
 
         return $isRoot;
+    }
+
+    public function addProperty(string $property, JsRenderInterface $value, bool $isDynamic = true): self
+    {
+        $this->properties[($isDynamic ? ':' : '') . $property] = $value->jsRender();
+
+        return $this;
+    }
+
+    protected function renderProperties(): void
+    {
+        $props = '';
+        foreach ($this->properties as $k => $v) {
+            $props .= $k . '="' . $v . '"';
+        }
+
+        $this->getTemplate()->tryDangerouslySetHtml('properties', $props);
+    }
+
+    public function addEvent(string $event, JsRenderInterface $declaration): void
+    {
+        $this->events['@' . $event] = $declaration->jsRender();
+    }
+
+    protected function renderEvents(): void
+    {
+        $props = '';
+        foreach ($this->events as $k => $v) {
+            $props .= $k . '="' . $v . '"';
+        }
+
+        $this->getTemplate()->tryDangerouslySetHtml('events', $props);
     }
 
     protected function jsGetStore(string $prefix): JsRenderInterface

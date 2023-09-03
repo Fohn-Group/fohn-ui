@@ -36,8 +36,26 @@ $grid = View::addTo(Ui::layout(), ['template' => Ui::templateFromFile(
     dirname(__DIR__) . '/templates/split-columns.html'
 )]);
 
-$table = Table::addTo($grid);
+$table = Table::addTo($grid, ['keepSelectionAcrossPage' => true]);
 $table->setCaption(AppTest::tableCaptionFactory('Countries'));
+
+$actionDelete = (new Table\Action(['reloadTable' => true]))->setTrigger(Button::factory(['label' => 'Delete', 'color' => 'neutral']));
+$actionMsg = new Table\Action\Messages();
+$actionMsg->single = 'This action will delete 1 country. Are you sure?';
+$actionMsg->multiple = 'This action will delete {#} countries. Are you sure?';
+
+$actionDelete->addConfirmationDialog('Delete countries:', $actionMsg);
+$table->addRowsAction($actionDelete)->onTrigger(function ($ids, $dialog) {
+    // performs deletes on ids
+    return JsStatements::with([JsToast::success('Delete Action! ' . implode(' / ', $ids)), $dialog->jsClose()]);
+});
+
+$actionTest = (new Table\Action(['keepSelection' => true]))->setTrigger(Button::factory(['label' => 'Process', 'color' => 'neutral']));
+$table->addRowsAction($actionTest)->onTrigger(function ($ids) {
+    sleep(2);
+
+    return JsStatements::with([JsToast::success('Process Action! ' . implode(' / ', $ids))]);
+});
 
 $editDialog = Modal\AsForm::addTo(Ui::layout(), ['title' => 'Edit Country']);
 $deleteDialog = Modal\AsDialog::addTo(Ui::layout(), ['title' => 'Confirm country deletion:']);

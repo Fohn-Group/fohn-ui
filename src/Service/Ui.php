@@ -418,17 +418,6 @@ class Ui implements UiInterface
         return JsChain::with(static::service()->jsLibrary)->utils()->browser()->redirect($url, Type::factory($param));
     }
 
-    /**
-     * Bind a Vue v-on:event to a View via html attributes.
-     */
-    public static function bindVueEvent(View $view, string $eventName, string $event): void
-    {
-        if (!$view->getTemplate()->hasTag('attributes')) {
-            throw new Exception('Unable to bind Vue event. Template for View does not have the attributes tag.');
-        }
-        $view->appendHtmlAttribute('v-on:' . $eventName, $event);
-    }
-
     public static function copyView(View $view): View
     {
         /** @var View $viewCopy */

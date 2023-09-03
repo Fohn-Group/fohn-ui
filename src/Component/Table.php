@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace Fohn\Ui\Component;
 
 use Fohn\Ui\Callback\Data;
+use Fohn\Ui\Component\Table\Action;
+use Fohn\Ui\Component\Table\Action\TriggerCtrl;
 use Fohn\Ui\Component\Table\Column;
 use Fohn\Ui\Component\Table\Header;
 use Fohn\Ui\Component\Table\Payload;
@@ -38,6 +40,7 @@ class Table extends View implements VueInterface
     use VueTrait;
 
     public const CELL_PROP_NAME = 'cell';
+    public const TABLE_ACTION_REGION = 'tableActions';
 
     public string $defaultTemplate = 'vue-component/table.html';
     protected const HOOKS_DATA_REQUEST = self::class . '@data_request';
@@ -56,6 +59,11 @@ class Table extends View implements VueInterface
 
     public bool $hasColumnsHeader = true;
     public bool $hasTableSearch = true;
+
+    /** Will add checkmark for rows selection. */
+    public bool $hasSelectableRows = false;
+    /** Will keep user rows selection on page change. */
+    public bool $keepSelectionAcrossPage = false;
 
     /** Will keep table state on refresh. */
     public bool $keepTableState = true;
@@ -130,6 +138,26 @@ class Table extends View implements VueInterface
         return $this;
     }
 
+    /**
+     * Add a table action to table action region in template.
+     * Return a TriggerCtrl where onTrigger is used to perform the callback action.
+     * The onTrigger closure function received the ids of rows select by user.
+     * ex: $table->addRowsAction($myAction)->onTrigger(function($ids): JsRenderInterface {});.
+     */
+    public function addRowsAction(Action $action, array $urlArgs = []): TriggerCtrl
+    {
+        if ($action->requireSelection && !$this->hasSelectableRows) {
+            $this->hasSelectableRows = true;
+        }
+
+        $this->addView($action, self::TABLE_ACTION_REGION);
+        foreach ($urlArgs as $k => $v) {
+            $action->stickyGet($k, $v);
+        }
+
+        return new TriggerCtrl($action);
+    }
+
     public function hasColumn(string $name): bool
     {
         return isset($this->columns[$name]);
@@ -142,7 +170,7 @@ class Table extends View implements VueInterface
         return $this->jsGetStore(self::PINIA_PREFIX)->getCellValue(Js::var($idVar), Js::string($colName));
     }
 
-    public function addActionColumn(string $columnName, string $actionName, View\Button $button, Header $header = null, string $eventName = 'click'): JsFunction
+    public function addActionColumn(string $columnName, string $actionName, View\Button $button, Header $header = null, string $eventName = 'click.stop'): JsFunction
     {
         if (!$this->hasColumn($columnName)) {
             if (!$header) {
@@ -160,7 +188,7 @@ class Table extends View implements VueInterface
             );
         }
         $button->setViewName($actionName);
-        Ui::bindVueEvent($button, $eventName, "executeAction('{$actionName}', cell)");
+        static::bindVueEvent($button, $eventName, "executeRowAction('{$actionName}', cell)");
         $column = $this->getTableColumn($columnName);
         $column->addView($button);
 
@@ -281,10 +309,12 @@ class Table extends View implements VueInterface
     {
         $this->getTemplate()->set('storeId', $this->getPiniaStoreId(self::PINIA_PREFIX));
         $this->getTemplate()->set('dataUrl', $this->tableDataCb->getUrl());
+        $this->getTemplate()->setJs('hasSelectableRows', Js::boolean($this->hasSelectableRows));
+        $this->getTemplate()->setJs('keepSelectionAcrossPage', Js::boolean($this->keepSelectionAcrossPage));
         $this->getTemplate()->setJs('keepTableState', Js::boolean($this->keepTableState));
         $this->getTemplate()->setJs('columns', ArrayLiteral::set($this->getColumnsDefinition()));
         $this->getTemplate()->setJs('itemsPerPage', Integer::set($this->paginatorItemsPerPage));
-        $this->getTemplate()->setJs('tableActions', ObjectLiteral::set($this->actions));
+        $this->getTemplate()->setJs('tableRowActions', ObjectLiteral::set($this->actions));
     }
 
     private function getColumnsDefinition(): array
