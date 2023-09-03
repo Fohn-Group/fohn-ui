@@ -23,8 +23,8 @@ class AsDialog extends Modal
     /** @var array<string, Ajax> */
     private array $callbacks = [];
 
-    public array $cancelButtonSeed = [Button::class, 'label' => 'No', 'type' => 'outline', 'color' => 'error', 'size' => 'small'];
-    public array $confirmButtonSeed = [Button::class, 'label' => 'Yes', 'type' => 'outline', 'color' => 'success', 'size' => 'small'];
+    public array $cancelButtonSeed = [Button::class, 'label' => 'Cancel', 'type' => 'outline', 'color' => 'error', 'size' => 'small'];
+    public array $confirmButtonSeed = [Button::class, 'label' => 'Confirm', 'type' => 'outline', 'color' => 'success', 'size' => 'small'];
 
     /**
      * Add a close event to modal using Closure function.
