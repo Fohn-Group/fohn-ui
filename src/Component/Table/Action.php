@@ -9,6 +9,7 @@ namespace Fohn\Ui\Component\Table;
 
 use Fohn\Ui\Callback\Ajax;
 use Fohn\Ui\Component\Modal\AsDialog;
+use Fohn\Ui\Component\Table\Action\Messages;
 use Fohn\Ui\Component\VueTrait;
 use Fohn\Ui\Js\Js;
 use Fohn\Ui\View;
@@ -40,21 +41,22 @@ class Action extends View
         return $this->cb;
     }
 
-    public function getConfirmationModal(): AsDialog
+    public function getConfirmationModal(): ?AsDialog
     {
         return $this->confirmationModal;
     }
 
-    public function addConfirmationDialog(string $title, string $msg, View\Button $ok = null, View\Button $cancel = null, bool $isClosable = true): self
+    public function addConfirmationDialog(string $title, Messages $messages, View\Button $ok = null, View\Button $cancel = null, bool $isClosable = true): self
     {
+        $this->addProperty('messages', $messages->getJsMessages());
         $this->confirmationModal = AsDialog::addTo($this, ['title' => $title, 'isClosable' => $isClosable]);
-        $this->confirmationModal->setTextContent($msg);
         if (!$isClosable) {
-            $this->confirmationModal->addCancelEvent();
+            $this->confirmationModal->addCancelEvent(null, $cancel);
         }
 
-        $trigger = $this->confirmationModal->addConfirmEvent();
+        $trigger = $this->confirmationModal->addConfirmEvent(null, $ok);
         $this->confirmationModal->addEvent('on-confirm', Js::var('execute($event)'));
+        $this->confirmationModal->addProperty('message', Js::var('actionMsg'));
         static::bindVueEvent($trigger, 'click', 'confirm');
 
         return $this;
@@ -79,6 +81,7 @@ class Action extends View
         static::bindVueAttr($this->trigger, 'disabled', '!isEnable || isTableFetching');
 
         $this->renderEvents();
+        $this->renderProperties();
         parent::beforeHtmlRender();
     }
 }
