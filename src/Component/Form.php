@@ -124,7 +124,7 @@ class Form extends View implements VueInterface
 
     public function jsClearControlsValue(): JsRenderInterface
     {
-        return $this->jsGetStore(self::PINIA_PREFIX)->clearControlValues();
+        return $this->jsGetStore(self::PINIA_PREFIX)->clearControlsValue();
     }
 
     public function getLayout(string $layoutName = self::MAIN_LAYOUT): ?FormLayoutInterface
