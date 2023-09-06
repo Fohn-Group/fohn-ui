@@ -17,6 +17,7 @@ use Fohn\Ui\AppTest\Model\Country;
 use Fohn\Ui\Component\Form;
 use Fohn\Ui\Component\Modal;
 use Fohn\Ui\Component\Table;
+use Fohn\Ui\Js\Jquery;
 use Fohn\Ui\Js\Js;
 use Fohn\Ui\Js\JsRenderInterface;
 use Fohn\Ui\Js\JsStatements;
@@ -39,38 +40,73 @@ $grid = View::addTo(Ui::layout(), ['template' => Ui::templateFromFile(
 $table = Table::addTo($grid, ['keepSelectionAcrossPage' => true]);
 $table->setCaption(AppTest::tableCaptionFactory('Countries'));
 
+$table->addColumn('name', Table\Column\Generic::factory(['isSortable' => true]));
+$table->addColumn('iso', Table\Column\Generic::factory(['isSortable' => true])->alignText('center'));
+$table->addColumn('iso3', Table\Column\Generic::factory(['isSortable' => true])->alignText('center'));
+$table->addColumn('numcode', Table\Column\Integer::factory());
+$table->addColumn('phonecode', Table\Column\Integer::factory());
+
+// ADD Country
+$addDialog = Modal\AsForm::addTo($table, ['title' => 'Add Country:'], Table::TABLE_ACTION_REGION);
+$addForm = $addDialog->addForm(Ui::factory(Form::class));
+$addForm->addControls($modelCtrl->factoryFormControls(null));
+// Response to form submit request.
+$addForm->onSubmit(function (Form $f, ?string $id) use ($modelCtrl, $addDialog, $table): JsRenderInterface {
+    if ($errors = $modelCtrl->saveModelUsingForm($id, $f->getControls())) {
+        $f->addValidationErrors($errors);
+    }
+
+    return JsStatements::with(
+        [
+            JsToast::success('Success!', 'Record added.'),
+            $table->jsDataRequest(),
+            $addDialog->jsClose(),
+        ]
+    );
+});
+
+$btn = Button::addTo($table, ['label' => 'Add Country', 'color' => 'neutral'], Table::TABLE_ACTION_REGION);
+Jquery::addEventTo($btn, 'click')->executes($addDialog->jsOpenWithId(null));
+
+// Multiple Delete action
 $actionDelete = (new Table\Action(['reloadTable' => true]))->setTrigger(Button::factory(['label' => 'Delete', 'color' => 'neutral']));
 $actionMsg = new Table\Action\Messages();
 $actionMsg->single = 'This action will delete 1 country. Are you sure?';
 $actionMsg->multiple = 'This action will delete {#} countries. Are you sure?';
 
 $actionDelete->addConfirmationDialog('Delete countries:', $actionMsg);
-$table->addRowsAction($actionDelete)->onTrigger(function ($ids, $dialog) {
+$table->addRowsAction($actionDelete)->onTrigger(function ($ids, $dialog) use ($modelCtrl) {
     // performs deletes on ids
+    foreach ($ids as $id) {
+        $modelCtrl->delete($id);
+    }
+
     return JsStatements::with([JsToast::success('Delete Action! ' . implode(' / ', $ids)), $dialog->jsClose()]);
 });
 
-$actionTest = (new Table\Action(['keepSelection' => true]))->setTrigger(Button::factory(['label' => 'Process', 'color' => 'neutral']));
-$table->addRowsAction($actionTest)->onTrigger(function ($ids) {
+// Multiple process action
+$actionProcess = (new Table\Action(['keepSelection' => true]))->setTrigger(Button::factory(['label' => 'Process', 'color' => 'neutral']));
+$table->addRowsAction($actionProcess)->onTrigger(function ($ids) {
     sleep(2);
 
     return JsStatements::with([JsToast::success('Process Action! ' . implode(' / ', $ids))]);
 });
 
+// Edit and delete Dialog
 $editDialog = Modal\AsForm::addTo(Ui::layout(), ['title' => 'Edit Country']);
 $deleteDialog = Modal\AsDialog::addTo(Ui::layout(), ['title' => 'Confirm country deletion:']);
 
 // Add form to edit dialog
-$form = $editDialog->addForm(Ui::factory(Form::class));
-$form->addControls($modelCtrl->factoryFormControls(null));
+$editForm = $editDialog->addForm(Ui::factory(Form::class));
+$editForm->addControls($modelCtrl->factoryFormControls(null));
 
 // Response to form request value callback using $ctrl.
-$form->onControlsValueRequest(function ($id, Form\Response\Value $response) use ($modelCtrl) {
+$editForm->onControlsValueRequest(function ($id, Form\Response\Value $response) use ($modelCtrl) {
     $response->mergeValues($modelCtrl->getFormInputValue((string) $id));
 });
 
 // Response to form submit request.
-$form->onSubmit(function (Form $f, ?string $id) use ($modelCtrl, $editDialog, $table): JsRenderInterface {
+$editForm->onSubmit(function (Form $f, ?string $id) use ($modelCtrl, $editDialog, $table): JsRenderInterface {
     if ($errors = $modelCtrl->saveModelUsingForm($id, $f->getControls())) {
         $f->addValidationErrors($errors);
     }
@@ -83,12 +119,6 @@ $form->onSubmit(function (Form $f, ?string $id) use ($modelCtrl, $editDialog, $t
         ]
     );
 });
-
-$table->addColumn('name', Table\Column\Generic::factory(['isSortable' => true]));
-$table->addColumn('iso', Table\Column\Generic::factory(['isSortable' => true])->alignText('center'));
-$table->addColumn('iso3', Table\Column\Generic::factory(['isSortable' => true])->alignText('center'));
-$table->addColumn('numcode', Table\Column\Integer::factory());
-$table->addColumn('phonecode', Table\Column\Integer::factory());
 
 // Add Edit action column to table using a click event (default).
 // The method return a Js arrow function using the cell property value as argument. ex: (cell) => {};
@@ -107,10 +137,12 @@ $deleteActionFn->executes([$deleteDialog->jsOpen(['message' => $msg, 'payload' =
 
 // Add callback event to Dialog when user confirm the action.
 $deleteDialog->addCallbackEvent('confirm', new Button(['label' => 'Delete', 'color' => 'info']));
-$deleteDialog->onCallbackEvent('confirm', function ($payload) use ($deleteDialog, $table) {
+$deleteDialog->onCallbackEvent('confirm', function ($payload) use ($deleteDialog, $table, $modelCtrl) {
     // Delete record in db. Record id is set in $payload['id']
+    $modelCtrl->delete($payload['id']);
+
     return JsStatements::with([
-        JsToast::success('Delete'),
+        JsToast::success('Delete' . $payload['id']),
         $deleteDialog->jsClose(),
         $table->jsDeleteRow($payload[$table->idColumnName]),
     ]);
