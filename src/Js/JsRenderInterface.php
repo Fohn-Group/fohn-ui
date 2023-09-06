@@ -12,6 +12,7 @@ namespace Fohn\Ui\Js;
  * @method updateRow(?string $id, array $row)
  * @method getStoreChain()
  * @method getCellValue(JsRenderInterface $id, JsRenderInterface $name)
+ * @method clearControlsValue()
  */
 interface JsRenderInterface
 {
