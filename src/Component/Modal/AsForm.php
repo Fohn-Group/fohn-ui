@@ -37,11 +37,11 @@ class AsForm extends Modal
     /**
      * Open modal and request Form controls value with a specific id.
      */
-    public function jsOpenWithId(JsRenderInterface $id, array $options = []): array
+    public function jsOpenWithId(?JsRenderInterface $id, array $options = []): array
     {
         return [
             $this->jsOpen($options),
-            $this->form->jsRequestControlsValue($id),
+            $id ? $this->form->jsRequestControlsValue($id) : $this->form->jsClearControlsValue(),
         ];
     }
 }

@@ -45,7 +45,7 @@ $select->setItems($locales);
 $table = Table::addTo($grid, ['hasTableSearch' => false, 'hasPaginator' => false]);
 $table->setCaption(AppTest::tableCaptionFactory('Sales Report'));
 $select->onChange(JsFunction::arrow([Js::var('selectLocale')])->executes([
-    $table->jsDataRequest(['loc' => Js::var('selectLocale')]),
+    $table->jsFetchItems(['loc' => Js::var('selectLocale')]),
 ]));
 
 // Locale get argument to table callback.
