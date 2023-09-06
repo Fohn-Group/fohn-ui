@@ -9,6 +9,7 @@ namespace Fohn\Ui\Js;
  *
  * @method setDataId(JsRenderInterface $id)
  * @method deleteRow(string $id)
+ * @method fetchItems(JsRenderInterface $args)
  * @method updateRow(?string $id, array $row)
  * @method getStoreChain()
  * @method getCellValue(JsRenderInterface $id, JsRenderInterface $name)

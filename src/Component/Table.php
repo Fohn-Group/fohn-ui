@@ -237,9 +237,8 @@ class Table extends View implements VueInterface
         return $this->jsGetStore(self::PINIA_PREFIX)->deleteRow($id);
     }
 
-    public function jsDataRequest(array $args = []): JsRenderInterface
+    public function jsFetchItems(array $args = []): JsRenderInterface
     {
-        // @phpstan-ignore-next-line
         return $this->jsGetStore(self::PINIA_PREFIX)->fetchItems(Js::object($args));
     }
 

@@ -59,7 +59,7 @@ $addForm->onSubmit(function (Form $f, ?string $id) use ($modelCtrl, $addDialog, 
     return JsStatements::with(
         [
             JsToast::success('Success!', 'Record added.'),
-            $table->jsDataRequest(),
+            $table->jsFetchItems(),
             $addDialog->jsClose(),
         ]
     );
