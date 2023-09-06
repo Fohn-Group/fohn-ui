@@ -60,7 +60,7 @@ class ModelController implements ModelControllerInterface
         try {
             $m = $this->getModel()->delete($id);
 
-            return !$m->tryLoad($id)->isLoaded();
+            return $m->tryLoad($id) === null;
         } catch (Exception $e) {
             if (Ui::service()->environment === Ui::DEV_ENV) {
                 throw $e;
