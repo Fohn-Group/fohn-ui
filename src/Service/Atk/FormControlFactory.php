@@ -220,7 +220,7 @@ class FormControlFactory
             $control->onSetValue(function ($value) use ($refModel) {
                 if ($value) {
                     $refEntity = $refModel->tryLoad($value);
-                    if ($refEntity->isLoaded()) {
+                    if ($refEntity) {
                         $selectableItems[$value] = $refEntity->get($refEntity->titleField);
                     }
                 }
@@ -236,7 +236,7 @@ class FormControlFactory
                 $items = self::getSelectItems($refModel);
                 if ($value && !in_array($value, array_column($items, Control\Select::KEY), true)) {
                     $refEntity = $refModel->tryLoad($value);
-                    if ($refEntity->isLoaded()) {
+                    if ($refEntity) {
                         $newItems = [Control\Select::KEY => $value, Control\Select::LABEL => $refEntity->get($refEntity->titleField)];
                         array_unshift($items, $newItems);
                     }
