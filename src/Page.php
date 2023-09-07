@@ -28,16 +28,20 @@ class Page extends View
     public string $title = '';
     protected ?Layout $layout = null;
 
+    /** Used a specific js package version or leave empty for latest. ex: '1.5.0' */
+    public string $fohnJsVersion = '';
+    public string $jQueryVersion = '';
+
     public ?string $toastSelector = '#fohn-toast';
     public string $jsBundleLocation = '/public';
 
     /** An array of Js packages to include in Page. */
     public array $jsPackages = [
         'jquery' => [
-            'url' => 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js',
+            'url' => 'https://unpkg.com/jquery',
         ],
         'fohn-js' => [
-            'url' => 'https://unpkg.com/fohn-ui@1.5.0/dist/fohn-ui.min.js',
+            'url' => 'https://unpkg.com/fohn-ui',
         ],
     ];
 
@@ -59,6 +63,14 @@ class Page extends View
     protected function initRenderTree(): void
     {
         parent::initRenderTree();
+
+        if ($this->fohnJsVersion) {
+            $this->includeJsPackage('fohn-js', 'https://unpkg.com/fohn-ui@' . $this->fohnJsVersion);
+        }
+
+        if ($this->jQueryVersion) {
+            $this->includeJsPackage('jquery', 'https://unpkg.com/jquery@' . $this->jQueryVersion);
+        }
 
         Ui::theme()::styleAs(Base::PAGE, [$this]);
     }
