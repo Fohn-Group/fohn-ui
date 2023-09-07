@@ -28,9 +28,9 @@ class Page extends View
     public string $title = '';
     protected ?Layout $layout = null;
 
-    /** Used a specific js package version or leave empty for latest. ex: '1.5.0' */
-    public string $fohnJsVersion = '';
-    public string $jQueryVersion = '';
+    /** Used a specific js package version, ex: '1.5.0', a wildcard or leave empty for latest. */
+    public string $fohnJsVersion = '^1';
+    public string $jQueryVersion = '^3';
 
     public ?string $toastSelector = '#fohn-toast';
     public string $jsBundleLocation = '/public';
