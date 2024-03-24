@@ -186,6 +186,7 @@ class App
     {
         @set_time_limit($limit);
         ignore_user_abort($ignoreUserAbort);
+        @ini_set('zlib.output_compression', '0');
 
         $response = (new Response())
             ->withHeader('Content-Type', 'text/event-stream')
