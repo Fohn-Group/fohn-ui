@@ -38,6 +38,12 @@ class ServerEvent extends Generic
     /** Keep execution alive or not if connection is close by user. False mean that execution will stop on user aborted. */
     public bool $keepAlive = false;
 
+    /**
+     * The min size of event stream data to be output.
+     * Set it to 4096 when using phpfpm.
+     */
+    public int $minBufferSize = 0;
+
     /** Check if ServerEvent callback has been request and executed. */
     private bool $requestSet = false;
 
@@ -127,7 +133,7 @@ class ServerEvent extends Generic
         $streamEvent = [
             'id: ' . $id . "\n",
             'event: ' . $name . "\n",
-            'data' => $this->wrapEvent($event) . "\n",
+            'data' => $this->wrapEvent(str_pad($event, $this->minBufferSize)) . "\n",
         ];
 
         $this->app->streamEvent($streamEvent);
