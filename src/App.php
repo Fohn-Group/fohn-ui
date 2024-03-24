@@ -188,7 +188,6 @@ class App
         ignore_user_abort($ignoreUserAbort);
         @ini_set('zlib.output_compression', '0');
 
-
         $response = (new Response())
             ->withHeader('Content-Type', 'text/event-stream')
             ->withHeader('Cache-Control', 'no-cache')
@@ -196,6 +195,5 @@ class App
             ->withStatus(200);
 
         $this->emitter->emit($response);
-
     }
 }
