@@ -30,6 +30,7 @@ class AppTest
         ]);
 
         if ($environment === 'dev') {
+            $page->fohnJsVersion = '';
             $page->includeJsPackage('fohn-js', '/public/fohn-ui.js');
             $page->includeCssPackage('fohn-css', '/public/fohn-ui.css');
         }
