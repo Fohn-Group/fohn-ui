@@ -19,7 +19,7 @@ class MockApp extends \Fohn\Ui\App
     {
     }
 
-    public function streamEvent(array $event): void
+    public function streamEvent(array $event, int $bufferSize = 0): void
     {
     }
 }
