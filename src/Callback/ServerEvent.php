@@ -39,8 +39,8 @@ class ServerEvent extends Generic
     public bool $keepAlive = false;
 
     /**
-     * The min size of event stream data to be output.
-     * Set it to 4096 when using phpfpm.
+     * The min size of event stream data buffer.
+     * Set it to 4096 when using phpfpm with apache mod_proxy_fcgi.
      */
     public int $minBufferSize = 0;
 
@@ -133,10 +133,10 @@ class ServerEvent extends Generic
         $streamEvent = [
             'id: ' . $id . "\n",
             'event: ' . $name . "\n",
-            'data' => $this->wrapEvent(str_pad($event, $this->minBufferSize)) . "\n",
+            'data' => $this->wrapEvent($event) . "\n",
         ];
 
-        $this->app->streamEvent($streamEvent);
+        $this->app->streamEvent($streamEvent, $this->minBufferSize);
     }
 
     public function start(JsStatements $statements = null): JsRenderInterface

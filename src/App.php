@@ -170,10 +170,10 @@ class App
     /**
      * Output Server side event to client.
      */
-    public function streamEvent(array $event): void
+    public function streamEvent(array $event, int $bufferSize = 0): void
     {
         foreach ($event as $v) {
-            echo $v;
+            echo $v .= ': ' . str_pad('x', $bufferSize) . "\n\n";
         }
 
         flush();
