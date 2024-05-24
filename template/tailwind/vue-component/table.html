@@ -41,9 +41,10 @@
                             <span v-if="selectedRowSize > 0" @click="clearSelectedRows"><i class="mx-1 bi bi-x-circle-fill text-red-600 cursor-pointer"></i></span>
                         </div>
                     </div>
-                    {TableSearch}
                     <div class="flex justify-end">
-                        <div class="flex relative w-64 py-2">
+                        {$tableFilter}
+                        {TableSearch}
+                        <div class=" relative w-64 py-2">
                             <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                                 <i class="bi bi-search"></i>
                             </div>
@@ -61,8 +62,8 @@
                                 <i class="bi bi-x"></i>
                             </button>
                         </div>
+                        {/TableSearch}
                     </div>
-                    {/TableSearch}
                 </div>
                 <div class="overflow-auto">
                 <table class="{$tableTws}" :class="@{'animate-pulse': isFetching}">

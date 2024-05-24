@@ -17,6 +17,7 @@ use Fohn\Ui\Callback\Data;
 use Fohn\Ui\Component\Table\Action;
 use Fohn\Ui\Component\Table\Action\TriggerCtrl;
 use Fohn\Ui\Component\Table\Column;
+use Fohn\Ui\Component\Table\Filter;
 use Fohn\Ui\Component\Table\Header;
 use Fohn\Ui\Component\Table\Payload;
 use Fohn\Ui\Core\Exception;
@@ -195,6 +196,13 @@ class Table extends View implements VueInterface
         $this->actions[$actionName] = JsFunction::arrow([Variable::set('cell')]);
 
         return $this->actions[$actionName];
+    }
+
+    public function addFilter(): self
+    {
+        $this->addView(Filter::factory(), 'tableFilter');
+
+        return $this;
     }
 
     public function setColumJqueryEvents(string $columnName, string $eventName, array $statements): self
