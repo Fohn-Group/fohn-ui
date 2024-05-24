@@ -65,13 +65,16 @@ class Action extends View
     public function setTrigger(View\Button $btn): self
     {
         $this->trigger = $btn;
-        $this->addView($btn);
 
         return $this;
     }
 
     protected function beforeHtmlRender(): void
     {
+        if ($this->trigger) {
+            $this->addView($this->trigger);
+        }
+
         $this->getTemplate()->set('actionUrl', $this->cb->getUrl());
         if ($this->confirmationModal) {
             $this->trigger->appendHtmlAttribute('onclick', $this->confirmationModal->jsOpen()->jsRender());
