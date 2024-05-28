@@ -15,6 +15,8 @@ class Filter extends View
 {
     use VueTrait;
 
+    private const COMP_NAME = 'fohn-table-filter';
+
     public const FILTER_EVENT_TOGGLE = 'toggleFilterIcon';
     public const FILTER_PROP_ICON_NAME = 'icon-name';
     public const FILTER_PROP_ALT_ICON_NAME = 'alt-icon-name';
@@ -36,6 +38,13 @@ class Filter extends View
 
         $this->addProperty(self::FILTER_PROP_ICON_NAME, Js::string($this->iconName));
         $this->addProperty(self::FILTER_PROP_ALT_ICON_NAME, Js::string($this->altIconName));
+        $this->addProperty('columns', Js::array([['value' => 'id', 'label' => 'Id', 'type' => 'number'], ['value' => 'name', 'label' => 'Name', 'type' => 'text']]));
+        $this->addProperty('operators', Js::array([
+            ['value' => '>', 'label' => '>', 'type' => ['number']],
+            ['value' => '=', 'label' => '=', 'type' => ['number', 'text']],
+            ['value' => 'contains', 'label' => 'Contains', 'type' => ['text']],
+            ]
+        ));
 
         $this->addEvent('click', Js::var(self::FILTER_EVENT_TOGGLE));
     }
@@ -44,6 +53,9 @@ class Filter extends View
     {
         $this->renderEvents();
         $this->renderProperties();
+
+        $this->createVueApp(self::COMP_NAME, [], $this->getDefaultSelector());
+
         parent::beforeHtmlRender();
     }
 }

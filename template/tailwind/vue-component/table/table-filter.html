@@ -1,6 +1,46 @@
 <div id="{$idAttr}"  class="{$classAttr}" {$attributes}>
     <fohn-table-filter {$properties}
-                       #default="@{iconCss, toggleFilterIcon}" >
+                       #default="@{iconCss, toggleFilterIcon, isActive, filters, columns, operators}" >
+        <div class="">
         <i class="cursor-pointer" :class="iconCss" {$events}></i>
+        <div class="absolute right-24 border w-3/4" v-if="isActive">
+            <fohn-table-filter-item :columns="columns" :operators="operators" #default="@{columns, typeOperators, setColumn, setOperator}" >
+                <div class="flex flex-row max-h-64 text-gray-900 text-base my-2">
+                    <fohn-table-filter-select :items="columns"
+                      @on-item-select="setColumn"
+                      #default="@{items, isActive, toggleSelect, closeSelect, openSelect, selectItem}" >
+                        <div class="grow">
+                            <div class="relative mx-2">
+                                <input value="test" readonly @click="toggleSelect" @blur="closeSelect" @focus="openSelect"
+                                       class="cursor-pointer block py-2.5 px-2 w-full  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600"
+                                />
+                                <div class="absolute border px-2 shadow w-full" v-if="isActive">
+                                    <ul>
+                                        <li class="cursor-pointer hover:bg-gray-100" v-for="(item, key) in items" @click="selectItem(key)">{{item.label}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </fohn-table-filter-select>
+                    <fohn-table-filter-select :items="typeOperators"
+                                              @on-item-select="setOperator"
+                                              #default="@{items, isActive, toggleSelect, closeSelect, openSelect, selectItem}" >
+                        <div class="grow">
+                            <div class="relative mx-2">
+                                <input value="test" readonly @click="toggleSelect" @blur="closeSelect" @focus="openSelect"
+                                       class="cursor-pointer block py-2.5 px-2 w-full  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600"
+                                />
+                                <div class="absolute border px-2 shadow w-full" v-if="isActive">
+                                    <ul>
+                                        <li class="cursor-pointer hover:bg-gray-100" v-for="(item, key) in items" @click="selectItem(key)">{{item.label}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </fohn-table-filter-select>
+                </div>
+            </fohn-table-filter-item>
+        </div>
+        </div>
     </fohn-table-filter>
 </div>
