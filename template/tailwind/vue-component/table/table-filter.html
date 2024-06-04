@@ -4,14 +4,20 @@
         <div class="">
         <i class="cursor-pointer" :class="iconCss" {$events}></i>
         <div class="absolute right-24 border w-3/4" v-if="isActive">
-            <fohn-table-filter-item :columns="columns" :operators="operators" #default="@{columns, typeOperators, setColumn, setOperator}" >
+            <div class="flex flex-row text-gray-900 text-base my-2">
+                <div class="grow"></div>
+                <div class="grow">Columns</div>
+                <div class="grow">Operator</div>
+                <div class="grow">Value</div>
+            </div>
+            <fohn-table-filter-item :columns="columns" :operators="operators" :filter-value="@{}" #default="@{ itemLabel, itemOperator, itemComponent, columns, typeOperators, setColumn, setOperator, setValue}" >
                 <div class="flex flex-row max-h-64 text-gray-900 text-base my-2">
-                    <fohn-table-filter-select :items="columns"
+                    <fohn-table-filter-select :items="columns" :init-value="itemLabel"
                       @on-item-select="setColumn"
-                      #default="@{items, isActive, toggleSelect, closeSelect, openSelect, selectItem}" >
+                      #default="@{value, items, isActive, toggleSelect, closeSelect, openSelect, selectItem}" >
                         <div class="grow">
                             <div class="relative mx-2">
-                                <input value="test" readonly @click="toggleSelect" @blur="closeSelect" @focus="openSelect"
+                                <input :value="value" readonly @click="toggleSelect" @blur="closeSelect" @focus="openSelect"
                                        class="cursor-pointer block py-2.5 px-2 w-full  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600"
                                 />
                                 <div class="absolute border px-2 shadow w-full" v-if="isActive">
@@ -22,12 +28,12 @@
                             </div>
                         </div>
                     </fohn-table-filter-select>
-                    <fohn-table-filter-select :items="typeOperators"
+                    <fohn-table-filter-select :items="typeOperators" :init-value="itemOperator"
                                               @on-item-select="setOperator"
-                                              #default="@{items, isActive, toggleSelect, closeSelect, openSelect, selectItem}" >
+                                              #default="@{value, items, isActive, toggleSelect, closeSelect, openSelect, selectItem}" >
                         <div class="grow">
                             <div class="relative mx-2">
-                                <input value="test" readonly @click="toggleSelect" @blur="closeSelect" @focus="openSelect"
+                                <input :value="value" readonly @click="toggleSelect" @blur="closeSelect" @focus="openSelect"
                                        class="cursor-pointer block py-2.5 px-2 w-full  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600"
                                 />
                                 <div class="absolute border px-2 shadow w-full" v-if="isActive">
@@ -38,6 +44,14 @@
                             </div>
                         </div>
                     </fohn-table-filter-select>
+                    <fohn-table-filter-value :component="itemComponent" @on-update-value="setValue" #default="@{ update, componentProps, componentName}">
+                        <div class="grow">
+                            <div class="relative mx-2">
+                                <component :is="componentName"  v-bind="componentProps"
+                                       v-model="componentProps.value" @input="update($event.currentTarget.value)" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring-0 focus:ring-blue-200 focus:ring-opacity-50"></component>
+                            </div>
+                        </div>
+                    </fohn-table-filter-value>
                 </div>
             </fohn-table-filter-item>
         </div>
