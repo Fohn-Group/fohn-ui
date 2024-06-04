@@ -38,13 +38,23 @@ class Filter extends View
 
         $this->addProperty(self::FILTER_PROP_ICON_NAME, Js::string($this->iconName));
         $this->addProperty(self::FILTER_PROP_ALT_ICON_NAME, Js::string($this->altIconName));
-        $this->addProperty('columns', Js::array([['value' => 'id', 'label' => 'Id', 'type' => 'number'], ['value' => 'name', 'label' => 'Name', 'type' => 'text']]));
+        $this->addProperty('columns', Js::array([
+            ['id' => 'id', 'label' => 'Id', 'componentName' => 'input', 'operatorType' => 'number', 'props' => ['type' => 'number', 'name' => 'id']],
+            ['id' => 'name', 'label' => 'Name', 'componentName' => 'input', 'operatorType' => 'text', 'props' => ['type' => 'text', 'name' => 'name']],
+            ['id' => 'date', 'label' => 'Date', 'componentName' => 'flat-pickr', 'operatorType' => 'date', 'props' => ['config' => ['format' => 'Y-m-d']]],
+        ]));
         $this->addProperty('operators', Js::array([
-            ['value' => '>', 'label' => '>', 'type' => ['number']],
-            ['value' => '=', 'label' => '=', 'type' => ['number', 'text']],
-            ['value' => 'contains', 'label' => 'Contains', 'type' => ['text']],
-            ]
-        ));
+            ['id' => '=', 'label' => '=', 'types' => ['number', 'date']],
+            ['id' => '>', 'label' => '>', 'types' => ['number', 'date']],
+            ['id' => 'contains', 'label' => 'contains', 'types' => ['text']],
+            ['id' => 'notContains', 'label' => 'not contains', 'types' => ['text']],
+            ['id' => 'startsWith', 'label' => 'starts with', 'types' => ['text']],
+            ['id' => 'endsWith', 'label' => 'end with', 'types' => ['text']],
+            ['id' => 'equals', 'label' => 'equals', 'types' => ['text']],
+            ['id' => 'isEmpty', 'label' => 'is empty', 'types' => ['text', 'number']],
+            ['id' => 'isNotEmpty', 'label' => 'is not empty', 'types' => ['text', 'number']],
+            ['id' => 'isAnyOf', 'label' => 'is any of', 'types' => ['text', 'number']],
+        ]));
 
         $this->addEvent('click', Js::var(self::FILTER_EVENT_TOGGLE));
     }
