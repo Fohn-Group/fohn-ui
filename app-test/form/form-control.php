@@ -80,3 +80,5 @@ $range->onChange($changeTextFn($chip->content), 500);
 $form->onSubmit(function (Form $f) {
     return JsToast::success('Submit!');
 });
+
+Ui::viewDump($form, 'form');
