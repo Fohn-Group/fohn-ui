@@ -51,8 +51,8 @@ class Filter extends View
     protected array $filters = [];
 
     protected array $matchTypes = [
-      ['id' => 'and', 'label' => 'And'],
-      ['id' => 'or', 'label' => 'Or'],
+        ['id' => 'and', 'label' => 'And'],
+        ['id' => 'or', 'label' => 'Or'],
     ];
 
     protected array $operators = [
@@ -92,13 +92,13 @@ class Filter extends View
 
     /**
      * Provide an array of operator [id => label] for translation.
-     * Ex: setOperatorsLabel(['contains' => 'Contient'])
+     * Ex: setOperatorsLabel(['contains' => 'Contient']).
      */
     public function setOperatorsLabels(array $operators): self
     {
         foreach ($operators as $id => $label) {
             // find operators Id in list and set label
-            for ($i = 0; $i < count($this->operators); $i++) {
+            for ($i = 0; $i < count($this->operators); ++$i) {
                 if ($this->operators[$i]['id'] === $id) {
                     $this->operators[$i]['label'] = $label;
                 }
