@@ -55,6 +55,10 @@ interface UiInterface
 
     public static function templateFromFile(string $fileName): HtmlTemplate;
 
+    public static function getDisplayFormat(string $type): string;
+
+    public function setDisplayFormat(array $formats): void;
+
     public static function renderException(\Throwable $exception): string;
 
     /**

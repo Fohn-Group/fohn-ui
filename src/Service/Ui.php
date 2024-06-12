@@ -68,7 +68,7 @@ class Ui implements UiInterface
 
     public string $timezone = 'UTC';
     public string $locale = 'en_CA';
-    public array $displayformat = [
+    private array $displayFormat = [
         'currency_code' => 'CAD',
         'currency' => '$',
         'date' => 'M d, Y',
@@ -123,7 +123,12 @@ class Ui implements UiInterface
 
     public static function getDisplayFormat(string $name): string
     {
-        return static::service()->displayformat[$name];
+        return static::service()->displayFormat[$name];
+    }
+
+    public function setDisplayFormat(array $formats): void
+    {
+        $this->displayFormat = array_merge($this->displayFormat, $formats);
     }
 
     protected function setTheme(ThemeInterface $theme): void
