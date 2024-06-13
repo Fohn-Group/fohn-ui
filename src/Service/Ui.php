@@ -173,6 +173,11 @@ class Ui implements UiInterface
 
     public static function getQueryParamValue(string $param): ?string
     {
+        return static::service()->returnQueryParamValue($param);
+    }
+
+    protected function returnQueryParamValue(string $param): ?string
+    {
         $params = [];
         parse_str(static::service()->serverRequest()->getUri()->getQuery(), $params);
 

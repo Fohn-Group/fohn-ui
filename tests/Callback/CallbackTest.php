@@ -16,13 +16,14 @@ use Fohn\Ui\Callback\ServerEvent;
 use Fohn\Ui\HtmlTemplate;
 use Fohn\Ui\Js\Js;
 use Fohn\Ui\Service\Ui;
+use Fohn\Ui\Tests\UiTestService;
 use Fohn\Ui\View;
 
 class CallbackTest extends \PHPUnit\Framework\TestCase
 {
     protected function setUp(): void
     {
-        $ui = Ui::service();
+        $ui = UiTestService::service();
         $ui->setApp(new MockApp(['registerShutdown' => false]));
     }
 
