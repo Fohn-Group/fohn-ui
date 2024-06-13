@@ -25,6 +25,8 @@ class Filter extends View
     protected const INPUT_VUE_COMPONENT = 'input';
     protected const DATE_VUE_COMPONENT = 'flat-pickr';
 
+    protected array $removeAllBtnSeed = [View\Button::class, 'label' => 'Remove All', 'type' => 'text'];
+
     /**
      * Vue component to use according to data type.
      */
@@ -110,6 +112,9 @@ class Filter extends View
 
     protected function beforeHtmlRender(): void
     {
+        $btn = $this->addView(View\Button::factoryFromSeed($this->removeAllBtnSeed), 'removeBtn');
+        $this->bindVueEvent($btn, 'click', 'removeAll');
+
         $this->addProperty('columns', Js::array($this->getFitlersColumn()));
         $this->addProperty('operators', Js::array($this->operators));
         $this->addProperty('match-types', Js::array($this->matchTypes));
