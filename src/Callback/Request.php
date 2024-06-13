@@ -113,7 +113,7 @@ class Request extends AbstractView
      */
     public function isTriggered(): bool
     {
-        return (Ui::getQueryParamValue($this->urlTrigger) !== null) && $this->getTriggeredValue() === $this->type;
+        return (Ui::service()->getQueryParamValue($this->urlTrigger) !== null) && $this->getTriggeredValue() === $this->type;
     }
 
     /**
@@ -121,7 +121,7 @@ class Request extends AbstractView
      */
     public function getTriggeredValue(): string
     {
-        return Ui::getQueryParamValue($this->urlTrigger) ?? '';
+        return Ui::service()->getQueryParamValue($this->urlTrigger) ?? '';
     }
 
     /**
@@ -129,7 +129,7 @@ class Request extends AbstractView
      */
     public function canTerminate(): bool
     {
-        return (Ui::getQueryParamValue(static::URL_QUERY_TARGET) !== null) && Ui::getQueryParamValue(static::URL_QUERY_TARGET) === $this->urlTrigger;
+        return (Ui::service()->getQueryParamValue(static::URL_QUERY_TARGET) !== null) && Ui::service()->getQueryParamValue(static::URL_QUERY_TARGET) === $this->urlTrigger;
     }
 
     /**
@@ -177,7 +177,7 @@ class Request extends AbstractView
 
     public static function assertNoCallbackRunning(): void
     {
-        if ($v = Ui::getQueryParamValue(static::URL_QUERY_TARGET) !== null) {
+        if ($v = Ui::service()->getQueryParamValue(static::URL_QUERY_TARGET) !== null) {
             throw (new Exception('Callback requested, but never reached. You may be missing some arguments in request URL.'))
                 ->addMoreInfo('callback requested', $v);
         }

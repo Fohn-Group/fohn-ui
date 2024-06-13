@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Fohn\Ui\Tests\Callback;
 
+use Fohn\Ui\AppTest\UiAppTest;
 use Fohn\Ui\Callback\Ajax;
 use Fohn\Ui\Callback\Data;
 use Fohn\Ui\Callback\Generic;
@@ -15,14 +16,14 @@ use Fohn\Ui\Callback\Jquery;
 use Fohn\Ui\Callback\ServerEvent;
 use Fohn\Ui\HtmlTemplate;
 use Fohn\Ui\Js\Js;
-use Fohn\Ui\Tests\UiTestService;
+use Fohn\Ui\Service\Ui;
 use Fohn\Ui\View;
 
 class CallbackTest extends \PHPUnit\Framework\TestCase
 {
     protected function setUp(): void
     {
-        $ui = UiTestService::service();
+        $ui = Ui::service();
         $ui->setApp(new MockApp(['registerShutdown' => false]));
     }
 

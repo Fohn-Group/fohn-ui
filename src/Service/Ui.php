@@ -171,17 +171,9 @@ class Ui implements UiInterface
         return static::service()->serverRequest;
     }
 
-    public static function getQueryParamValue(string $param): ?string
+    public function getQueryParamValue(string $param): ?string
     {
-        return static::service()->returnQueryParamValue($param);
-    }
-
-    protected function returnQueryParamValue(string $param): ?string
-    {
-        $params = [];
-        parse_str(static::service()->serverRequest()->getUri()->getQuery(), $params);
-
-        return $params[$param] ?? null;
+        return $_GET[$param] ?? null;
     }
 
     /**
@@ -452,7 +444,7 @@ class Ui implements UiInterface
      */
     public static function viewDump(View $view, string $dumpWhen, bool $includeJs = true): void
     {
-        if (self::getQueryParamValue(self::DUMP_PARAM_NAME) === $dumpWhen) {
+        if (static::service()->getQueryParamValue(self::DUMP_PARAM_NAME) === $dumpWhen) {
             static::app()->terminateHtml(static::service()->getDumpPageHtml($view, $includeJs));
         }
     }

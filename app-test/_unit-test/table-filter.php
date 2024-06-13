@@ -11,7 +11,7 @@ use Fohn\Ui\Service\Ui;
 
 require_once __DIR__ . '/../init-ui.php';
 
-if ($locale = Ui::getQueryParamValue('locale')) {
+if ($locale = Ui::service()->getQueryParamValue('locale')) {
     \Fohn\Ui\Component\Utils::requireFLatPickrLocale(\Fohn\Ui\Service\Ui::page(), $locale);
 }
 

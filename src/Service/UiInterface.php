@@ -40,7 +40,7 @@ interface UiInterface
 
     public static function serverRequest(): ServerRequestInterface;
 
-    public static function getQueryParamValue(string $param): ?string;
+    public function getQueryParamValue(string $param): ?string;
 
     public static function timezone(string $timezone = null): string;
 
