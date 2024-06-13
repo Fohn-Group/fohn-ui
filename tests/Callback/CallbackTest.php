@@ -7,7 +7,6 @@ declare(strict_types=1);
 
 namespace Fohn\Ui\Tests\Callback;
 
-use Fohn\Ui\AppTest\UiAppTest;
 use Fohn\Ui\Callback\Ajax;
 use Fohn\Ui\Callback\Data;
 use Fohn\Ui\Callback\Generic;
