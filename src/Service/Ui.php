@@ -447,7 +447,7 @@ class Ui implements UiInterface
      */
     public static function viewDump(View $view, string $dumpWhen, bool $includeJs = true): void
     {
-        if (Ui::getQueryParamValue(self::DUMP_PARAM_NAME) === $dumpWhen){
+        if (self::getQueryParamValue(self::DUMP_PARAM_NAME) === $dumpWhen) {
             static::app()->terminateHtml(static::service()->getDumpPageHtml($view, $includeJs));
         }
     }
