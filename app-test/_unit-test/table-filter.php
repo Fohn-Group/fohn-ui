@@ -11,7 +11,10 @@ use Fohn\Ui\Service\Ui;
 
 require_once __DIR__ . '/../init-ui.php';
 
-// \Fohn\Ui\Component\Utils::requireFLatPickrLocale(\Fohn\Ui\Service\Ui::page(), 'fr', );
+
+if ($locale = Ui::getQueryParamValue('locale')) {
+    \Fohn\Ui\Component\Utils::requireFLatPickrLocale(\Fohn\Ui\Service\Ui::page(), $locale);
+}
 
 $filter = \Fohn\Ui\Component\Table\Filter::addTo(Ui::layout());
 

@@ -40,6 +40,8 @@ interface UiInterface
 
     public static function serverRequest(): ServerRequestInterface;
 
+    public static function getQueryParamValue(string $param): ?string;
+
     public static function timezone(string $timezone = null): string;
 
     /** Get current Url as request by the client, without query. */
