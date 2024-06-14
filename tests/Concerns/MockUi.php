@@ -5,13 +5,13 @@ declare(strict_types=1);
  * Ui Service setup for testing purpose.
  */
 
-namespace Fohn\Ui\Tests;
+namespace Fohn\Ui\Tests\Concerns;
 
 use Fohn\Ui\Service\Ui;
 
-class UiTestService extends Ui
+class MockUi extends Ui
 {
-    protected function returnQueryParamValue(string $param): ?string
+    public function getQueryParamValue(string $param): ?string
     {
         return $_GET[$param] ?? null;
     }

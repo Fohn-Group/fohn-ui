@@ -12,8 +12,6 @@ class ViewTest extends FohnTestCase
 {
     protected function getTopView(array $default = []): View
     {
-        $this->initUiService();
-
         return new View($default);
     }
 

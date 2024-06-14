@@ -9,10 +9,10 @@ use Fohn\Ui\Core\Exception;
 use Fohn\Ui\HtmlTemplate;
 use Fohn\Ui\Service\Ui;
 use Fohn\Ui\Tests\Concerns\MockView;
+use Fohn\Ui\Tests\FohnTestCase;
 use Fohn\Ui\View;
-use PHPUnit\Framework\TestCase;
 
-class UiServiceTest extends TestCase
+class UiServiceTest extends FohnTestCase
 {
     public function testGenerateId(): void
     {

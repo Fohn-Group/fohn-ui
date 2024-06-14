@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace Fohn\Ui\Tests;
 
-use Fohn\Ui\Service\Ui;
+use Fohn\Ui\Tests\Concerns\MockApp;
+use Fohn\Ui\Tests\Concerns\MockUi;
 use PHPUnit\Framework\TestCase;
 
 class FohnTestCase extends TestCase
 {
-    public function initUiService(): void
+    public function __construct(string $name = null, array $data = [], $dataName = '')
     {
-        $ui = Ui::service();
-        $ui->appendTemplateDirectories([dirname(__DIR__) . \DIRECTORY_SEPARATOR . 'template' . \DIRECTORY_SEPARATOR . 'tailwind']);
+        MockUi::service();
+        MockUi::service()->setApp(new MockApp(['registerShutdown' => false]));
+
+        parent::__construct($name, $data, $dataName);
     }
 }
