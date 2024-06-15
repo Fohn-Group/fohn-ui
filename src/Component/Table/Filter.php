@@ -88,7 +88,7 @@ class Filter extends View
         return static::VUE_COMPONENT_NAME_TYPE[$type];
     }
 
-    public function addFilter(FilterInterface $filter): FilterInterface
+    public function addColumnFilter(FilterInterface $filter): FilterInterface
     {
         $this->filters[$filter->getId()] = $filter;
 
@@ -102,7 +102,7 @@ class Filter extends View
     public function setOperatorsLabels(array $operators): self
     {
         foreach ($operators as $id => $label) {
-            // find operators Id in list and set label
+            // find operators id in list and set label
             for ($i = 0; $i < count($this->operators); ++$i) {
                 if ($this->operators[$i]['id'] === $id) {
                     $this->operators[$i]['label'] = $label;

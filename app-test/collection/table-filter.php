@@ -37,10 +37,10 @@ $table->addColumn('numcode', Table\Column\Integer::factory());
 $table->addColumn('phonecode', Table\Column\Integer::factory());
 
 $filter = $table->addFilter();
-$filter->addFilter(new Table\Filter\Text('name'));
-$filter->addFilter(new Table\Filter\Text('iso'));
-$filter->addFilter(new Table\Filter\Text('iso3'));
-$filter->addFilter(new Table\Filter\Number('numcode'));
+$filter->addColumnFilter(new Table\Filter\Text('name'));
+$filter->addColumnFilter(new Table\Filter\Text('iso'));
+$filter->addColumnFilter(new Table\Filter\Text('iso3'));
+$filter->addColumnFilter(new Table\Filter\Number('numcode'));
 
 // Response to an onDataRequest event from Table.
 // Fill in Table\Result\Set $dataSet depending on $payload value.

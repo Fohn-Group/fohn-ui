@@ -17,10 +17,10 @@ if ($locale = Ui::service()->getQueryParamValue('locale')) {
 
 $filter = \Fohn\Ui\Component\Table\Filter::addTo(Ui::layout());
 
-$filter->addFilter(new Number('id'));
-$filter->addFilter(new Text('name'));
-$filter->addFilter(new Date('date', Ui::getDisplayFormat('date')));
-$filter->addFilter(new Time('time'));
-$filter->addFilter(new DateTime('datetime', Ui::getDisplayFormat('datetime')));
+$filter->addColumnFilter(new Number('id'));
+$filter->addColumnFilter(new Text('name'));
+$filter->addColumnFilter(new Date('date', Ui::getDisplayFormat('date')));
+$filter->addColumnFilter(new Time('time'));
+$filter->addColumnFilter(new DateTime('datetime', Ui::getDisplayFormat('datetime')));
 
 Ui::viewDump($filter, 'filter');
