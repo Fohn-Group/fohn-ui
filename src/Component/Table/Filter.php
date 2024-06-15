@@ -80,7 +80,7 @@ class Filter extends View
         ['id' => FilterOperators::IS_ON_OR_BEFORE, 'label' => 'Is On Or Before', 'types' => ['date', 'datetime', 'time'], 'requiredValue' => true],
         ['id' => FilterOperators::IS_EMPTY, 'label' => 'Is Empty', 'types' => ['text', 'number', 'date', 'datetime', 'time'], 'requiredValue' => false],
         ['id' => FilterOperators::IS_NOT_EMPTY, 'label' => 'Is Not Empty', 'types' => ['text', 'number', 'date', 'datetime', 'time'], 'requiredValue' => false],
-//        ['id' => FilterOperators::IS_ANY_OF, 'label' => 'Is Any Of', 'types' => ['text', 'number'], 'requiredValue' => true], To add with multiple value component
+        // ['id' => FilterOperators::IS_ANY_OF, 'label' => 'Is Any Of', 'types' => ['text', 'number'], 'requiredValue' => true], To add with multiple value component
     ];
 
     public static function getComponentName(string $type): string
