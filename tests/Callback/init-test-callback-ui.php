@@ -27,7 +27,7 @@ Ui::service()->boot(function (Ui $ui) use ($config) {
     Data::setDb($config['db']);
 
     $ui->environment = $config['env'];
-    $ui->displayformat = $config['format'];
+    $ui->setDisplayFormat($config['format']);
     $ui->timezone($config['timezone']);
 
     $ui->setApp($app);

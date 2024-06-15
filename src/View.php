@@ -473,7 +473,7 @@ class View extends AbstractView
      */
     public function stickyGet(string $name, string $newValue = null): ?string
     {
-        $this->stickyArgs[$name] = $_GET[$name] ?? $newValue;
+        $this->stickyArgs[$name] = Ui::service()->getQueryParamValue($name) ?? $newValue;
 
         return $this->stickyArgs[$name];
     }

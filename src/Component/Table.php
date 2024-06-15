@@ -198,11 +198,12 @@ class Table extends View implements VueInterface
         return $this->actions[$actionName];
     }
 
-    public function addFilter(): self
+    public function addFilter(): Filter
     {
-        $this->addView(Filter::factory(), 'tableFilter');
+        $filter = Filter::factory();
+        $this->addView($filter, 'tableFilter');
 
-        return $this;
+        return $filter;
     }
 
     public function setColumJqueryEvents(string $columnName, string $eventName, array $statements): self

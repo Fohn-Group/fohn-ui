@@ -7,7 +7,6 @@ namespace Fohn\Ui\AppTest;
 use Fohn\Ui\AppTest\Model\Country;
 use Fohn\Ui\Component\Form;
 use Fohn\Ui\Js\JsToast;
-use Fohn\Ui\Service\Atk\FormModelController;
 use Fohn\Ui\Service\Data;
 use Fohn\Ui\Service\Ui;
 use Fohn\Ui\Tailwind\Tw;
@@ -15,7 +14,7 @@ use Fohn\Ui\View;
 
 require_once __DIR__ . '/../init-ui.php';
 
-$modelCtrl = new FormModelController(new Country(Data::db()));
+$modelCtrl = Data::formModelCtrl(new Country(Data::db()));
 $id = (string) $modelCtrl->getModel()->tryLoadAny()->get('id');
 
 $form = Form::addTo(Ui::layout());

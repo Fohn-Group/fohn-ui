@@ -40,6 +40,8 @@ interface UiInterface
 
     public static function serverRequest(): ServerRequestInterface;
 
+    public function getQueryParamValue(string $param): ?string;
+
     public static function timezone(string $timezone = null): string;
 
     /** Get current Url as request by the client, without query. */
@@ -54,6 +56,10 @@ interface UiInterface
     public static function viewRenderer(View $view): ViewRenderer;
 
     public static function templateFromFile(string $fileName): HtmlTemplate;
+
+    public static function getDisplayFormat(string $type): string;
+
+    public function setDisplayFormat(array $formats): void;
 
     public static function renderException(\Throwable $exception): string;
 

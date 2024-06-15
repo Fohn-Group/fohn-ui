@@ -68,7 +68,7 @@ class Ui implements UiInterface
 
     public string $timezone = 'UTC';
     public string $locale = 'en_CA';
-    public array $displayformat = [
+    private array $displayFormat = [
         'currency_code' => 'CAD',
         'currency' => '$',
         'date' => 'M d, Y',
@@ -123,7 +123,12 @@ class Ui implements UiInterface
 
     public static function getDisplayFormat(string $name): string
     {
-        return static::service()->displayformat[$name];
+        return static::service()->displayFormat[$name];
+    }
+
+    public function setDisplayFormat(array $formats): void
+    {
+        $this->displayFormat = array_merge($this->displayFormat, $formats);
     }
 
     protected function setTheme(ThemeInterface $theme): void
@@ -166,6 +171,27 @@ class Ui implements UiInterface
         return static::service()->serverRequest;
     }
 
+    public function getQueryParamValue(string $param): ?string
+    {
+        $params = [];
+        parse_str(static::service()->serverRequest()->getUri()->getQuery(), $params);
+
+        return $params[$param] ?? null;
+    }
+
+    /**
+     * return request url.
+     */
+    public static function parseRequestUrl(): string
+    {
+        return static::service()->serverRequest()->getUri()->getPath();
+    }
+
+    public static function buildUrl(string $url, array $params = []): string
+    {
+        return (string) (new Uri($url))->withQuery(Query::build($params));
+    }
+
     public static function locale(string $locale = null, int $option = \LC_ALL): string
     {
         if ($locale) {
@@ -187,7 +213,7 @@ class Ui implements UiInterface
 
     /**
      * Factory method when seed is provide.
-     * $seed[0] must contains the class name.
+     * $seed[0] must contain the class name.
      * The rest of the seed determine object properties.
      *
      * @return mixed
@@ -226,19 +252,6 @@ class Ui implements UiInterface
         static::service()->assertIsSubClassOfAbsctractView($className);
 
         return new $className($properties);
-    }
-
-    /**
-     * Create Url from a ServerRequest path and add $params as Get query.
-     */
-    public static function parseRequestUrl(): string
-    {
-        return static::service()->serverRequest()->getUri()->getPath();
-    }
-
-    public static function buildUrl(string $url, array $params = []): string
-    {
-        return (string) (new Uri($url))->withQuery(Query::build($params));
     }
 
     /**
@@ -434,11 +447,8 @@ class Ui implements UiInterface
      */
     public static function viewDump(View $view, string $dumpWhen, bool $includeJs = true): void
     {
-        $needDump = $_GET[self::DUMP_PARAM_NAME] ?? null;
-        if ($needDump) {
-            if ($needDump === $dumpWhen) {
-                static::app()->terminateHtml(static::service()->getDumpPageHtml($view, $includeJs));
-            }
+        if (static::service()->getQueryParamValue(self::DUMP_PARAM_NAME) === $dumpWhen) {
+            static::app()->terminateHtml(static::service()->getDumpPageHtml($view, $includeJs));
         }
     }
 

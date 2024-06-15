@@ -5,7 +5,7 @@ declare(strict_types=1);
  * App for Callback testing.
  */
 
-namespace Fohn\Ui\Tests\Callback;
+namespace Fohn\Ui\Tests\Concerns;
 
 class MockApp extends \Fohn\Ui\App
 {

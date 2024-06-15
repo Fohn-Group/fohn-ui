@@ -113,7 +113,7 @@ class Request extends AbstractView
      */
     public function isTriggered(): bool
     {
-        return isset($_GET[$this->urlTrigger]) && $this->getTriggeredValue() === $this->type;
+        return (Ui::service()->getQueryParamValue($this->urlTrigger) !== null) && $this->getTriggeredValue() === $this->type;
     }
 
     /**
@@ -121,7 +121,7 @@ class Request extends AbstractView
      */
     public function getTriggeredValue(): string
     {
-        return $_GET[$this->urlTrigger] ?? '';
+        return Ui::service()->getQueryParamValue($this->urlTrigger) ?? '';
     }
 
     /**
@@ -129,7 +129,7 @@ class Request extends AbstractView
      */
     public function canTerminate(): bool
     {
-        return isset($_GET[static::URL_QUERY_TARGET]) && $_GET[static::URL_QUERY_TARGET] === $this->urlTrigger;
+        return (Ui::service()->getQueryParamValue(static::URL_QUERY_TARGET) !== null) && Ui::service()->getQueryParamValue(static::URL_QUERY_TARGET) === $this->urlTrigger;
     }
 
     /**
@@ -177,9 +177,9 @@ class Request extends AbstractView
 
     public static function assertNoCallbackRunning(): void
     {
-        if (isset($_GET[static::URL_QUERY_TARGET])) {
+        if ($v = Ui::service()->getQueryParamValue(static::URL_QUERY_TARGET) !== null) {
             throw (new Exception('Callback requested, but never reached. You may be missing some arguments in request URL.'))
-                ->addMoreInfo('callback requested', $_GET[static::URL_QUERY_TARGET]);
+                ->addMoreInfo('callback requested', $v);
         }
     }
 }

@@ -34,7 +34,7 @@
                 <div class="flex justify-start">
                     {$tableActions}
                 </div>
-                <div class="grid grid-cols-2">
+                <div class="grid grid-cols-2 relative">
                     <div  class="flex justify-start mx-2 my-auto">
                         <div v-if="hasSelectableRows">
                             <span class="text-sm italic">Selected row: {{selectedRowSize}}</span>
@@ -42,7 +42,6 @@
                         </div>
                     </div>
                     <div class="flex justify-end">
-                        {$tableFilter}
                         {TableSearch}
                         <div class=" relative w-64 py-2">
                             <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
@@ -67,7 +66,7 @@
                 </div>
                 <div class="overflow-auto">
                 <table class="{$tableTws}" :class="@{'animate-pulse': isFetching}">
-                    <caption>{$caption}</caption>
+                    <caption><div class="flex flex-row relative">{$caption}{$tableFilter}</div></caption>
                     {TableHeaders}
                     <thead>
                     <tr class="{$headRowTws} bg-gray-100">
