@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace Fohn\Ui\Component\Table;
 
 use Fohn\Ui\Component\Table\Filter\FilterInterface;
+use Fohn\Ui\Component\Table\Filter\FilterOperators;
 use Fohn\Ui\Component\VueTrait;
 use Fohn\Ui\Js\Js;
 use Fohn\Ui\View;
@@ -58,26 +59,28 @@ class Filter extends View
     ];
 
     protected array $operators = [
-        ['id' => 'contains', 'label' => 'Contains', 'types' => ['text'], 'requiredValue' => true],
-        ['id' => 'notContains', 'label' => 'Not Contains', 'types' => ['text'], 'requiredValue' => true],
-        ['id' => 'startsWith', 'label' => 'Starts With', 'types' => ['text'], 'requiredValue' => true],
-        ['id' => 'endsWith', 'label' => 'End With', 'types' => ['text'], 'requiredValue' => true],
-        ['id' => 'equals', 'label' => 'Equals', 'types' => ['text'], 'requiredValue' => true],
-        ['id' => '=', 'label' => '=', 'types' => ['number'], 'requiredValue' => true],
-        ['id' => '!=', 'label' => '!=', 'types' => ['number'], 'requiredValue' => true],
-        ['id' => '>', 'label' => '>', 'types' => ['number'], 'requiredValue' => true],
-        ['id' => '>=', 'label' => '>=', 'types' => ['number'], 'requiredValue' => true],
-        ['id' => '<', 'label' => '<', 'types' => ['number'], 'requiredValue' => true],
-        ['id' => '<=', 'label' => '<=', 'types' => ['number'], 'requiredValue' => true],
-        ['id' => 'is', 'label' => 'Is', 'types' => ['date', 'datetime', 'time', 'boolean'], 'requiredValue' => true],
-        ['id' => 'isNot', 'label' => 'Is Not', 'types' => ['date', 'datetime', 'time'], 'requiredValue' => true],
-        ['id' => 'isAfter', 'label' => 'Is After', 'types' => ['date', 'datetime', 'time'], 'requiredValue' => true],
-        ['id' => 'isOnOrAfter', 'label' => 'Is On Or After', 'types' => ['date', 'datetime', 'time'], 'requiredValue' => true],
-        ['id' => 'isBefore', 'label' => 'Is Before', 'types' => ['date', 'datetime', 'time'], 'requiredValue' => true],
-        ['id' => 'isOnOrBefore', 'label' => 'Is On Or Before', 'types' => ['date', 'datetime', 'time'], 'requiredValue' => true],
-        ['id' => 'isEmpty', 'label' => 'Is Empty', 'types' => ['text', 'number', 'date', 'datetime', 'time'], 'requiredValue' => false],
-        ['id' => 'isNotEmpty', 'label' => 'Is Not Empty', 'types' => ['text', 'number', 'date', 'datetime', 'time'], 'requiredValue' => false],
-        //        ['id' => 'isAnyOf', 'label' => 'Is Any Of', 'types' => ['text', 'number'], 'requiredValue' => true], To add with multiple value component
+        ['id' => FilterOperators::TEXT_CONTAINS, 'label' => 'Contains', 'types' => ['text'], 'requiredValue' => true],
+        ['id' => FilterOperators::TEXT_NOT_CONTAINS, 'label' => 'Not Contains', 'types' => ['text'], 'requiredValue' => true],
+        ['id' => FilterOperators::TEXT_STARTS_WITH, 'label' => 'Starts With', 'types' => ['text'], 'requiredValue' => true],
+        ['id' => FilterOperators::TEXT_NOT_STARTS_WITH, 'label' => 'Not Starts With', 'types' => ['text'], 'requiredValue' => true],
+        ['id' => FilterOperators::TEXT_ENDS_WITH, 'label' => 'End With', 'types' => ['text'], 'requiredValue' => true],
+        ['id' => FilterOperators::TEXT_NOT_ENDS_WITH, 'label' => 'Not End With', 'types' => ['text'], 'requiredValue' => true],
+        ['id' => FilterOperators::TEXT_EQUALS, 'label' => 'Equals', 'types' => ['text'], 'requiredValue' => true],
+        ['id' => FilterOperators::EQUAL, 'label' => '=', 'types' => ['number'], 'requiredValue' => true],
+        ['id' => FilterOperators::NOT_EQUAL, 'label' => '!=', 'types' => ['number'], 'requiredValue' => true],
+        ['id' => FilterOperators::GREATER, 'label' => '>', 'types' => ['number'], 'requiredValue' => true],
+        ['id' => FilterOperators::GREATER_EQUAL, 'label' => '>=', 'types' => ['number'], 'requiredValue' => true],
+        ['id' => FilterOperators::LESS, 'label' => '<', 'types' => ['number'], 'requiredValue' => true],
+        ['id' => FilterOperators::LESS_EQUAL, 'label' => '<=', 'types' => ['number'], 'requiredValue' => true],
+        ['id' => FilterOperators::IS, 'label' => 'Is', 'types' => ['date', 'datetime', 'time', 'boolean'], 'requiredValue' => true],
+        ['id' => FilterOperators::IS_NOT, 'label' => 'Is Not', 'types' => ['date', 'datetime', 'time'], 'requiredValue' => true],
+        ['id' => FilterOperators::IS_AFTER, 'label' => 'Is After', 'types' => ['date', 'datetime', 'time'], 'requiredValue' => true],
+        ['id' => FilterOperators::IS_ON_OR_AFTER, 'label' => 'Is On Or After', 'types' => ['date', 'datetime', 'time'], 'requiredValue' => true],
+        ['id' => FilterOperators::IS_BEFORE, 'label' => 'Is Before', 'types' => ['date', 'datetime', 'time'], 'requiredValue' => true],
+        ['id' => FilterOperators::IS_ON_OR_BEFORE, 'label' => 'Is On Or Before', 'types' => ['date', 'datetime', 'time'], 'requiredValue' => true],
+        ['id' => FilterOperators::IS_EMPTY, 'label' => 'Is Empty', 'types' => ['text', 'number', 'date', 'datetime', 'time'], 'requiredValue' => false],
+        ['id' => FilterOperators::IS_NOT_EMPTY, 'label' => 'Is Not Empty', 'types' => ['text', 'number', 'date', 'datetime', 'time'], 'requiredValue' => false],
+//        ['id' => FilterOperators::IS_ANY_OF, 'label' => 'Is Any Of', 'types' => ['text', 'number'], 'requiredValue' => true], To add with multiple value component
     ];
 
     public static function getComponentName(string $type): string
