@@ -35,7 +35,7 @@
                     <div class="flex-none italic text-sm text-blue-400"> # Results: {{filterMatchResult}}</div>
                     <div class="flex-grow container"><div class="flex justify-end">{$removeBtn}</div></div>
                 </div>
-                <div class="grid grid-cols-12 gap-1 text-sm text-blue-500 italic my-2">
+                <div class="grid grid-cols-12 gap-1 text-sm text-left text-blue-500 italic my-2 pl-6">
                         <div class=""></div>
                         <div class="col-span-4">Columns</div>
                         <div class="col-span-3">Operator</div>
@@ -65,7 +65,7 @@
                                             <i :class="@{'bi bi-caret-down-fill': !isActive, 'bi bi-caret-up-fill' : isActive}"></i>
                                         </div>
                                     </div>
-                                    <div class="absolute border px-2 shadow w-full leading-6 text-sm bg-white z-10" v-if="isActive">
+                                    <div class="absolute border px-2 shadow w-full leading-6 text-sm text-left bg-white z-10" v-if="isActive">
                                         <ul>
                                             <li class="cursor-pointer hover:bg-gray-100" v-for="(item, key) in items"
                                                 @click.stop="selectItem(key)">{{item.label}}
@@ -88,7 +88,7 @@
                                             <i :class="@{'bi bi-caret-down-fill': !isActive, 'bi bi-caret-up-fill' : isActive}"></i>
                                         </div>
                                     </div>
-                                    <div class="absolute border px-2 shadow w-full bg-white leading-6 text-sm z-10" v-if="isActive">
+                                    <div class="absolute border px-2 shadow w-full bg-white leading-6 text-sm text-left z-10" v-if="isActive">
                                         <ul>
                                             <li class="cursor-pointer hover:bg-gray-100" v-for="(item, key) in items"
                                                 @click.stop="selectItem(key)">{{item.label}}
