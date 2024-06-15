@@ -1,12 +1,12 @@
 <div id="{$idAttr}" class="{$classAttr}" {$attributes}>
     <fohn-table-filter {$properties}
-                       #default="@{iconCss, toggleFilterIcon, isActive, matchType, matchTypes, filters, removeAll, filterCount, columns, operators, removeFilter, insertFilter, updateFilter, setMatchType}">
+                       #default="@{iconCss, toggleFilterIcon, isActive, matchType, matchTypes, filters, filterMatchResult, removeAll, filterCount, columns, operators, removeFilter, insertFilter, updateFilter, setMatchType}">
         <div class="">
             <div class="flex flex-row items-center" @click="toggleFilterIcon">
                 <div><i class="cursor-pointer" :class="iconCss"></i></div>
                 <div class="text-sm mx-2 -mt-3">{{filterCount > 0 ? filterCount : ''}}</div>
             </div>
-            <div class="absolute right-24 border w-3/4" v-if="isActive">
+            <div class="absolute left-0 bg-white z-20 shadow-xl top-24 border w-full lg:w-5/6" v-if="isActive">
                 <div class="flex flex-row items-baseline text-base text-gray-800 border-b border-gray-300 py-2">
                     <div class="flex-none mx-2">Match Type:</div>
                     <fohn-item-select :init-value="matchType" :items="matchTypes"
@@ -32,6 +32,7 @@
                             </div>
                         </div>
                     </fohn-item-select>
+                    <div class="flex-none italic text-sm text-blue-400"> # Results: {{filterMatchResult}}</div>
                     <div class="flex-grow container"><div class="flex justify-end">{$removeBtn}</div></div>
                 </div>
                 <div class="grid grid-cols-12 gap-1 text-sm text-blue-500 italic my-2">
