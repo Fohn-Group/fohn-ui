@@ -13,6 +13,7 @@ class Payload
     public string $sortColumn;
     public string $sortDirection;
     public int $ipp;
+    public array $filters;
     public string $searchQuery;
 
     public function __construct(array $payload)
@@ -22,5 +23,6 @@ class Payload
         $this->sortDirection = $payload['sorting']['direction'] ?? '';
         $this->ipp = $payload['ipp'] ?? 10;
         $this->searchQuery = $payload['_q'] ?? '';
+        $this->filters = $payload['filters'] ?? [];
     }
 }
