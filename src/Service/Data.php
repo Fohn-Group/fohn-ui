@@ -12,12 +12,14 @@ namespace Fohn\Ui\Service;
 
 use Atk4\Data\Model;
 use Fohn\Ui\Service\Atk\FormModelController;
+use Fohn\Ui\Service\Atk\TableModelController;
 
 class Data
 {
     protected static ?Data $instance = null;
 
     protected string $formModelControllerClass = FormModelController::class;
+    protected string $tableModelControllerClass = TableModelController::class;
 
     /** @var mixed */
     private $db;
@@ -43,14 +45,14 @@ class Data
         static::get()->setDbPersistence($db);
     }
 
-    public static function setModelCtrl(string $className): void
-    {
-        static::get()->setModelCtrlClassName($className);
-    }
-
     public static function formModelCtrl(Model $model): FormModelControllerInterface
     {
         return static::get()->factoryFormModelCtrl($model);
+    }
+
+    public static function tableModelCtrl(Model $model): TableModelControllerInterface
+    {
+        return static::get()->factoryTableModelCtrl($model);
     }
 
     /**
@@ -64,6 +66,11 @@ class Data
     protected function factoryFormModelCtrl(Model $model): FormModelControllerInterface
     {
         return new $this->formModelControllerClass($model);
+    }
+
+    protected function factoryTableModelCtrl(Model $model): TableModelControllerInterface
+    {
+        return new $this->tableModelControllerClass($model);
     }
 
     /**
@@ -82,8 +89,13 @@ class Data
         return $this->db;
     }
 
-    protected function setModelCtrlClassName(string $className): void
+    public function setFormModelCtrlClassName(string $className): void
     {
         $this->formModelControllerClass = $className;
+    }
+
+    public function setTableModelCtrlClassName(string $className): void
+    {
+        $this->tableModelControllerClass = $className;
     }
 }
