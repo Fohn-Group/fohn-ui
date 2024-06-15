@@ -145,7 +145,7 @@
                                         </button>
                                     </li>
                                     <template v-for="page in range">
-                                        <li class="w-8 h-8 table-cell">
+                                        <li class="h-8 table-cell mx-1.5">
                                             <button @click="goToPage(page)"
                                                     :class="{'text-blue-700 border-b-2 border-blue-700': page === currentPage, 'text-gray-600' : page !== currentPage}"
                                                     class="hover:bg-blue-100 w-full h-full transition duration-100 ease-in-out">
