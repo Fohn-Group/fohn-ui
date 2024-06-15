@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 /**
- * Filter for type text.
+ * Filter for type number.
  */
 
 namespace Fohn\Ui\Component\Table\Filter;

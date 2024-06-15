@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 /**
- * Filter for type text.
+ * Filter for type date.
  */
 
 namespace Fohn\Ui\Component\Table\Filter;
