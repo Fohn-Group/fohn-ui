@@ -42,6 +42,7 @@ class Table extends View implements VueInterface
 
     public const CELL_PROP_NAME = 'cell';
     public const TABLE_ACTION_REGION = 'tableActions';
+    public const FILTER_REGION_NAME = 'tableFilter';
 
     public string $defaultTemplate = 'vue-component/table.html';
     protected const HOOKS_DATA_REQUEST = self::class . '@data_request';
@@ -73,6 +74,16 @@ class Table extends View implements VueInterface
     public int $paginatorLimit = 5;
     public int $paginatorItemsPerPage = 10;
 
+    /**
+     * set max height of the table using a fix number or viewport value.
+     * When using viewport, it is possible to set a percentage value of the viewport
+     * using -%value.
+     * Ex:
+     * - 800 will be set at 800 px.
+     * - viewport-75 will be set at 75% of the viewport height.
+     */
+    public string $maxHeight = 'viewport-75';
+
     /** @var Column[] */
     private array $columns = [];
 
@@ -83,7 +94,11 @@ class Table extends View implements VueInterface
 
     protected ?Data $tableDataCb = null;
 
+    protected string $payloadClass = Payload::class;
+    protected ?Filter $filter = null;
+
     protected array $tableTws = [
+        'relative',
         'w-full',
         'border',
         'border-collapse',
@@ -198,12 +213,12 @@ class Table extends View implements VueInterface
         return $this->actions[$actionName];
     }
 
-    public function addFilter(): Filter
+    public function addFilter(Filter $filter, string $regionName = self::FILTER_REGION_NAME): Filter
     {
-        $filter = Filter::factory();
-        $this->addView($filter, 'tableFilter');
+        $this->filter = $filter;
+        $this->addView($this->filter, $regionName);
 
-        return $filter;
+        return $this->filter;
     }
 
     public function setColumJqueryEvents(string $columnName, string $eventName, array $statements): self
@@ -278,6 +293,10 @@ class Table extends View implements VueInterface
             $this->getTemplate()->trySet('pagesLimit', (string) $this->paginatorLimit);
         }
 
+        if ($this->maxHeight > 0) {
+            $this->getTemplate()->trySetJs('height', Js::string($this->maxHeight));
+        }
+
         $this->getTemplate()->trySet('tableTws', Tw::from($this->tableTws)->toString());
         $this->getTemplate()->trySet('rowTws', Tw::from($this->rowTws)->toString());
         $this->renderTableProps();
@@ -299,7 +318,7 @@ class Table extends View implements VueInterface
     {
         $this->tableDataCb->onDataRequest(function (array $payload = []): array {
             $resultSet = new Table\Result\Set($this);
-            $this->callHooks(self::HOOKS_DATA_REQUEST, HookFn::withVoid([new Payload($payload), $resultSet]));
+            $this->callHooks(self::HOOKS_DATA_REQUEST, HookFn::withVoid([new $this->payloadClass($payload, $this->filter), $resultSet]));
 
             return $resultSet->outputData($this->columns, $this->idColumnName);
         });
