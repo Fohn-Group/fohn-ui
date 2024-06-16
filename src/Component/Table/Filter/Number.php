@@ -9,7 +9,7 @@ namespace Fohn\Ui\Component\Table\Filter;
 
 use Fohn\Ui\Component\Table\Filter;
 
-class Number implements FilterInterface
+class Number implements FilterColumnInterface
 {
     protected string $type = 'number';
     private string $id;
@@ -30,6 +30,11 @@ class Number implements FilterInterface
     public function getId(): string
     {
         return $this->id;
+    }
+
+    public function getValue(string $value)
+    {
+        return $value;
     }
 
     public function getDefinition(): array

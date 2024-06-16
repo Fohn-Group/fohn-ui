@@ -9,7 +9,7 @@ namespace Fohn\Ui\Component\Table\Filter;
 
 use Fohn\Ui\Component\Table\Filter;
 
-class Text implements FilterInterface
+class Text implements FilterColumnInterface
 {
     protected string $type = 'text';
     private string $id;
@@ -30,6 +30,11 @@ class Text implements FilterInterface
     public function getId(): string
     {
         return $this->id;
+    }
+
+    public function getValue(string $value)
+    {
+        return $value;
     }
 
     public function getDefinition(): array
