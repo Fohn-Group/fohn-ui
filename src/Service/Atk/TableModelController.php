@@ -126,7 +126,7 @@ class TableModelController extends ModelController implements TableModelControll
     {
         $key = $column['column'] ?? null;
         $operator = (string) ($column['operator'] ?? null);
-        $value = $column['value'] ?? null;
+        $value = $column['filterValue'] ?? null;
 
         switch ($operator) {
             case FilterOperators::IS_EMPTY:
