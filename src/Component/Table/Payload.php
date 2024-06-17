@@ -17,7 +17,7 @@ class Payload
 
     public string $searchQuery;
 
-    public function __construct(array $payload, FilterInterface $filter)
+    public function __construct(array $payload, ?FilterInterface $filter)
     {
         $this->page = $payload['page'] ?? 0;
         $this->sortColumn = $payload['sorting']['columnName'] ?? '';
@@ -27,7 +27,7 @@ class Payload
         $this->filters = $this->getFilterValues($payload['filters'] ?? [], $filter);
     }
 
-    private function getFilterValues(array $filterPayload, FilterInterface $filter): array
+    private function getFilterValues(array $filterPayload, ?FilterInterface $filter): array
     {
         foreach ($filterPayload['columns'] as $k => $col) {
             $filterPayload['columns'][$k]['filterValue'] = $filter->getColumnFilter($col['column'])->getValue($col['value']);
