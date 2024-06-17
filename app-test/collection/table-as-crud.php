@@ -30,14 +30,14 @@ use Fohn\Ui\View\Button;
 
 require_once __DIR__ . '/../init-ui.php';
 
-$country = new Country(Data::db());
-$modelCtrl = new FormModelController($country);
+$tableCtrl = Data::tableModelCtrl(new Country(Data::db()));
+$formCtrl   = Data::formModelCtrl(new Country(Data::db()));
 
 $grid = View::addTo(Ui::layout(), ['template' => Ui::templateFromFile(
     dirname(__DIR__) . '/templates/split-columns.html'
 )]);
 
-$table = Table::addTo($grid, ['keepSelectionAcrossPage' => true]);
+$table = Table::addTo($grid, ['keepSelectionAcrossPage' => true, 'height' => 'viewport-65']);
 $table->setCaption(AppTest::tableCaptionFactory('Countries'));
 
 $table->addColumn('name', Table\Column\Generic::factory(['isSortable' => true]));
@@ -46,13 +46,20 @@ $table->addColumn('iso3', Table\Column\Generic::factory(['isSortable' => true])-
 $table->addColumn('numcode', Table\Column\Integer::factory());
 $table->addColumn('phonecode', Table\Column\Integer::factory());
 
+$f = $table->addFilter(new Table\Filter());
+$f->addColumnFilter(new Table\Filter\Text('name'));
+$f->addColumnFilter(new Table\Filter\Text('iso'));
+$f->addColumnFilter(new Table\Filter\Text('iso3'));
+$f->addColumnFilter(new Table\Filter\Number('numcode'));
+$f->addColumnFilter(new Table\Filter\Number('phonecode'));
+
 // ADD Country
 $addDialog = Modal\AsForm::addTo($table, ['title' => 'Add Country:'], Table::TABLE_ACTION_REGION);
-$addForm = $addDialog->addForm(Ui::factory(Form::class));
-$addForm->addControls($modelCtrl->factoryFormControls(null));
+$addForm    = $addDialog->addForm(Ui::factory(Form::class));
+$addForm->addControls($formCtrl->factoryFormControls(null));
 // Response to form submit request.
-$addForm->onSubmit(function (Form $f, ?string $id) use ($modelCtrl, $addDialog, $table): JsRenderInterface {
-    if ($errors = $modelCtrl->saveModelUsingForm($id, $f->getControls())) {
+$addForm->onSubmit(function (Form $f, ?string $id) use ($formCtrl, $addDialog, $table): JsRenderInterface {
+    if ($errors = $formCtrl->saveModelUsingForm($id, $f->getControls())) {
         $f->addValidationErrors($errors);
     }
 
@@ -75,10 +82,10 @@ $actionMsg->single = 'This action will delete 1 country. Are you sure?';
 $actionMsg->multiple = 'This action will delete {#} countries. Are you sure?';
 
 $actionDelete->addConfirmationDialog('Delete countries:', $actionMsg);
-$table->addRowsAction($actionDelete)->onTrigger(function ($ids, $dialog) use ($modelCtrl) {
+$table->addRowsAction($actionDelete)->onTrigger(function ($ids, $dialog) use ($formCtrl) {
     // performs deletes on ids
     foreach ($ids as $id) {
-        $modelCtrl->delete($id);
+        $formCtrl->delete($id);
     }
 
     return JsStatements::with([JsToast::success('Delete Action! ' . implode(' / ', $ids)), $dialog->jsClose()]);
@@ -98,16 +105,16 @@ $deleteDialog = Modal\AsDialog::addTo(Ui::layout(), ['title' => 'Confirm country
 
 // Add form to edit dialog
 $editForm = $editDialog->addForm(Ui::factory(Form::class));
-$editForm->addControls($modelCtrl->factoryFormControls(null));
+$editForm->addControls($formCtrl->factoryFormControls(null));
 
 // Response to form request value callback using $ctrl.
-$editForm->onControlsValueRequest(function ($id, Form\Response\Value $response) use ($modelCtrl) {
-    $response->mergeValues($modelCtrl->getFormInputValue((string) $id));
+$editForm->onControlsValueRequest(function ($id, Form\Response\Value $response) use ($formCtrl) {
+    $response->mergeValues($formCtrl->getFormInputValue((string) $id));
 });
 
 // Response to form submit request.
-$editForm->onSubmit(function (Form $f, ?string $id) use ($modelCtrl, $editDialog, $table): JsRenderInterface {
-    if ($errors = $modelCtrl->saveModelUsingForm($id, $f->getControls())) {
+$editForm->onSubmit(function (Form $f, ?string $id) use ($formCtrl, $editDialog, $table): JsRenderInterface {
+    if ($errors = $formCtrl->saveModelUsingForm($id, $f->getControls())) {
         $f->addValidationErrors($errors);
     }
 
@@ -137,9 +144,9 @@ $deleteActionFn->executes([$deleteDialog->jsOpen(['message' => $msg, 'payload' =
 
 // Add callback event to Dialog when user confirm the action.
 $deleteDialog->addCallbackEvent('confirm', new Button(['label' => 'Delete', 'color' => 'info']));
-$deleteDialog->onCallbackEvent('confirm', function ($payload) use ($deleteDialog, $table, $modelCtrl) {
+$deleteDialog->onCallbackEvent('confirm', function ($payload) use ($deleteDialog, $table, $formCtrl) {
     // Delete record in db. Record id is set in $payload['id']
-    $modelCtrl->delete($payload['id']);
+    $formCtrl->delete($payload['id']);
 
     return JsStatements::with([
         JsToast::success('Delete' . $payload['id']),
@@ -150,24 +157,8 @@ $deleteDialog->onCallbackEvent('confirm', function ($payload) use ($deleteDialog
 
 // Response to an onDataRequest event from Table.
 // Fill in Table\Result\Set $dataSet depending on $payload value.
-$table->onDataRequest(function (Table\Payload $payload, Table\Result\Set $result) use ($country): void {
-    $searchFields = ['name'];
-    if ($payload->sortColumn) {
-        $country->setOrder($payload->sortColumn, $payload->sortDirection);
-    }
-    if ($payload->searchQuery) {
-        $scope = Scope::createOr();
-        foreach ($country->getFields() as $field) {
-            if (in_array($field->shortName, $searchFields, true)) {
-                $scope->addCondition($field, 'like', '%' . $payload->searchQuery . '%');
-            }
-        }
-        $country->addCondition($scope);
-    }
-    $country->setLimit($payload->ipp, ($payload->page - 1) * $payload->ipp);
-
-    $result->totalItems = (int) $country->action('count')->getOne();
-    $result->dataSet = $country->export();
+$table->onDataRequest(function (Table\Payload $payload, Table\Result\Set $result) use ($tableCtrl): void {
+    $tableCtrl->setTableResultSet($payload, $result);
 });
 
 // Use Ui::viewDump to inspect a rendered template of a view using a console display like for debugging.
