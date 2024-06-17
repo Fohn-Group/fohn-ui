@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Fohn\Ui\AppTest;
 
-use Atk4\Data\Model\Scope;
 use Fohn\Ui\AppTest\Model\Country;
 use Fohn\Ui\Component\Form;
 use Fohn\Ui\Component\Modal;
@@ -22,7 +21,6 @@ use Fohn\Ui\Js\Js;
 use Fohn\Ui\Js\JsRenderInterface;
 use Fohn\Ui\Js\JsStatements;
 use Fohn\Ui\Js\JsToast;
-use Fohn\Ui\Service\Atk\FormModelController;
 use Fohn\Ui\Service\Data;
 use Fohn\Ui\Service\Ui;
 use Fohn\Ui\View;
@@ -31,7 +29,7 @@ use Fohn\Ui\View\Button;
 require_once __DIR__ . '/../init-ui.php';
 
 $tableCtrl = Data::tableModelCtrl(new Country(Data::db()));
-$formCtrl   = Data::formModelCtrl(new Country(Data::db()));
+$formCtrl = Data::formModelCtrl(new Country(Data::db()));
 
 $grid = View::addTo(Ui::layout(), ['template' => Ui::templateFromFile(
     dirname(__DIR__) . '/templates/split-columns.html'
@@ -55,7 +53,7 @@ $f->addColumnFilter(new Table\Filter\Number('phonecode'));
 
 // ADD Country
 $addDialog = Modal\AsForm::addTo($table, ['title' => 'Add Country:'], Table::TABLE_ACTION_REGION);
-$addForm    = $addDialog->addForm(Ui::factory(Form::class));
+$addForm = $addDialog->addForm(Ui::factory(Form::class));
 $addForm->addControls($formCtrl->factoryFormControls(null));
 // Response to form submit request.
 $addForm->onSubmit(function (Form $f, ?string $id) use ($formCtrl, $addDialog, $table): JsRenderInterface {
