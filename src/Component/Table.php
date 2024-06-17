@@ -82,7 +82,7 @@ class Table extends View implements VueInterface
      * - 800 will be set at 800 px.
      * - viewport-75 will be set at 75% of the viewport height.
      */
-    public string $maxHeight = 'viewport-75';
+    public string $height = 'viewport-75';
 
     /** @var Column[] */
     private array $columns = [];
@@ -293,9 +293,7 @@ class Table extends View implements VueInterface
             $this->getTemplate()->trySet('pagesLimit', (string) $this->paginatorLimit);
         }
 
-        if ($this->maxHeight > 0) {
-            $this->getTemplate()->trySetJs('height', Js::string($this->maxHeight));
-        }
+        $this->getTemplate()->trySetJs('height', Js::string($this->height));
 
         $this->getTemplate()->trySet('tableTws', Tw::from($this->tableTws)->toString());
         $this->getTemplate()->trySet('rowTws', Tw::from($this->rowTws)->toString());
