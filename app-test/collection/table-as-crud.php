@@ -83,7 +83,7 @@ $actionDelete->addConfirmationDialog('Delete countries:', $actionMsg);
 $table->addRowsAction($actionDelete)->onTrigger(function ($ids, $dialog) use ($formCtrl) {
     // performs deletes on ids
     foreach ($ids as $id) {
-        $formCtrl->delete($id);
+        $formCtrl->getModel()->delete($id);
     }
 
     return JsStatements::with([JsToast::success('Delete Action! ' . implode(' / ', $ids)), $dialog->jsClose()]);
@@ -144,7 +144,7 @@ $deleteActionFn->executes([$deleteDialog->jsOpen(['message' => $msg, 'payload' =
 $deleteDialog->addCallbackEvent('confirm', new Button(['label' => 'Delete', 'color' => 'info']));
 $deleteDialog->onCallbackEvent('confirm', function ($payload) use ($deleteDialog, $table, $formCtrl) {
     // Delete record in db. Record id is set in $payload['id']
-    $formCtrl->delete($payload['id']);
+    $formCtrl->getModel()->delete($payload['id']);
 
     return JsStatements::with([
         JsToast::success('Delete' . $payload['id']),

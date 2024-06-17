@@ -47,7 +47,7 @@ $filter->addColumnFilter(new Table\Filter\Number('numcode'));
 // Response to an onDataRequest event from Table.
 // Fill in Table\Result\Set $dataSet depending on $payload value.
 $table->onDataRequest(function (Table\Payload $payload, Table\Result\Set $result) use ($ctrl): void {
-    $ctrl->setTableResultSet($result, $payload);
+    $ctrl->setTableResultSet($payload, $result);
 });
 
 // Use Ui::viewDump to inspect a rendered template of a view using a console display like for debugging.
