@@ -13,6 +13,6 @@ use Fohn\Ui\Component\Table\Result\Set;
 interface TableModelControllerInterface
 {
     public function setSearchFields(array $fields): void;
-    
+
     public function setTableResultSet(Payload $payload, Set $resultSet): void;
 }
