@@ -61,7 +61,7 @@ class TableModelController extends ModelController implements TableModelControll
         $this->searchFields = $fields;
     }
 
-    public function setTableResultSet(Set $resultSet, Payload $payload): void
+    public function setTableResultSet(Payload $payload, Set $resultSet): void
     {
         if ($payload->sortColumn) {
             $this->getModel()->setOrder($payload->sortColumn, $payload->sortDirection);

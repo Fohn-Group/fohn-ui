@@ -16,5 +16,5 @@ interface TableModelControllerInterface
 
     public function getDataSet(Payload $payload): array;
 
-    public function setTableResultSet(Set $resultSet, Payload $payload): void;
+    public function setTableResultSet(Payload $payload, Set $resultSet): void;
 }
