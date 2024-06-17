@@ -36,12 +36,15 @@
                 <div class="flex justify-start">
                     {$tableActions}
                 </div>
-                <div class="grid grid-cols-2 relative">
+                <div class="grid grid-cols-3 relative">
                     <div  class="flex justify-start mx-2 my-auto">
                         <div v-if="hasSelectableRows">
                             <span class="text-sm italic">Selected row: {{selectedRowSize}}</span>
                             <span v-if="selectedRowSize > 0" @click="clearSelectedRows"><i class="mx-1 bi bi-x-circle-fill text-red-600 cursor-pointer"></i></span>
                         </div>
+                    </div>
+                    <div class="flex justify-end">
+                        {$tableFilter}
                     </div>
                     <div class="flex justify-end">
                         {TableSearch}
@@ -66,11 +69,11 @@
                         {/TableSearch}
                     </div>
                 </div>
-                <div class="overflow-auto" :style="heightStyle">
+                <div class="overflow-auto border" :style="heightStyle">
                     <div class="">
                         <table class="{$tableTws}" :class="@{'animate-pulse': isFetching}">
                             <caption>
-                                <div class="flex flex-row relative">{$caption}{$tableFilter}</div>
+                                <div class="flex flex-row justify-center">{$caption}</div>
                             </caption>
                             {TableHeaders}
                             <thead>
@@ -115,7 +118,7 @@
                 </div>
                 {$afterTable}
                 {Paginator}
-                <div class="py-4">
+                <div class="">
                     <fohn-table-paginator
                             :current-page="currentPage"
                             :total-items="totalItems"
@@ -135,9 +138,9 @@
                             }"
                             @load-page="loadPage($event)"
                             @set-items-per-page="setItemsPerPage($event)">
-                        <div class="flex flex-row flex-wrap justify-between">
-                            <div class="pb-2">
-                                <ul class="inline-flex text-center bg-white mx-auto">
+                        <div class="flex flex-row flex-wrap justify-between items-center bg-gray-100">
+                            <div class="py-2">
+                                <ul class="inline-flex text-center pt-2 mx-auto">
                                     <li class="w-8 h-8 table-cell">
                                         <button @click="goToPage(1)"
                                                 :disabled="currentPage === 1"
@@ -177,8 +180,8 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div class="hidden md:block pb-2">{{fromItem}} - {{toItem}} / {{totalItems}}</div>
-                            <div class="pb-2">
+                            <div class="hidden md:block py-2">{{fromItem}} - {{toItem}} / {{totalItems}}</div>
+                            <div class="p-2">
                                 <select v-model="itemsPerPage" @change="setItemsPerPage(itemsPerPage)" class=" p-1 mb-1 w-24 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500">
                                     <option v-for="items in itemsPerPages" :value="items">{{items}}</option>
                                 </select>
