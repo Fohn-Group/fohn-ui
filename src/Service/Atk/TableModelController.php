@@ -88,26 +88,6 @@ class TableModelController extends ModelController implements TableModelControll
         $resultSet->totalItems = $this->getRecordCount();
     }
 
-    public function getDataSet(Payload $payload): array
-    {
-        if ($payload->sortColumn) {
-            $this->getModel()->setOrder($payload->sortColumn, $payload->sortDirection);
-        }
-
-        if ($payload->searchQuery) {
-            $scope = Scope::createOr();
-            foreach ($this->getModel()->getFields() as $field) {
-                if (in_array($field->shortName, $this->searchFields, true)) {
-                    $scope->addCondition($field, 'like', '%' . $payload->searchQuery . '%');
-                }
-            }
-            $this->getModel()->addCondition($scope);
-        }
-        $this->getModel()->setLimit($payload->ipp, ($payload->page - 1) * $payload->ipp);
-
-        return $this->getModel()->export();
-    }
-
     protected function filterToModelScope(array $filters): Scope
     {
         $matchType = $filters['matchType'] === 'and' ? Scope::AND : Scope::OR;
