@@ -10,7 +10,6 @@ namespace Fohn\Ui\Service\Atk;
 use Atk4\Data\Model;
 use Atk4\Data\Model\Scope;
 use Atk4\Data\Model\Scope\Condition;
-use Fohn\Ui\Component\Table\Filter;
 use Fohn\Ui\Component\Table\Filter\FilterOperators;
 use Fohn\Ui\Component\Table\Payload;
 use Fohn\Ui\Component\Table\Result\Set;
@@ -54,11 +53,17 @@ class TableModelController extends ModelController implements TableModelControll
     public function __construct(Model $model)
     {
         $this->setModel($model->isEntity() ? $model->getModel() : $model);
+        $this->searchFields[] = $this->getModel()->titleField;
     }
 
     public function setSearchFields(array $fields): void
     {
         $this->searchFields = $fields;
+    }
+
+    public function getSearchFields(): array
+    {
+        return $this->searchFields;
     }
 
     public function setTableResultSet(Payload $payload, Set $resultSet): void
@@ -79,7 +84,9 @@ class TableModelController extends ModelController implements TableModelControll
                     $searchScope->addCondition($field, 'like', '%' . $payload->searchQuery . '%');
                 }
             }
-            $this->getModel()->addCondition($searchScope);
+            if (!$searchScope->isEmpty()) {
+                $this->getModel()->addCondition($searchScope);
+            }
         }
 
         $this->getModel()->setLimit($payload->ipp, ($payload->page - 1) * $payload->ipp);
