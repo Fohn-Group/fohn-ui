@@ -20,7 +20,7 @@ class TableModelController extends ModelController implements TableModelControll
     /** a list of field name to be searched. */
     protected array $searchFields = [];
 
-    /** Map filter operator to model scope. */
+    /** Map filter operator to model condition operator. */
     protected array $filterOperatorMap = [
         FilterOperators::IS_ANY_OF => Condition::OPERATOR_IN,
         FilterOperators::IS => Condition::OPERATOR_EQUALS,
