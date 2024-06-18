@@ -27,6 +27,8 @@ class View extends AbstractView
     public const ATTR_TEMPLATE_TAG = 'attributes';
     public const TAG_TEMPLATE_TAG = 'htmlTag';
 
+    public const VIEW_ATTR_ID_PREFIX = 'f-';
+
     /** @var JsRenderInterface[] */
     private array $jsActions = [];
 
@@ -90,7 +92,7 @@ class View extends AbstractView
     protected function initRenderTree(): void
     {
         parent::initRenderTree();
-        $this->setIdAttribute(Ui::service()->factoryId($this->getViewId()));
+        $this->setIdAttribute(Ui::service()->factoryId($this->getViewId(), static::VIEW_ATTR_ID_PREFIX));
     }
 
     /**

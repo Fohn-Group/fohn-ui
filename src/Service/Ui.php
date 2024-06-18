@@ -326,7 +326,7 @@ class Ui implements UiInterface
         return Utils::getFromClassName($className);
     }
 
-    public function factoryId(string $viewName, string $leftPad = 'f-', int $lenght = 10): string
+    public function factoryId(string $viewName, string $leftPad = '', int $lenght = 10): string
     {
         return Utils::generateId($viewName, $leftPad, $lenght);
     }
