@@ -7,7 +7,6 @@ declare(strict_types=1);
 
 namespace Fohn\Ui\Component\Table\Filter;
 
-use Fohn\Ui\Component\Table\Filter;
 use Fohn\Ui\Component\Utils;
 
 class Date extends Generic implements FilterColumnInterface
@@ -28,5 +27,4 @@ class Date extends Generic implements FilterColumnInterface
     {
         return \DateTime::createFromFormat($this->format, $value) ?: null;
     }
-
 }
