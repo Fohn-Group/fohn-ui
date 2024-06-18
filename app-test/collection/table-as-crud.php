@@ -48,8 +48,8 @@ $f = $table->addFilter(new Table\Filter());
 $f->addColumnFilter(new Table\Filter\Text('name'));
 $f->addColumnFilter(new Table\Filter\Text('iso'));
 $f->addColumnFilter(new Table\Filter\Text('iso3'));
-$f->addColumnFilter(new Table\Filter\Number('numcode'));
-$f->addColumnFilter(new Table\Filter\Number('phonecode'));
+$f->addColumnFilter(new Table\Filter\Integer('numcode'));
+$f->addColumnFilter(new Table\Filter\Integer('phonecode'));
 
 // ADD Country
 $addDialog = Modal\AsForm::addTo($table, ['title' => 'Add Country:'], Table::TABLE_ACTION_REGION);

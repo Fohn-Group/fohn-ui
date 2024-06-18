@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Fohn\Ui\Component\Table\Filter\Date;
 use Fohn\Ui\Component\Table\Filter\DateTime;
-use Fohn\Ui\Component\Table\Filter\Number;
+use Fohn\Ui\Component\Table\Filter\Integer;
 use Fohn\Ui\Component\Table\Filter\Text;
 use Fohn\Ui\Component\Table\Filter\Time;
 use Fohn\Ui\Service\Ui;
@@ -17,7 +17,7 @@ if ($locale = Ui::service()->getQueryParamValue('locale')) {
 
 $filter = \Fohn\Ui\Component\Table\Filter::addTo(Ui::layout());
 
-$filter->addColumnFilter(new Number('id'));
+$filter->addColumnFilter(new Integer('id'));
 $filter->addColumnFilter(new Text('name'));
 $filter->addColumnFilter(new Date('date', Ui::getDisplayFormat('date')));
 $filter->addColumnFilter(new Time('time'));
