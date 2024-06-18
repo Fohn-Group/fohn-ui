@@ -125,6 +125,7 @@
                             :disabled="isFetching"
                             :page-limit="{$pagesLimit}"
                             :items-per-page="itemsPerPage"
+                            :items-per-pages="{$itemsPerPages}"
                             #default="@{range,
                             currentPage,
                             totalPages,
@@ -183,7 +184,7 @@
                             <div class="hidden md:block py-2">{{fromItem}} - {{toItem}} / {{totalItems}}</div>
                             <div class="p-2">
                                 <select v-model="itemsPerPage" @change="setItemsPerPage(itemsPerPage)" class=" p-1 mb-1 w-24 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500">
-                                    <option v-for="items in itemsPerPages" :value="items">{{items}}</option>
+                                    <option v-for="(items, idx) in itemsPerPages" :key="idx" :value="items">{{items}}</option>
                                 </select>
                             </div>
                         </div>
