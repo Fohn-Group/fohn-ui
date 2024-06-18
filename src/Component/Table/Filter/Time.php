@@ -37,7 +37,7 @@ class Time implements FilterColumnInterface
 
     public function getValue(string $value)
     {
-        return \DateTime::createFromFormat($this->format, $value);
+        return \DateTime::createFromFormat($this->format, $value) ?: null;
     }
 
     public function getDefinition(): array

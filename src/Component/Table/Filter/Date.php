@@ -26,6 +26,7 @@ class Date implements FilterColumnInterface
         $this->label = $label ?? ucfirst($id);
         $this->props['name'] = $this->id;
         $this->props['config'] = Utils::getFlatPickrConfig($this->type, $format);
+        $this->props['config']['allowInput'] = true;
 
         $this->props = array_merge($this->props, $props);
     }
@@ -37,7 +38,7 @@ class Date implements FilterColumnInterface
 
     public function getValue(string $value)
     {
-        return \DateTime::createFromFormat($this->format, $value);
+        return \DateTime::createFromFormat($this->format, $value) ?: null;
     }
 
     public function getDefinition(): array
