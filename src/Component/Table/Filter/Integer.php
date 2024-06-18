@@ -2,22 +2,21 @@
 
 declare(strict_types=1);
 /**
- *  Float filter value.
+ * Filter for type number.
  */
 
 namespace Fohn\Ui\Component\Table\Filter;
 
-class Number extends Generic implements FilterColumnInterface
+class Integer extends Generic implements FilterColumnInterface
 {
     protected string $type = 'number';
 
     protected array $props = [
         'type' => 'number',
-        'precision' => 2,
     ];
 
-    public function getValue(string $value): float
+    public function getValue(string $value): int
     {
-        return (float) $value;
+        return (int) $value;
     }
 }

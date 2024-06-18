@@ -23,10 +23,11 @@ class FieldTest extends Model
 
         $this->addField('first_name', ['required' => true, 'default' => 'myname']);
         $this->addField('last_name', ['required' => false]);
+        //   @phpstan-ignore-next-line
         $this->hasOne('country_id', [
             'model' => new Country($this->getPersistence()), 'caption' => 'Country',
             'ui' => ['form' => [Form\Control\Select::class]],
-        ]);
+        ])->addTitle();
         $this->addField('radio', ['enum' => ['one', 'two', 'three'], 'default' => 'two', 'ui' => ['form' => [Form\Control\Radio::class]]]);
         $this->addField('email', ['ui' => ['form' => ['inputType' => 'email']]]);
         $this->addField('password', ['ui' => ['form' => [Form\Control\Password::class, 'inputType' => 'password']]]);

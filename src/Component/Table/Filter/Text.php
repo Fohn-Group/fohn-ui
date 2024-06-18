@@ -7,41 +7,10 @@ declare(strict_types=1);
 
 namespace Fohn\Ui\Component\Table\Filter;
 
-use Fohn\Ui\Component\Table\Filter;
-
-class Text implements FilterInterface
+class Text extends Generic implements FilterColumnInterface
 {
-    protected string $type = 'text';
-    private string $id;
-    protected string $label;
-
-    protected array $props = [
-        'type' => 'text',
-    ];
-
-    public function __construct(string $id, string $label = null, array $props = [])
+    public function getValue(string $value): string
     {
-        $this->id = $id;
-        $this->label = $label ?? ucfirst($id);
-        $props['name'] = $this->id;
-        $this->props = array_merge($this->props, $props);
-    }
-
-    public function getId(): string
-    {
-        return $this->id;
-    }
-
-    public function getDefinition(): array
-    {
-        return [
-            'id' => $this->id,
-            'label' => $this->label,
-            'operatorType' => $this->type,
-            'component' => [
-                'name' => Filter::getComponentName($this->type),
-                'props' => $this->props,
-            ],
-        ];
+        return $value;
     }
 }

@@ -9,6 +9,7 @@
                 :keep-selection-across-page="{$keepSelectionAcrossPage}"
                 :row-actions="{$tableRowActions}"
                 :keep-table-state="{$keepTableState}"
+                :height="{$height}"
                 #default="@{isFetching,
                 query,
                 columns,
@@ -16,6 +17,7 @@
                 currentPage,
                 sortColumn,
                 rows,
+                heightStyle,
                 totalItems,
                 itemsPerPage,
                 loadPage,
@@ -34,12 +36,15 @@
                 <div class="flex justify-start">
                     {$tableActions}
                 </div>
-                <div class="grid grid-cols-2 relative">
+                <div class="grid grid-cols-3 relative">
                     <div  class="flex justify-start mx-2 my-auto">
                         <div v-if="hasSelectableRows">
                             <span class="text-sm italic">Selected row: {{selectedRowSize}}</span>
                             <span v-if="selectedRowSize > 0" @click="clearSelectedRows"><i class="mx-1 bi bi-x-circle-fill text-red-600 cursor-pointer"></i></span>
                         </div>
+                    </div>
+                    <div class="flex justify-end">
+                        {$tableFilter}
                     </div>
                     <div class="flex justify-end">
                         {TableSearch}
@@ -64,56 +69,63 @@
                         {/TableSearch}
                     </div>
                 </div>
-                <div class="overflow-auto">
-                <table class="{$tableTws}" :class="@{'animate-pulse': isFetching}">
-                    <caption><div class="flex flex-row relative">{$caption}{$tableFilter}</div></caption>
-                    {TableHeaders}
-                    <thead>
-                    <tr class="{$headRowTws} bg-gray-100">
-                        <td v-if="hasSelectableRows">
-                            <div class="flex items-center mx-1 cursor-pointer" @click="togglePageRows">
-                                <i :class="{'bi bi-square': pageSelectState.none, 'bi bi-check-square' : pageSelectState.all, 'bi bi-dash-square' : pageSelectState.partial} "></i>
-                            </div>
-                        </td>
-                        <template v-for="column in columns" >
-                            <fohn-header-cell :column="column" :sort-column="sortColumn" :sort-direction="sortDirection" @sort-table="sortTable">
-                                {$headers}
-                            </fohn-header-cell>
-                        </template>
-                    </tr>
-                    </thead>
-                    {/TableHeaders}
-                    <tbody>
-                        <template v-for="(row, idx) in rows" :key="idx">
-                            <fohn-table-row :row="row" :has-selection="hasSelectableRows">
-                                <template #default="@{row, isEvenRow, isActionable, isSelected, toggleRow}" >
-                                    <tr :data-id="row.id" :class="row.css" class="{$rowTws}" @click="toggleRow(row.id)">
-                                        <td v-if="isActionable">
-                                            <div class="flex items-center mx-1 cursor-pointer">
-                                                <i :class="{'bi bi-check-square': isSelected, 'bi bi-square': !isSelected}"></i>
-                                            </div>
-                                        </td>
-                                        <template v-for="column in columns">
-                                            <fohn-table-cell :cell="row.cells[column.name]">
-                                                {$cells}
-                                            </fohn-table-cell>
-                                        </template>
-                                    </tr>
+                <div class="overflow-auto border" :style="heightStyle">
+                    <div class="">
+                        <table class="{$tableTws}" :class="@{'animate-pulse': isFetching}">
+                            <caption class="bg-gray-100">
+                                <div class="flex flex-row justify-center">{$caption}</div>
+                            </caption>
+                            {TableHeaders}
+                            <thead>
+                            <tr class="{$headRowTws} bg-gray-100 sticky top-0">
+                                <td v-if="hasSelectableRows">
+                                    <div class="flex items-center mx-1 cursor-pointer" @click="togglePageRows">
+                                        <i :class="{'bi bi-square': pageSelectState.none, 'bi bi-check-square' : pageSelectState.all, 'bi bi-dash-square' : pageSelectState.partial} "></i>
+                                    </div>
+                                </td>
+                                <template v-for="column in columns">
+                                    <fohn-header-cell :column="column" :sort-column="sortColumn" class="sticky top-0"
+                                                      :sort-direction="sortDirection" @sort-table="sortTable">
+                                        {$headers}
+                                    </fohn-header-cell>
                                 </template>
-                            </fohn-table-row>
-                        </template>
-                    </tbody>
-                </table>
+                            </tr>
+                            </thead>
+                            {/TableHeaders}
+                            <tbody>
+                            <template v-for="(row, idx) in rows" :key="idx">
+                                <fohn-table-row :row="row" :has-selection="hasSelectableRows">
+                                    <template #default="@{row, isEvenRow, isActionable, isSelected, toggleRow}">
+                                        <tr :data-id="row.id" :class="row.css" class="{$rowTws}"
+                                            @click="toggleRow(row.id)">
+                                            <td v-if="isActionable">
+                                                <div class="flex items-center mx-1 cursor-pointer">
+                                                    <i :class="{'bi bi-check-square': isSelected, 'bi bi-square': !isSelected}"></i>
+                                                </div>
+                                            </td>
+                                            <template v-for="column in columns">
+                                                <fohn-table-cell :cell="row.cells[column.name]">
+                                                    {$cells}
+                                                </fohn-table-cell>
+                                            </template>
+                                        </tr>
+                                    </template>
+                                </fohn-table-row>
+                            </template>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 {$afterTable}
                 {Paginator}
-                <div class="py-4">
+                <div class="border bg-gray-100">
                     <fohn-table-paginator
                             :current-page="currentPage"
                             :total-items="totalItems"
                             :disabled="isFetching"
                             :page-limit="{$pagesLimit}"
                             :items-per-page="itemsPerPage"
+                            :items-per-pages="{$itemsPerPages}"
                             #default="@{range,
                             currentPage,
                             totalPages,
@@ -127,9 +139,9 @@
                             }"
                             @load-page="loadPage($event)"
                             @set-items-per-page="setItemsPerPage($event)">
-                        <div class="flex flex-row flex-wrap justify-between">
-                            <div class="pb-2">
-                                <ul class="inline-flex text-center bg-white mx-auto">
+                        <div class="flex flex-row flex-wrap justify-between items-center ">
+                            <div class="py-2">
+                                <ul class="inline-flex text-center pt-2 mx-auto">
                                     <li class="w-8 h-8 table-cell">
                                         <button @click="goToPage(1)"
                                                 :disabled="currentPage === 1"
@@ -169,10 +181,10 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div class="hidden md:block pb-2">{{fromItem}} - {{toItem}} / {{totalItems}}</div>
-                            <div class="pb-2">
+                            <div class="hidden md:block py-2">{{fromItem}} - {{toItem}} / {{totalItems}}</div>
+                            <div class="p-2">
                                 <select v-model="itemsPerPage" @change="setItemsPerPage(itemsPerPage)" class=" p-1 mb-1 w-24 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500">
-                                    <option v-for="items in itemsPerPages" :value="items">{{items}}</option>
+                                    <option v-for="(items, idx) in itemsPerPages" :key="idx" :value="items">{{items}}</option>
                                 </select>
                             </div>
                         </div>

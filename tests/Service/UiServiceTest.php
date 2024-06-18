@@ -19,10 +19,10 @@ class UiServiceTest extends FohnTestCase
         $longName = 'fonh_view_view_view_view_view';
         $shortName = 'fohn';
 
-        $this->assertSame('uig8quzkuK', Ui::service()->factoryId($longName));
-        $this->assertSame('mAp86sLodh', Ui::service()->factoryId($shortName));
-        $this->assertSame('uig8quzkuK-fohn', Ui::service()->factoryId($longName, 'fohn'));
-        $this->assertSame('dEZ4PCB4Gc-fo', Ui::service()->factoryId($shortName, 'fo'));
+        $this->assertSame('uig8quzkuK', Ui::service()->factoryId($longName, ''));
+        $this->assertSame('mAp86sLodh', Ui::service()->factoryId($shortName, ''));
+        $this->assertSame('fohn-uig8quzkuK', Ui::service()->factoryId($longName, 'fohn-'));
+        $this->assertSame('fo-mAp86sLodh', Ui::service()->factoryId($shortName, 'fo-'));
 
         $this->assertSame(10, strlen(Ui::service()->factoryId($longName, '', 10)));
         $this->assertSame(20, strlen(Ui::service()->factoryId($longName, '', 20)));

@@ -10,7 +10,6 @@ namespace Fohn\Ui\Service\Atk;
 use Atk4\Data\Model;
 use Atk4\Data\Model\Scope;
 use Atk4\Data\Model\Scope\Condition;
-use Fohn\Ui\Component\Table\Filter;
 use Fohn\Ui\Component\Table\Filter\FilterOperators;
 use Fohn\Ui\Component\Table\Payload;
 use Fohn\Ui\Component\Table\Result\Set;
@@ -21,7 +20,7 @@ class TableModelController extends ModelController implements TableModelControll
     /** a list of field name to be searched. */
     protected array $searchFields = [];
 
-    /** Map filter operator to model scope. */
+    /** Map filter operator to model condition operator. */
     protected array $filterOperatorMap = [
         FilterOperators::IS_ANY_OF => Condition::OPERATOR_IN,
         FilterOperators::IS => Condition::OPERATOR_EQUALS,
@@ -54,6 +53,7 @@ class TableModelController extends ModelController implements TableModelControll
     public function __construct(Model $model)
     {
         $this->setModel($model->isEntity() ? $model->getModel() : $model);
+        $this->searchFields[] = $this->getModel()->titleField;
     }
 
     public function setSearchFields(array $fields): void
@@ -61,7 +61,12 @@ class TableModelController extends ModelController implements TableModelControll
         $this->searchFields = $fields;
     }
 
-    public function setTableResultSet(Set $resultSet, Payload $payload): void
+    public function getSearchFields(): array
+    {
+        return $this->searchFields;
+    }
+
+    public function setTableResultSet(Payload $payload, Set $resultSet): void
     {
         if ($payload->sortColumn) {
             $this->getModel()->setOrder($payload->sortColumn, $payload->sortDirection);
@@ -79,7 +84,9 @@ class TableModelController extends ModelController implements TableModelControll
                     $searchScope->addCondition($field, 'like', '%' . $payload->searchQuery . '%');
                 }
             }
-            $this->getModel()->addCondition($searchScope);
+            if (!$searchScope->isEmpty()) {
+                $this->getModel()->addCondition($searchScope);
+            }
         }
 
         $this->getModel()->setLimit($payload->ipp, ($payload->page - 1) * $payload->ipp);
@@ -88,29 +95,9 @@ class TableModelController extends ModelController implements TableModelControll
         $resultSet->totalItems = $this->getRecordCount();
     }
 
-    public function getDataSet(Payload $payload): array
-    {
-        if ($payload->sortColumn) {
-            $this->getModel()->setOrder($payload->sortColumn, $payload->sortDirection);
-        }
-
-        if ($payload->searchQuery) {
-            $scope = Scope::createOr();
-            foreach ($this->getModel()->getFields() as $field) {
-                if (in_array($field->shortName, $this->searchFields, true)) {
-                    $scope->addCondition($field, 'like', '%' . $payload->searchQuery . '%');
-                }
-            }
-            $this->getModel()->addCondition($scope);
-        }
-        $this->getModel()->setLimit($payload->ipp, ($payload->page - 1) * $payload->ipp);
-
-        return $this->getModel()->export();
-    }
-
     protected function filterToModelScope(array $filters): Scope
     {
-        $matchType = $filters['matchType'] === 'and' ? Scope::AND : Scope::OR;
+        $matchType = ($filters['matchType'] ?? 'and') === 'and' ? Scope::AND : Scope::OR;
         $columns = $filters['columns'] ?? [];
 
         // Get Condition for each column.
@@ -126,7 +113,7 @@ class TableModelController extends ModelController implements TableModelControll
     {
         $key = $column['column'] ?? null;
         $operator = (string) ($column['operator'] ?? null);
-        $value = $column['value'] ?? null;
+        $value = $column['filterValue'] ?? null;
 
         switch ($operator) {
             case FilterOperators::IS_EMPTY:

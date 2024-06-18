@@ -16,12 +16,8 @@ class Utils
      * Thanks to Roy Tanck
      * https://roytanck.com/2021/10/17/generating-short-hashes-in-php/.
      */
-    public static function generateId(string $longName, string $keep = '', int $length = 10): string
+    public static function generateId(string $longName, string $leftPad = 'f-', int $length = 10): string
     {
-        if ($keep) {
-            $longName = str_replace($keep, '', $longName);
-            $keep = '-' . $keep;
-        }
         // Create a raw binary sha256 hash and base64 encode it.
         $hashBase64 = base64_encode(hash('sha256', $longName, true));
         // Replace non-urlsafe chars to make the string urlsafe.
@@ -29,8 +25,7 @@ class Utils
         // Trim base64 padding characters from the end.
         $hashUrlsafe = rtrim($hashUrlsafe, '=');
 
-        // Shorten the string before returning.
-        return substr($hashUrlsafe, 0, $length) . $keep;
+        return $leftPad . substr($hashUrlsafe, 0, $length);
     }
 
     public static function hasValidOptions(array $options, array $validKeys): bool

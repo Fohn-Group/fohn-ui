@@ -7,13 +7,13 @@ declare(strict_types=1);
 
 namespace Fohn\Ui\Component\Table;
 
-use Fohn\Ui\Component\Table\Filter\FilterInterface;
+use Fohn\Ui\Component\Table\Filter\FilterColumnInterface;
 use Fohn\Ui\Component\Table\Filter\FilterOperators;
 use Fohn\Ui\Component\VueTrait;
 use Fohn\Ui\Js\Js;
 use Fohn\Ui\View;
 
-class Filter extends View
+class Filter extends View implements FilterInterface
 {
     use VueTrait;
 
@@ -50,8 +50,8 @@ class Filter extends View
     protected string $iconName = 'bi bi-funnel';
     protected string $altIconName = 'bi bi-funnel-fill';
 
-    /** @var array<string, FilterInterface> */
-    protected array $filters = [];
+    /** @var array<string, FilterColumnInterface> */
+    protected array $columnFilters = [];
 
     protected array $matchTypes = [
         ['id' => 'and', 'label' => 'And'],
@@ -88,11 +88,16 @@ class Filter extends View
         return static::VUE_COMPONENT_NAME_TYPE[$type];
     }
 
-    public function addColumnFilter(FilterInterface $filter): FilterInterface
+    public function addColumnFilter(FilterColumnInterface $columnFilter): FilterColumnInterface
     {
-        $this->filters[$filter->getId()] = $filter;
+        $this->columnFilters[$columnFilter->getId()] = $columnFilter;
 
-        return $filter;
+        return $columnFilter;
+    }
+
+    public function getColumnFilter(string $columnFilterId): FilterColumnInterface
+    {
+        return $this->columnFilters[$columnFilterId];
     }
 
     /**
@@ -135,7 +140,7 @@ class Filter extends View
     private function getFitlersColumn(): array
     {
         $columns = [];
-        foreach ($this->filters as $filter) {
+        foreach ($this->columnFilters as $filter) {
             $columns[] = $filter->getDefinition();
         }
 

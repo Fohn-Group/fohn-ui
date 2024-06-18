@@ -7,9 +7,12 @@ declare(strict_types=1);
 
 namespace Fohn\Ui\Component\Table\Filter;
 
-interface FilterInterface
+interface FilterColumnInterface
 {
     public function getId(): string;
 
     public function getDefinition(): array;
+
+    /** @return mixed */
+    public function getValue(string $value);
 }

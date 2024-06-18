@@ -14,7 +14,5 @@ interface TableModelControllerInterface
 {
     public function setSearchFields(array $fields): void;
 
-    public function getDataSet(Payload $payload): array;
-
-    public function setTableResultSet(Set $resultSet, Payload $payload): void;
+    public function setTableResultSet(Payload $payload, Set $resultSet): void;
 }
