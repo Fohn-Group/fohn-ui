@@ -72,7 +72,9 @@ class Table extends View implements VueInterface
 
     public bool $hasPaginator = true;
     public int $paginatorLimit = 5;
-    public int $paginatorItemsPerPage = 10;
+    public int $paginatorItemsPerPage = 50;
+
+    public array $paginatorItemsPerPages = [50, 100, 250, 500];
 
     /**
      * set max height of the table using a fix number or viewport value.
@@ -339,6 +341,7 @@ class Table extends View implements VueInterface
         $this->getTemplate()->setJs('keepTableState', Js::boolean($this->keepTableState));
         $this->getTemplate()->setJs('columns', ArrayLiteral::set($this->getColumnsDefinition()));
         $this->getTemplate()->setJs('itemsPerPage', Integer::set($this->paginatorItemsPerPage));
+        $this->getTemplate()->setJs('itemsPerPages', ArrayLiteral::set($this->paginatorItemsPerPages));
         $this->getTemplate()->setJs('tableRowActions', ObjectLiteral::set($this->actions));
     }
 
