@@ -97,7 +97,7 @@ class TableModelController extends ModelController implements TableModelControll
 
     protected function filterToModelScope(array $filters): Scope
     {
-        $matchType = $filters['matchType'] ?? 'and' === 'and' ? Scope::AND : Scope::OR;
+        $matchType = ($filters['matchType'] ?? 'and') === 'and' ? Scope::AND : Scope::OR;
         $columns = $filters['columns'] ?? [];
 
         // Get Condition for each column.
