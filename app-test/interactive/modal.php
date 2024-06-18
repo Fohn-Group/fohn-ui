@@ -117,7 +117,10 @@ $form->onControlsValueRequest(function ($id, Form\Response\Value $response) use 
     $response->mergeValues($modelTestCtrl->getFormInputValue((string) $id));
 });
 
-$form->onSubmit(function ($f, $id) use ($modalFieldTest) {
+$form->onSubmit(function ($f, $id) use ($modalFieldTest, $modelTestCtrl) {
+    if ($errors = $modelTestCtrl->saveModelUsingForm($id, $f->getControls())) {
+        $f->addValidationErrors($errors);
+    }
     return JsStatements::with(
         [
             JsToast::success('Saved!'),

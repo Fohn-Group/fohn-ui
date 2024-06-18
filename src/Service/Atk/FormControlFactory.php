@@ -210,7 +210,7 @@ class FormControlFactory
 
         $selectableItems = [];
         if ($field->hasReference()) {
-            $refModel = $field->getReference()->model;
+            $refModel = $field->getReference()->createTheirModel();
             $refModel->setLimit($control->maxItems);
 
             if ($control->maxItems !== 0 && $refModel->action('count')->getOne() > $control->maxItems) {
