@@ -50,6 +50,10 @@ class TableModelController extends ModelController implements TableModelControll
         FilterOperators::NOT_LIKE => Condition::OPERATOR_NOT_LIKE,
     ];
 
+    protected array $fieldRequiredNotSupportedOperators = [
+        FilterOperators::IS_EMPTY,
+    ];
+
     public function __construct(Model $model)
     {
         $this->setModel($model->isEntity() ? $model->getModel() : $model);
@@ -103,10 +107,27 @@ class TableModelController extends ModelController implements TableModelControll
         // Get Condition for each column.
         $conditions = [];
         foreach ($columns as $column) {
-            $conditions[] = $this->getScopeCondition($column);
+            if ($this->canHaveCondition($column)) {
+                $conditions[] = $this->getScopeCondition($column);
+            }
         }
 
         return new Scope($conditions, $matchType);
+    }
+
+    /**
+     * Atk Model does not support query using a required field with null value.
+     * ex: $model->addCondition('req_field_name', '=', null);
+     * This function will check if a required field is use with an equal or not equal operator.
+     */
+    private function canHaveCondition(array $column): bool
+    {
+        $canHave = true;
+        if ($this->getModel()->getField($column['column'])->required && in_array($column['operator'], $this->fieldRequiredNotSupportedOperators, true)) {
+            $canHave = false;
+        }
+
+        return $canHave;
     }
 
     protected function getScopeCondition(array $column): Scope\Condition
@@ -144,8 +165,6 @@ class TableModelController extends ModelController implements TableModelControll
             default:
                 break;
         }
-
-        // $operatorsMap = array_merge(...array_values(self::$operatorsMap));
 
         $operator = $operator ? ($this->filterOperatorMap[$operator] ?? '=') : null;
 
