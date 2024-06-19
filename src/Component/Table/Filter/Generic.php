@@ -25,7 +25,7 @@ abstract class Generic
     }
 
     /** @return mixed */
-    abstract public function getValue(string $value);
+    abstract public function getValue(?string $value);
 
     public function getId(): string
     {

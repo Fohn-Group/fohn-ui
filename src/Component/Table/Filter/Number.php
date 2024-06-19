@@ -16,7 +16,7 @@ class Number extends Generic implements FilterColumnInterface
         'precision' => 2,
     ];
 
-    public function getValue(string $value): float
+    public function getValue(?string $value): ?float
     {
         return (float) $value;
     }
