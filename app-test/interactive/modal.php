@@ -121,6 +121,7 @@ $form->onSubmit(function ($f, $id) use ($modalFieldTest, $modelTestCtrl) {
     if ($errors = $modelTestCtrl->saveModelUsingForm($id, $f->getControls())) {
         $f->addValidationErrors($errors);
     }
+
     return JsStatements::with(
         [
             JsToast::success('Saved!'),

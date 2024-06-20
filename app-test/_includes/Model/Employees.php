@@ -1,8 +1,8 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 /**
- * Employees
+ * Employees.
  */
 
 namespace Fohn\Ui\AppTest\Model;
@@ -13,7 +13,7 @@ class Employees extends Model
 {
     public $table = 'employees';
 
-//    public ?string $titleField = 'first_name';
+    //    public ?string $titleField = 'first_name';
 
     protected function init(): void
     {
