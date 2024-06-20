@@ -15,7 +15,7 @@ class Integer extends Generic implements FilterColumnInterface
         'type' => 'number',
     ];
 
-    public function getValue(?string $value): ?int
+    public function getValue(?string $value): int
     {
         return (int) $value;
     }
