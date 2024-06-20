@@ -31,7 +31,7 @@ class Lister extends View
     {
         $this->assertRegionExist($regionName);
 
-        $this->repeatableRegions[$regionName] = new View\Lister\Region($items, $template);
+        $this->repeatableRegions[$regionName] = new Lister\Region($items, $template);
 
         return $this;
     }
@@ -43,7 +43,7 @@ class Lister extends View
         return $this;
     }
 
-    protected function getRegion(string $regionName): View\Lister\Region
+    protected function getRegion(string $regionName): Lister\Region
     {
         return $this->repeatableRegions[$regionName];
     }
@@ -61,7 +61,7 @@ class Lister extends View
      */
     public function onItemRender(string $regionName, \Closure $fn): void
     {
-        $this->getRegion($regionName)->onHook(View\Lister\Region::HOOK_ITEM_RENDER, function (HtmlTemplate $template, array $tags) use ($fn) {
+        $this->getRegion($regionName)->onHook(Lister\Region::HOOK_ITEM_RENDER, static function (HtmlTemplate $template, array $tags) use ($fn) {
             return $fn($template, $tags);
         });
     }

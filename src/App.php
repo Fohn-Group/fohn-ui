@@ -48,7 +48,7 @@ class App
             $this->emitter = new ResponseEmitter();
         }
 
-        $this->setOutputHandler(function () {
+        $this->setOutputHandler(static function () {
             return 'App Output handler is not set.';
         });
 

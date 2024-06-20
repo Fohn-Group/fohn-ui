@@ -46,7 +46,7 @@ $filter->addColumnFilter(new Table\Filter\Integer('numcode'));
 
 // Response to an onDataRequest event from Table.
 // Fill in Table\Result\Set $dataSet depending on $payload value.
-$table->onDataRequest(function (Table\Payload $payload, Table\Result\Set $result) use ($ctrl): void {
+$table->onDataRequest(static function (Table\Payload $payload, Table\Result\Set $result) use ($ctrl): void {
     $ctrl->setTableResultSet($payload, $result);
 });
 

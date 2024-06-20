@@ -67,7 +67,7 @@ class ViewRenderer
      */
     private function beforeTemplateRender(View $view): void
     {
-        \Closure::bind(function () use ($view) {
+        \Closure::bind(static function () use ($view) {
             $view->beforeHtmlRender();
         }, null, View::class)();
 

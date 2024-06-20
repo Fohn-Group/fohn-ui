@@ -217,7 +217,7 @@ class FormControlFactory
                 $control->setFilterMode(Control\Select::QUERY_MODE);
             }
 
-            $control->onSetValue(function ($value) use ($refModel) {
+            $control->onSetValue(static function ($value) use ($refModel) {
                 if ($value) {
                     $refEntity = $refModel->tryLoad($value);
                     if ($refEntity) {
@@ -228,11 +228,11 @@ class FormControlFactory
                 return $value;
             });
 
-            $control->onQueryItems(function (Items $response, string $query) use ($refModel) {
+            $control->onQueryItems(static function (Items $response, string $query) use ($refModel) {
                 $response->setItems(self::getQueryItems($refModel, $query));
             });
 
-            $control->onItemsRequest(function (Items $response, string $value) use ($refModel) {
+            $control->onItemsRequest(static function (Items $response, string $value) use ($refModel) {
                 $items = self::getSelectItems($refModel);
                 if ($value && !in_array($value, array_column($items, Control\Select::KEY), true)) {
                     $refEntity = $refModel->tryLoad($value);

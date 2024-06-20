@@ -24,9 +24,7 @@ class Data
     /** @var mixed */
     private $db;
 
-    final private function __construct()
-    {
-    }
+    final private function __construct() {}
 
     public static function get(): self
     {

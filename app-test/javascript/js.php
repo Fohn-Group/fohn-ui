@@ -59,7 +59,7 @@ $b2 = Button::addTo(Ui::layout(), ['label' => 'B']);
 Jquery::addEventTo($b, 'click')
     ->executes(
         [
-            JQuery::withView($b2)->toggle(),
+            Jquery::withView($b2)->toggle(),
             Js::from('console.log("Button B is now toggle")'),
             Js::from('console.log("event: ", e)'),
         ]
@@ -71,7 +71,7 @@ Header::addTo(Ui::layout(), ['title' => 'Callbacks', 'size' => 4]);
 
 // On button click reload it and change it's title
 $b = Button::addTo(Ui::layout(), ['label' => 'Callback Test']);
-Jquery::jqCallback($b, 'click', function ($jquery, $payload) {
+Jquery::jqCallback($b, 'click', static function ($jquery, $payload) {
     return $jquery->text(random_int(1, 20) . ' id = ' . $payload['id']);
 }, ['id' => 2]);
 Fohn::styleAs(Base::CONSOLE, [View::addTo(Ui::layout(), ['htmlTag' => 'pre'])->setTextContent($b->getJavascript())]);

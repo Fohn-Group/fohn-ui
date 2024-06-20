@@ -23,7 +23,7 @@ require_once __DIR__ . '/../init-ui.php';
  * Return a Javascript function that will update text inside a view when executed.
  * Will render as: (newValue) => { $('#VIEW_ID')->text(newValue); }.
  */
-$changeTextFn = function (View $view): JsFunction {
+$changeTextFn = static function (View $view): JsFunction {
     return JsFunction::arrow([Js::var('newValue')])->execute(Jquery::withView($view)->text(Js::var('newValue')));
 };
 
@@ -62,7 +62,7 @@ $form->addControls($controls);
 
 /** @var Form\Control\Select $countrySelect */
 $countrySelect = $form->getControl('country');
-$countrySelect->onItemsRequest(function (Form\Response\Items $response) {
+$countrySelect->onItemsRequest(static function (Form\Response\Items $response) {
     $response->setItems(FormControlFactory::getSelectItems(new Country(Data::db())));
 });
 
@@ -77,7 +77,7 @@ $chip = View\Chip::addAfter($range, ['size' => '12', 'color' => 'secondary']);
 $chip->appendTailwind('mx-auto');
 $range->onChange($changeTextFn($chip->content), 500);
 
-$form->onSubmit(function (Form $f) {
+$form->onSubmit(static function (Form $f) {
     return JsToast::success('Submit!');
 });
 

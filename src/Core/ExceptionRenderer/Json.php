@@ -82,13 +82,13 @@ class Json extends RendererAbstract
             $call = $this->parseStackTraceCall($call);
 
             $escape_frame = false;
-            if ($inFramework && !preg_match('~Fohn[/\\\\][^/\\\\]+[/\\\\]src[/\\\\]~', $call['file'])) {
+            if ($inFramework && !preg_match('~Fohn[/\\\][^/\\\]+[/\\\]src[/\\\]~', $call['file'])) {
                 $escape_frame = true;
                 $inFramework = false;
             }
 
             if ($escape_frame) {
-                $call['args'] = array_map(function ($arg) {
+                $call['args'] = array_map(static function ($arg) {
                     return static::toSafeString($arg);
                 }, $call['args']);
             }

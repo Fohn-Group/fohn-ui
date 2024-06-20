@@ -9,8 +9,9 @@ namespace Fohn\Ui\Tests\Core;
 
 use Fohn\Ui\Core\Exception;
 use Fohn\Ui\Tests\Concerns\MockView;
+use PHPUnit\Framework\TestCase;
 
-class InjectorTest extends \PHPUnit\Framework\TestCase
+class InjectorTest extends TestCase
 {
     public function testInjectorDefault(): void
     {

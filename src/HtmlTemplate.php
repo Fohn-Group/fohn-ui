@@ -256,7 +256,7 @@ class HtmlTemplate
 
     protected function unsetFromTagTree(TagTree $tagTree, int $k): void
     {
-        \Closure::bind(function () use ($tagTree, $k) {
+        \Closure::bind(static function () use ($tagTree, $k) {
             unset($tagTree->children[$k]);
         }, null, TagTree::class)();
     }

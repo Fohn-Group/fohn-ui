@@ -9,6 +9,4 @@ namespace Fohn\Ui\PageLayout;
  */
 use Fohn\Ui\View;
 
-class Layout extends View
-{
-}
+class Layout extends View {}

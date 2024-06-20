@@ -149,7 +149,7 @@ class Jquery extends JsChain
     public static function jqCallback(View $view, string $event, \Closure $fn, array $requestPayload = [], string $selector = null): JsFunction
     {
         $callback = \Fohn\Ui\Callback\Jquery::addAbstractTo($view);
-        $callback->onJqueryRequest(function (array $payload) use ($fn, $view): JsRenderInterface {
+        $callback->onJqueryRequest(static function (array $payload) use ($fn, $view): JsRenderInterface {
             return $fn(self::withSelector('#' . $view->getIdAttribute()), $payload);
         }, $requestPayload);
 

@@ -162,7 +162,7 @@ class Table extends View implements VueInterface
         $this->assertColumnIsUnique($name);
         $column->setColumnName($name);
         if ($this->hasColumnsHeader && $column->columnHeader === null) {
-            $column->columnHeader = Table\Header::factoryFromSeed($column->columnHeaderSeed);
+            $column->columnHeader = Header::factoryFromSeed($column->columnHeaderSeed);
         }
         $this->columns[$name] = $column;
 

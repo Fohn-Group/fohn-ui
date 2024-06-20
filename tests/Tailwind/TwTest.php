@@ -27,7 +27,7 @@ class TwTest extends TestCase
 
         $this->assertSame('a b c d e f', trim($twFrom->toString()));
         $this->assertSame('a', trim($twOf->toString()));
-        $this->assertSame('a-b-c-d-e-f', trim($twFrom->toString(function (string $output, string $utility) {
+        $this->assertSame('a-b-c-d-e-f', trim($twFrom->toString(static function (string $output, string $utility) {
             return ($output ? $output . '-' : '') . $utility;
         })));
     }
@@ -36,17 +36,17 @@ class TwTest extends TestCase
     {
         $tws = Tw::from(['a', 'b', 'c', 'd']);
 
-        $tws->filter(function (string $utitlity) {
+        $tws->filter(static function (string $utitlity) {
             return $utitlity !== 'c';
         });
         $this->assertSame(['a', 'b', 'd'], $tws());
 
-        $tws->map(function (string $utility) {
+        $tws->map(static function (string $utility) {
             return 'md:' . $utility;
         });
         $this->assertSame(['md:a', 'md:b', 'md:d'], $tws());
 
-        $tws->reduce(function (array $carry, string $utility) {
+        $tws->reduce(static function (array $carry, string $utility) {
             return array_merge($carry, ['lg:' . preg_replace('/[a-z]{2}:/', '', $utility)]);
         }, $tws());
         $this->assertSame(['md:a', 'md:b', 'md:d', 'lg:a', 'lg:b', 'lg:d'], $tws());
@@ -60,19 +60,19 @@ class TwTest extends TestCase
         $this->assertSame(['a', 'b', 'c', 'd'], $tws());
         $this->assertSame(['a', 'b', 'c', 'd', 'e'], $twsMerged());
 
-        $twsFiltered = $tws->fromFilter(function (string $utitlity) {
+        $twsFiltered = $tws->fromFilter(static function (string $utitlity) {
             return $utitlity !== 'c';
         });
         $this->assertSame(['a', 'b', 'c', 'd'], $tws());
         $this->assertSame(['a', 'b', 'd'], $twsFiltered());
 
-        $twsMapped = $tws->fromMap(function (string $utility) {
+        $twsMapped = $tws->fromMap(static function (string $utility) {
             return 'md:' . $utility;
         });
         $this->assertSame(['a', 'b', 'c', 'd'], $tws());
         $this->assertSame(['md:a', 'md:b', 'md:c', 'md:d'], $twsMapped());
 
-        $twsReduced = $tws->fromReduce(function (array $carry, string $utility) {
+        $twsReduced = $tws->fromReduce(static function (array $carry, string $utility) {
             return array_merge($carry, ['lg:' . preg_replace('/[a-z]{2}:/', '', $utility)]);
         }, $tws());
         $this->assertSame(['a', 'b', 'c', 'd'], $tws());

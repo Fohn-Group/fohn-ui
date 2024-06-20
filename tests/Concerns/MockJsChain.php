@@ -18,7 +18,7 @@ use Fohn\Ui\Js\JsRenderInterface;
  * @method getStoreChain()
  * @method getCellValue(JsRenderInterface $id, JsRenderInterface $name)
  */
-class MockJsChain implements \Fohn\Ui\Js\JsRenderInterface
+class MockJsChain implements JsRenderInterface
 {
     private $libName;
 

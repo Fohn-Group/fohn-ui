@@ -24,7 +24,7 @@ $table->getTableTw()->merge([Tw::textSize('sm')]);
 
 // Multiple process action
 $actionProcess = (new Table\Action(['keepSelection' => true]))->setTrigger(Button::factory(['label' => 'Process', 'color' => 'neutral']));
-$table->addRowsAction($actionProcess)->onTrigger(function ($ids) {
+$table->addRowsAction($actionProcess)->onTrigger(static function ($ids) {
     $count = count($ids);
 
     return JsStatements::with([JsToast::success("Process Action on {$count} employee(s)")]);
@@ -35,6 +35,6 @@ $table->addColumns($modelCtrl->getModel()->getTableColumns());
 // @phpstan-ignore-next-line
 $table->filterColumns($modelCtrl->getModel()->getTableFilters());
 
-$table->onDataRequest(function (Table\Payload $payload, Table\Result\Set $result) use ($modelCtrl): void {
+$table->onDataRequest(static function (Table\Payload $payload, Table\Result\Set $result) use ($modelCtrl): void {
     $modelCtrl->setTableResultSet($payload, $result);
 });

@@ -203,7 +203,7 @@ class View extends AbstractView
     private function removeFromTwContainer(): void
     {
         foreach ($this->twRemoveContainer as $tw) {
-            $this->tws = Tw::from($this->tws)->filter(function (string $utitlity) use ($tw) {
+            $this->tws = Tw::from($this->tws)->filter(static function (string $utitlity) use ($tw) {
                 return $utitlity !== $tw;
             })();
         }

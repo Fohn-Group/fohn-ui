@@ -132,7 +132,7 @@ class TableModelController extends ModelController implements TableModelControll
         return $canHave;
     }
 
-    protected function getScopeCondition(array $column): Scope\Condition
+    protected function getScopeCondition(array $column): Condition
     {
         $key = $column['column'] ?? null;
         $operator = (string) ($column['operator'] ?? null);
@@ -170,7 +170,7 @@ class TableModelController extends ModelController implements TableModelControll
 
         $operator = $operator ? ($this->filterOperatorMap[$operator] ?? '=') : null;
 
-        return new Scope\Condition($key, $operator, $value);
+        return new Condition($key, $operator, $value);
     }
 
     private function detectDelimiter(string $value): string

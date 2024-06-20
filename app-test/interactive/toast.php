@@ -54,7 +54,7 @@ $pos = $form->addControl(new Form\Control\Select(['caption' => 'Position', 'cont
 $pos->setItems($positions);
 $pos->setValue('top-right');
 
-$form->onSubmit(function (Form $f) {
+$form->onSubmit(static function (Form $f) {
     $values = $f->getControlValues();
 
     return JsToast::notify($values['title'], $values['message'], $values);

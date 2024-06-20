@@ -56,7 +56,7 @@ $addDialog = Modal\AsForm::addTo($table, ['title' => 'Add Country:'], Table::TAB
 $addForm = $addDialog->addForm(Ui::factory(Form::class));
 $addForm->addControls($formCtrl->factoryFormControls(null));
 // Response to form submit request.
-$addForm->onSubmit(function (Form $f, ?string $id) use ($formCtrl, $addDialog, $table): JsRenderInterface {
+$addForm->onSubmit(static function (Form $f, ?string $id) use ($formCtrl, $addDialog, $table): JsRenderInterface {
     if ($errors = $formCtrl->saveModelUsingForm($id, $f->getControls())) {
         $f->addValidationErrors($errors);
     }
@@ -80,7 +80,7 @@ $actionMsg->single = 'This action will delete 1 country. Are you sure?';
 $actionMsg->multiple = 'This action will delete {#} countries. Are you sure?';
 
 $actionDelete->addConfirmationDialog('Delete countries:', $actionMsg);
-$table->addRowsAction($actionDelete)->onTrigger(function ($ids, $dialog) use ($formCtrl) {
+$table->addRowsAction($actionDelete)->onTrigger(static function ($ids, $dialog) use ($formCtrl) {
     // performs deletes on ids
     foreach ($ids as $id) {
         $formCtrl->getModel()->delete($id);
@@ -91,7 +91,7 @@ $table->addRowsAction($actionDelete)->onTrigger(function ($ids, $dialog) use ($f
 
 // Multiple process action
 $actionProcess = (new Table\Action(['keepSelection' => true]))->setTrigger(Button::factory(['label' => 'Process', 'color' => 'neutral']));
-$table->addRowsAction($actionProcess)->onTrigger(function ($ids) {
+$table->addRowsAction($actionProcess)->onTrigger(static function ($ids) {
     sleep(2);
 
     return JsStatements::with([JsToast::success('Process Action! ' . implode(' / ', $ids))]);
@@ -106,12 +106,12 @@ $editForm = $editDialog->addForm(Ui::factory(Form::class));
 $editForm->addControls($formCtrl->factoryFormControls(null));
 
 // Response to form request value callback using $ctrl.
-$editForm->onControlsValueRequest(function ($id, Form\Response\Value $response) use ($formCtrl) {
+$editForm->onControlsValueRequest(static function ($id, Form\Response\Value $response) use ($formCtrl) {
     $response->mergeValues($formCtrl->getFormInputValue((string) $id));
 });
 
 // Response to form submit request.
-$editForm->onSubmit(function (Form $f, ?string $id) use ($formCtrl, $editDialog, $table): JsRenderInterface {
+$editForm->onSubmit(static function (Form $f, ?string $id) use ($formCtrl, $editDialog, $table): JsRenderInterface {
     if ($errors = $formCtrl->saveModelUsingForm($id, $f->getControls())) {
         $f->addValidationErrors($errors);
     }
@@ -142,7 +142,7 @@ $deleteActionFn->executes([$deleteDialog->jsOpen(['message' => $msg, 'payload' =
 
 // Add callback event to Dialog when user confirm the action.
 $deleteDialog->addCallbackEvent('confirm', new Button(['label' => 'Delete', 'color' => 'info']));
-$deleteDialog->onCallbackEvent('confirm', function ($payload) use ($deleteDialog, $table, $formCtrl) {
+$deleteDialog->onCallbackEvent('confirm', static function ($payload) use ($deleteDialog, $table, $formCtrl) {
     // Delete record in db. Record id is set in $payload['id']
     $formCtrl->getModel()->delete($payload['id']);
 
@@ -155,7 +155,7 @@ $deleteDialog->onCallbackEvent('confirm', function ($payload) use ($deleteDialog
 
 // Response to an onDataRequest event from Table.
 // Fill in Table\Result\Set $dataSet depending on $payload value.
-$table->onDataRequest(function (Table\Payload $payload, Table\Result\Set $result) use ($tableCtrl): void {
+$table->onDataRequest(static function (Table\Payload $payload, Table\Result\Set $result) use ($tableCtrl): void {
     $tableCtrl->setTableResultSet($payload, $result);
 });
 

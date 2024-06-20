@@ -106,7 +106,7 @@ class Console extends View implements LoggerInterface
      */
     public function outputHtmlMsg(string $message, array $valueTags = []): string
     {
-        $message = preg_replace_callback('~{([\w]+)}~', function ($match) use ($valueTags) {
+        $message = preg_replace_callback('~{([\w]+)}~', static function ($match) use ($valueTags) {
             if (isset($valueTags[$match[1]])) {
                 return $valueTags[$match[1]];
             }

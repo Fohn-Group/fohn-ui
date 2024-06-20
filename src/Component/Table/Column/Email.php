@@ -7,6 +7,8 @@ declare(strict_types=1);
 
 namespace Fohn\Ui\Component\Table\Column;
 
+use Fohn\Ui\View\Link;
+
 class Email extends Html
 {
     public function getDisplayValue($value, $id): string
@@ -17,7 +19,7 @@ class Email extends Html
     protected function getLinkValue(?string $value, string $id): string
     {
         $fvalue = $value ?? $this->nullValue;
-        $link = \Fohn\Ui\View\Link::factory(['url' => 'mailto:' . $fvalue]);
+        $link = Link::factory(['url' => 'mailto:' . $fvalue]);
         $link->setTextContent($fvalue);
 
         return $link->getHtml();

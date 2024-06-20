@@ -65,16 +65,12 @@ class Base implements ThemeInterface
     /** @var static|null */
     protected static $instance;
 
-    final protected function __construct()
-    {
-    }
+    final protected function __construct() {}
 
     /**
      * Override this method for your own theme initialization.
      */
-    public function init(): void
-    {
-    }
+    public function init(): void {}
 
     public function getSupportedVariants(): array
     {
@@ -86,13 +82,9 @@ class Base implements ThemeInterface
         return $this->colors;
     }
 
-    public static function colorAs(string $color, View $view, string $type): void
-    {
-    }
+    public static function colorAs(string $color, View $view, string $type): void {}
 
-    public static function styleAs(string $component, array $args): void
-    {
-    }
+    public static function styleAs(string $component, array $args): void {}
 
     /**
      * @return static

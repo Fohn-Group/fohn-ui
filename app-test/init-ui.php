@@ -13,7 +13,7 @@ use Fohn\Ui\Tests\Utils\HttpCoverage;
 
 require_once __DIR__ . '/init-autoloader.php';
 
-Ui::service()->boot(function (Ui $ui) {
+Ui::service()->boot(static function (Ui $ui) {
     $config = loadConfig();
     date_default_timezone_set($config['timezone']);
     Data::setDb($config['db']);
@@ -35,7 +35,7 @@ Ui::service()->boot(function (Ui $ui) {
 // Check for coverage
 if (in_array('pcov', Ui::serverRequest()->getHeader('x-coverage-id'), true)) {
     HttpCoverage::start();
-    Ui::app()->onHooks(App::HOOKS_BEFORE_EXIT, function () {
+    Ui::app()->onHooks(App::HOOKS_BEFORE_EXIT, static function () {
         HttpCoverage::saveData();
     });
 }

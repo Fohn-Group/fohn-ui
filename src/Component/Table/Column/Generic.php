@@ -7,7 +7,9 @@ declare(strict_types=1);
 
 namespace Fohn\Ui\Component\Table\Column;
 
-class Generic extends \Fohn\Ui\Component\Table\Column
+use Fohn\Ui\Component\Table\Column;
+
+class Generic extends Column
 {
     public string $defaultTemplate = 'vue-component/table/column/string.html';
 

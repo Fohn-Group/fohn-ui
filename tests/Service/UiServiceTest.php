@@ -42,14 +42,14 @@ class UiServiceTest extends FohnTestCase
     }
 
     /**
-     * @dataProvider classNameProvider
+     * @dataProvider provideGetFromClassNameCases
      */
     public function testGetFromClassName(string $value, string $className): void
     {
         $this->assertSame($value, Ui::service()->factoryViewName($className));
     }
 
-    public function classNameProvider(): array
+    public static function provideGetFromClassNameCases(): iterable
     {
         return [
             'test view name' => ['view', View::class],
@@ -69,14 +69,14 @@ class UiServiceTest extends FohnTestCase
     }
 
     /**
-     * @dataProvider decodeJsonProvider
+     * @dataProvider provideDecodeJsonCases
      */
     public function testDecodeJson(array $expected, array $decode): void
     {
         $this->assertSame($expected, $decode);
     }
 
-    public function decodeJsonProvider(): array
+    public static function provideDecodeJsonCases(): iterable
     {
         return [
             'decode nested' => [
@@ -102,14 +102,14 @@ class UiServiceTest extends FohnTestCase
     }
 
     /**
-     * @dataProvider htmlTagProvider
+     * @dataProvider provideBuildHtmlTagCases
      */
     public function testBuildHtmlTag(string $expectedTag, string $resultTag): void
     {
         $this->assertSame($expectedTag, $resultTag);
     }
 
-    public function htmlTagProvider(): array
+    public static function provideBuildHtmlTagCases(): iterable
     {
         $tagArray = [
             ['a', 'id' => 'id1', 'href' => '#1', [['i', ['class' => 'icon home'], '']]],

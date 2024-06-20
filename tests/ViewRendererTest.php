@@ -10,8 +10,9 @@ use Fohn\Ui\Js\JsFunction;
 use Fohn\Ui\Js\Type\Variable;
 use Fohn\Ui\View;
 use Fohn\Ui\ViewRenderer;
+use PHPUnit\Framework\TestCase;
 
-class ViewRendererTest extends \PHPUnit\Framework\TestCase
+class ViewRendererTest extends TestCase
 {
     public function testViewRenderedTemplate(): void
     {

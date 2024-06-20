@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Fohn\Ui\Core\ExceptionRenderer;
 
+use Composer\Autoload\ClassLoader;
 use Fohn\Ui\Core\Exception;
 
 abstract class RendererAbstract
@@ -103,10 +104,10 @@ abstract class RendererAbstract
             return 'resource';
         } elseif (is_scalar($val) || $val === null) {
             $out = json_encode($val, \JSON_PRESERVE_ZERO_FRACTION | \JSON_UNESCAPED_UNICODE);
-            $out = preg_replace('~\\\\"~', '"', preg_replace('~^"|"$~s', '\'', $out)); // use single quotes
-            $out = preg_replace('~\\\\([\\\\/])~s', '$1', $out); // unescape slashes
+            $out = preg_replace('~\\\"~', '"', preg_replace('~^"|"$~s', '\'', $out)); // use single quotes
+            $out = preg_replace('~\\\([\\\/])~s', '$1', $out); // unescape slashes
             if ($allowNl) {
-                $out = preg_replace('~(\\\\r)?\\\\n|\\\\r~s', "\n", $out); // unescape new lines
+                $out = preg_replace('~(\\\r)?\\\n|\\\r~s', "\n", $out); // unescape new lines
             }
 
             return $out;
@@ -158,7 +159,7 @@ abstract class RendererAbstract
      */
     protected function getStackTrace(bool $shorten): array
     {
-        $custTraceFunc = function (\Throwable $ex) {
+        $custTraceFunc = static function (\Throwable $ex) {
             $trace = $ex instanceof Exception
                 ? $ex->getMyTrace()
                 : $ex->getTrace();
@@ -198,7 +199,7 @@ abstract class RendererAbstract
 
     protected function getVendorDirectory(): string
     {
-        $loaderFile = realpath((new \ReflectionClass(\Composer\Autoload\ClassLoader::class))->getFileName());
+        $loaderFile = realpath((new \ReflectionClass(ClassLoader::class))->getFileName());
         $coreDir = realpath(dirname(__DIR__, 2) . '/');
         if (strpos($loaderFile, $coreDir . \DIRECTORY_SEPARATOR) === 0) { // this repo is main project
             return realpath(dirname($loaderFile, 2) . '/');
@@ -230,7 +231,7 @@ abstract class RendererAbstract
 
     protected function tryRelativizePathsInString(string $str): string
     {
-        $str = preg_replace_callback('~(?<!\w)(?:[/\\\\]|[a-z]:)\w?+[^:"\',;]*?\.php(?!\w)~i', function ($matches) {
+        $str = preg_replace_callback('~(?<!\w)(?:[/\\\]|[a-z]:)\w?+[^:"\',;]*?\.php(?!\w)~i', function ($matches) {
             try {
                 return $this->makeRelativePath($matches[0]);
             } catch (\Exception $e) {

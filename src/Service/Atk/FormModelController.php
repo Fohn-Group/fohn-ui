@@ -14,6 +14,7 @@ namespace Fohn\Ui\Service\Atk;
 use Atk4\Data\Model;
 use Atk4\Data\ValidationException;
 use Fohn\Ui\Component\Form\Control;
+use Fohn\Ui\Core\Exception;
 use Fohn\Ui\Service\FormModelControllerInterface;
 
 class FormModelController extends ModelController implements FormModelControllerInterface
@@ -79,7 +80,7 @@ class FormModelController extends ModelController implements FormModelController
             foreach ($e->errors as $fieldName => $errorMsg) {
                 $modelErrors[$fieldName][] = $errorMsg;
             }
-        } catch (\Fohn\Ui\Core\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
 
@@ -106,7 +107,7 @@ class FormModelController extends ModelController implements FormModelController
                 }
             } catch (ValidationException $e) {
                 $errors[$name][] = $e->getMessage();
-            } catch (\Fohn\Ui\Core\Exception $e) {
+            } catch (Exception $e) {
                 throw $e;
             }
         }

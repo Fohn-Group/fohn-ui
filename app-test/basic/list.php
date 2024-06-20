@@ -21,7 +21,7 @@ $subtitles = [
 ];
 
 // Utility function in order to create data.
-$factoryPeople = function (int $number): array {
+$factoryPeople = static function (int $number): array {
     $faker = Factory::create();
     $items = [];
     for ($i = 0; $i < $number; ++$i) {
@@ -70,7 +70,7 @@ Lister::addTo(Ui::layout(), ['template' => Ui::templateFromFile(__DIR__ . '/temp
 $list = View\HtmlList::addTo(Ui::layout());
 $list->setItems($factoryPeople(10));
 
-$list->onItemRender('Items', function (HtmlTemplate $template, array $tags) {
+$list->onItemRender('Items', static function (HtmlTemplate $template, array $tags) {
     $newT = new HtmlTemplate('<li> <span class="{$classAttr}">{$gender}</span> <span>{$name}</span>');
     if ($tags['gender'] === 'Ms.' || $tags['gender'] === 'Mrs.' || $tags['gender'] === 'Mss') {
         $newT->set('classAttr', Tw::textColor('secondary'));

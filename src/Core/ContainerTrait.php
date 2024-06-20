@@ -177,6 +177,6 @@ trait ContainerTrait
             $name .= '@anonymous';
         }
 
-        return trim(preg_replace('~^Fohn\\\\[^\\\\]+\\\\|[^0-9a-z\x7f-\xfe]+~s', '-', mb_strtolower($name)), '-');
+        return trim(preg_replace('~^Fohn\\\[^\\\]+\\\|[^0-9a-z\x7f-\xfe]+~s', '-', mb_strtolower($name)), '-');
     }
 }
