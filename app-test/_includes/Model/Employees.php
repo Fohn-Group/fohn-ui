@@ -8,6 +8,12 @@ declare(strict_types=1);
 namespace Fohn\Ui\AppTest\Model;
 
 use Atk4\Data\Model;
+use Fohn\Ui\Component\Table\Column\Currency;
+use Fohn\Ui\Component\Table\Column\Date;
+use Fohn\Ui\Component\Table\Column\Generic;
+use Fohn\Ui\Component\Table\Filter\Number;
+use Fohn\Ui\Component\Table\Filter\Text;
+use Fohn\Ui\Service\Ui;
 
 class Employees extends Model
 {
@@ -28,5 +34,28 @@ class Employees extends Model
         $this->addField('country', ['caption' => 'Country', 'type' => 'string']);
         $this->addField('birth_date', ['caption' => 'Birthdate', 'type' => 'date']);
         $this->addField('salary', ['caption' => 'Gender', 'type' => 'atk4_money']);
+    }
+
+    public function getTableColumns(): array
+    {
+        return [
+            'name' => Generic::factory(['isSortable' => true]),
+            'title' => Generic::factory(['isSortable' => true]),
+            'city' => Generic::factory(['isSortable' => true]),
+            'state' => Generic::factory(['isSortable' => true]),
+            'birth_date' => Date::factory(['isSortable' => true, 'caption' => 'Birthdate', 'format' => Ui::getDisplayFormat('date')]),
+            'salary' => Currency::factory(['isSortable' => true]),
+        ];
+    }
+
+    public function getTableFilters(): array
+    {
+        return [
+            new Text('name'),
+            new Text('first_name', 'First Name'),
+            new Text('last_name', 'Last Name'),
+            new \Fohn\Ui\Component\Table\Filter\Date('birth_date', Ui::getDisplayFormat('date'), 'Birthdate'),
+            new Number('salary', 'Salary'),
+        ];
     }
 }
