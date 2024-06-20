@@ -7,7 +7,9 @@ declare(strict_types=1);
 
 namespace Fohn\Ui\Component\Table;
 
-class Header extends \Fohn\Ui\View
+use Fohn\Ui\View;
+
+class Header extends View
 {
     public string $defaultTemplate = 'vue-component/table/column/header.html';
 }

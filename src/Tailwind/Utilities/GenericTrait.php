@@ -163,10 +163,10 @@ trait GenericTrait
     // GRID
     // -------------
 
-//    public static function grid(): string
-//    {
-//        return Tw::utility('', '', 'grid');
-//    }
+    //    public static function grid(): string
+    //    {
+    //        return Tw::utility('', '', 'grid');
+    //    }
 
     public static function gridType(string $type, string $size, string $variant = ''): string
     {

@@ -1,9 +1,10 @@
 <?php
 
 declare(strict_types=1);
+use Fohn\Ui\Service\Ui;
 
 return [
-    'env' => \Fohn\Ui\Service\Ui::PROD_ENV,
+    'env' => Ui::PROD_ENV,
     'timezone' => 'America/Toronto',
     'locale' => 'en_CA',
     'format' => [

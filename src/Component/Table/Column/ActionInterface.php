@@ -7,6 +7,4 @@ declare(strict_types=1);
 
 namespace Fohn\Ui\Component\Table\Column;
 
-interface ActionInterface
-{
-}
+interface ActionInterface {}

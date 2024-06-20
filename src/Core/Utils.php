@@ -49,7 +49,7 @@ class Utils
         }
 
         $matches = [];
-        preg_match('/(?<name>[^\\\\]+$)/m', $className, $matches);
+        preg_match('/(?<name>[^\\\]+$)/m', $className, $matches);
 
         $str = lcfirst($matches['name']);
         $str = preg_replace('/[A-Z]/', '-$0', $str);
@@ -131,11 +131,12 @@ class Utils
 
         // Convert integer value for Javascript.
         // If value is larger than max javascript integer value then it will be convert to a big int.
-        $pattern = '~"(?:[^"\\\\]+|\\\\.)*+"\K|\'(?:[^\'\\\\]+|\\\\.)*+\'\K|(?:^|[{\[,:])[ \n\r\t]*\K-?[1-9]\d{15,}(?=[ \n\r\t]*(?:$|[}\],:]))~s';
-        $json = preg_replace_callback($pattern, function ($matches) {
+        $pattern = '~"(?:[^"\\\]+|\\\.)*+"\K|\'(?:[^\'\\\]+|\\\.)*+\'\K|(?:^|[{\[,:])[ \n\r\t]*\K-?[1-9]\d{15,}(?=[ \n\r\t]*(?:$|[}\],:]))~s';
+        $json = preg_replace_callback($pattern, static function ($matches) {
             if ($matches[0] === '' || abs((int) $matches[0]) < (2 ** 53)) {
                 return $matches[0];
             }
+
             // return big int.
             return '"' . $matches[0] . 'n"';
         }, $json);

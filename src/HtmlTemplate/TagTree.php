@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Fohn\Ui\HtmlTemplate;
 
+use Fohn\Ui\Core\Exception;
 use Fohn\Ui\HtmlTemplate;
 
 class TagTree
@@ -20,9 +21,7 @@ class TagTree
         $this->tag = $tag;
     }
 
-    private function __clone()
-    {
-    }
+    private function __clone() {}
 
     /**
      * @return static
@@ -71,12 +70,12 @@ class TagTree
     {
         // very important check
         if ($value instanceof self) {
-            throw new \Fohn\Ui\Core\Exception('Tag tree can not be added directly');
+            throw new Exception('Tag tree can not be added directly');
         }
 
         // not strictly needed, but catch issues sooner
         if (!$value instanceof Value && !$value instanceof HtmlTemplate) {
-            throw new \Fohn\Ui\Core\Exception('Value must be of type HtmlTemplate\Value or HtmlTemplate');
+            throw new Exception('Value must be of type HtmlTemplate\Value or HtmlTemplate');
         }
 
         $this->children[] = $value;

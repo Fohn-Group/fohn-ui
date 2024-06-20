@@ -87,6 +87,7 @@ class Modal extends View implements VueInterface
                     implode('/', self::JS_OPEN_OPTIONS)
                 );
         }
+
         // @phpstan-ignore-next-line
         return $this->jsGetStore(self::PINIA_PREFIX)->openModal(Js::object($options));
     }

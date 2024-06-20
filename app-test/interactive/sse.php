@@ -59,12 +59,12 @@ Jquery::addEventTo($startBtn, 'click')->execute($sse->start($startSseEvents));
 Jquery::addEventTo($stopBtn, 'click')->execute($sse->stop($stopSseEvents));
 
 // When user aborted or stop ServerSide event.
-$onAborted = function (ServerEvent $sse) {
+$onAborted = static function (ServerEvent $sse) {
     error_log(' user aborted ');
 };
 
 // When ServerSide event is fire.
-$sse->onRequest(function (ServerEvent $sse) use ($counter, $stopSseEvents) {
+$sse->onRequest(static function (ServerEvent $sse) use ($counter, $stopSseEvents) {
     for ($i = 1; $i < 26; ++$i) {
         $sse->executeJavascript(Jquery::withView($counter->content)->text($i));
         sleep(1);

@@ -7,6 +7,8 @@ use Fohn\Ui\Component\Form;
 use Fohn\Ui\Component\Tabs;
 use Fohn\Ui\Component\Tabs\Tab;
 use Fohn\Ui\Js\Jquery;
+use Fohn\Ui\Js\Js;
+use Fohn\Ui\Js\JsFunction;
 use Fohn\Ui\Js\JsReload;
 use Fohn\Ui\Js\JsToast;
 use Fohn\Ui\Service\Atk\FormModelController;
@@ -30,14 +32,14 @@ Jquery::addEventTo($btnEnableUser, 'click')->execute($tabs->jsEnableTabName('use
 Jquery::addEventTo($btnDisableUser, 'click')->execute($tabs->jsDisableTabName('user'));
 
 $homeTab = $tabs->addTab(new Tab(['name' => 'home']));
-$fn = $homeTab->jsOnInitTab(\Fohn\Ui\Js\JsFunction::arrow());
-$fn->execute(\Fohn\Ui\Js\Js::from('console.log(\'homeTab on init\')'));
+$fn = $homeTab->jsOnInitTab(JsFunction::arrow());
+$fn->execute(Js::from('console.log(\'homeTab on init\')'));
 
-$fn = $homeTab->jsOnShowTab(\Fohn\Ui\Js\JsFunction::arrow());
-$fn->execute(\Fohn\Ui\Js\Js::from('console.log(\'homeTab on show\')'));
+$fn = $homeTab->jsOnShowTab(JsFunction::arrow());
+$fn->execute(Js::from('console.log(\'homeTab on show\')'));
 
-$fn = $homeTab->jsOnHideTab(\Fohn\Ui\Js\JsFunction::arrow());
-$fn->execute(\Fohn\Ui\Js\Js::from('console.log(\'homeTab on hide\')'));
+$fn = $homeTab->jsOnHideTab(JsFunction::arrow());
+$fn->execute(Js::from('console.log(\'homeTab on hide\')'));
 
 View::addTo($homeTab)->setTextContent('This is home tab content.');
 
@@ -45,7 +47,7 @@ $profileTab = $tabs->addTab(new Tab(['name' => 'country']));
 
 $form = Form::addTo($profileTab);
 $form->addControls($modelCtrl->factoryFormControls($id));
-$form->onSubmit(function (Form $f) use ($modelCtrl, $id) {
+$form->onSubmit(static function (Form $f) use ($modelCtrl, $id) {
     if ($errors = $modelCtrl->saveModelUsingForm($id, $f->getControls())) {
         $f->addValidationErrors($errors);
     }

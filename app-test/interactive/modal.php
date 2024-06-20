@@ -39,7 +39,7 @@ $infoDialog->jsOpenWith($btn);
 $dialog = AsDialog::addTo(Ui::layout(), ['title' => 'Confirm this action', 'isClosable' => false]);
 $dialog->addCancelEvent();
 
-$dialog->addConfirmEvent(function (array $payload) use ($dialog) {
+$dialog->addConfirmEvent(static function (array $payload) use ($dialog) {
     return JsStatements::with([
         JsToast::info('All goods!', 'Operation confirm.'),
         $dialog->jsClose(),
@@ -57,11 +57,11 @@ $modalForm = Modal\AsForm::addTo(Ui::layout(), ['title' => 'Edit Country Record 
 
 $form = $modalForm->addForm(new Form());
 $form->addControls($modelCtrl->factoryFormControls(null));
-$form->onControlsValueRequest(function ($id, Form\Response\Value $response) use ($modelCtrl) {
+$form->onControlsValueRequest(static function ($id, Form\Response\Value $response) use ($modelCtrl) {
     $response->mergeValues($modelCtrl->getFormInputValue((string) $id));
 });
 
-$form->onSubmit(function ($f, $id) use ($modalForm, $modelCtrl) {
+$form->onSubmit(static function ($f, $id) use ($modalForm, $modelCtrl) {
     if ($errors = $modelCtrl->saveModelUsingForm($id, $f->getControls())) {
         $f->addValidationErrors($errors);
     }
@@ -79,7 +79,7 @@ Button::addTo($bar, ['label' => 'Italy', 'color' => 'info', 'type' => 'outline',
 Button::addTo($bar, ['label' => 'Norway', 'color' => 'info', 'type' => 'outline', 'shape' => 'normal'])->appendHtmlAttribute('data-name', 'Norway');
 Button::addTo($bar, ['label' => 'Sweden', 'color' => 'info', 'type' => 'outline', 'shape' => 'normal'])->appendHtmlAttribute('data-name', 'Sweden');
 
-$fx = Jquery::jqCallback($bar, 'click', function ($j, $payload) use ($modalForm, $modelCtrl) {
+$fx = Jquery::jqCallback($bar, 'click', static function ($j, $payload) use ($modalForm, $modelCtrl) {
     $id = $modelCtrl->getModel()->tryLoadBy('name', $payload['name'])->get('id');
 
     return JsStatements::with($modalForm->jsOpenWithId(Js::var((string) $id)));
@@ -91,7 +91,7 @@ $fx->execute(Js::from("console.log(jQuery(this).data('name'))"));
 $modalDynamic = Modal\AsDynamic::addTo(Ui::layout(), ['title' => 'Load on demand content.']);
 $modalDynamic->addCloseButton(new Button(['label' => 'Close', 'type' => 'outline', 'color' => 'info', 'size' => 'small']));
 
-$modalDynamic->onOpen(function ($modal) {
+$modalDynamic->onOpen(static function ($modal) {
     $tw = ['first-line:uppercase', 'first-line:tracking-widest',
         'first-letter:text-7xl', 'first-letter:font-bold', 'first-letter:text-purple-700',
         'first-letter:mr-3', 'first-letter:float-left', ];
@@ -113,11 +113,15 @@ $modalFieldTest = Modal\AsForm::addTo(Ui::layout(), ['title' => 'Add :']);
 
 $form = $modalFieldTest->addForm(new Form());
 $form->addControls($modelTestCtrl->factoryFormControls(null));
-$form->onControlsValueRequest(function ($id, Form\Response\Value $response) use ($modelTestCtrl) {
+$form->onControlsValueRequest(static function ($id, Form\Response\Value $response) use ($modelTestCtrl) {
     $response->mergeValues($modelTestCtrl->getFormInputValue((string) $id));
 });
 
-$form->onSubmit(function ($f, $id) use ($modalFieldTest) {
+$form->onSubmit(static function ($f, $id) use ($modalFieldTest, $modelTestCtrl) {
+    if ($errors = $modelTestCtrl->saveModelUsingForm($id, $f->getControls())) {
+        $f->addValidationErrors($errors);
+    }
+
     return JsStatements::with(
         [
             JsToast::success('Saved!'),
@@ -129,6 +133,6 @@ $form->onSubmit(function ($f, $id) use ($modalFieldTest) {
 $bar2 = View::addTo(Ui::layout())->appendTailwinds(['inline-block, my-4']);
 Button::addTo($bar2, ['label' => 'Form Overflow', 'color' => 'info', 'type' => 'outline', 'shape' => 'large']);
 
-Jquery::jqCallback($bar2, 'click', function ($j, $payload) use ($modalFieldTest) {
+Jquery::jqCallback($bar2, 'click', static function ($j, $payload) use ($modalFieldTest) {
     return JsStatements::with($modalFieldTest->jsOpenWithId(Js::var('')));
 }, ['name' => Jquery::withThis()->data('name')], '.fohn-btn');

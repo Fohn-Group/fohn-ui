@@ -113,7 +113,7 @@ abstract class Column extends View
      */
     protected function getFormatterValue($value): ?string
     {
-        return $this->callHook(self::HOOK_FORMAT_AS, HookFn::withTypeFn(function ($fn, $args): string {
+        return $this->callHook(self::HOOK_FORMAT_AS, HookFn::withTypeFn(static function ($fn, $args): string {
             return $fn(...$args);
         }, [$this, $value]));
     }

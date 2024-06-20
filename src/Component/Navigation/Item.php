@@ -21,10 +21,10 @@ class Item
         $this->injectDefaults($props);
     }
 
-//    public function getName(): string
-//    {
-//        return $this->name;
-//    }
+    //    public function getName(): string
+    //    {
+    //        return $this->name;
+    //    }
 
     public function getItemRootData(): array
     {

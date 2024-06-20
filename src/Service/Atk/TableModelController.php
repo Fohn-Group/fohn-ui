@@ -3,6 +3,8 @@
 declare(strict_types=1);
 /**
  * Manage Atk model for Table.
+ *
+ * @method getModel()
  */
 
 namespace Fohn\Ui\Service\Atk;
@@ -48,6 +50,10 @@ class TableModelController extends ModelController implements TableModelControll
         FilterOperators::NOT_IN => Condition::OPERATOR_NOT_IN,
         FilterOperators::LIKE => Condition::OPERATOR_LIKE,
         FilterOperators::NOT_LIKE => Condition::OPERATOR_NOT_LIKE,
+    ];
+
+    protected array $fieldRequiredNotSupportedOperators = [
+        FilterOperators::IS_EMPTY,
     ];
 
     public function __construct(Model $model)
@@ -103,13 +109,30 @@ class TableModelController extends ModelController implements TableModelControll
         // Get Condition for each column.
         $conditions = [];
         foreach ($columns as $column) {
-            $conditions[] = $this->getScopeCondition($column);
+            if ($this->canHaveCondition($column)) {
+                $conditions[] = $this->getScopeCondition($column);
+            }
         }
 
         return new Scope($conditions, $matchType);
     }
 
-    protected function getScopeCondition(array $column): Scope\Condition
+    /**
+     * Atk Model does not support query using a required field with null value.
+     * ex: $model->addCondition('req_field_name', '=', null);
+     * This function will check if a required field is use with an equal or not equal operator.
+     */
+    private function canHaveCondition(array $column): bool
+    {
+        $canHave = true;
+        if ($this->getModel()->getField($column['column'])->required && in_array($column['operator'], $this->fieldRequiredNotSupportedOperators, true)) {
+            $canHave = false;
+        }
+
+        return $canHave;
+    }
+
+    protected function getScopeCondition(array $column): Condition
     {
         $key = $column['column'] ?? null;
         $operator = (string) ($column['operator'] ?? null);
@@ -145,11 +168,9 @@ class TableModelController extends ModelController implements TableModelControll
                 break;
         }
 
-        // $operatorsMap = array_merge(...array_values(self::$operatorsMap));
-
         $operator = $operator ? ($this->filterOperatorMap[$operator] ?? '=') : null;
 
-        return new Scope\Condition($key, $operator, $value);
+        return new Condition($key, $operator, $value);
     }
 
     private function detectDelimiter(string $value): string

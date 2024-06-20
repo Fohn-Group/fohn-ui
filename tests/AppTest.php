@@ -18,7 +18,7 @@ class AppTest extends TestCase
     public function testAppOutputHandler(): void
     {
         $app = $this->getApp();
-        $app->setOutputHandler(function () {
+        $app->setOutputHandler(static function () {
             return 'hello';
         });
 

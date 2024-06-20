@@ -7,6 +7,4 @@ namespace Fohn\Ui\Component\Form\Control;
 /**
  * Input element for a form control.
  */
-class Line extends Input
-{
-}
+class Line extends Input {}

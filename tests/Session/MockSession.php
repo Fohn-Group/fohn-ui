@@ -16,7 +16,5 @@ class MockSession extends Session
         $_SESSION = [];
     }
 
-    protected function startSession(array $options = []): void
-    {
-    }
+    protected function startSession(array $options = []): void {}
 }

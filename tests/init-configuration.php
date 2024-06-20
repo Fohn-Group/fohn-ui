@@ -18,7 +18,7 @@ function loadConfig(): array
     // Create a default $config['db'] using sqlite if not set but make sure db file is present.
     if (!isset($config['db'])) {
         if (!file_exists(__DIR__ . '/_data/db.sqlite')) {
-            throw new \Error('Db file is not present. Please create the file using create-sqlite.php script in _demo-data folder.');
+            throw new Error('Db file is not present. Please create the file using create-sqlite.php script in _demo-data folder.');
         }
 
         $config['db'] = new Sql('sqlite:' . __DIR__ . '/_data/db.sqlite');

@@ -88,7 +88,7 @@ class Console extends RendererAbstract
             $call = $this->parseStackTraceCall($call);
 
             $escapeFrame = false;
-            if ($inFramwork && !preg_match('~Fohn[/\\\\][^/\\\\]+[/\\\\]src[/\\\\]~', $call['file'])) {
+            if ($inFramwork && !preg_match('~Fohn[/\\\][^/\\\]+[/\\\]src[/\\\]~', $call['file'])) {
                 $escapeFrame = true;
                 $inFramwork = false;
             }
@@ -108,7 +108,7 @@ class Console extends RendererAbstract
                 $tokens['{FUNCTION_ARGS}'] = '()';
             } else {
                 if ($escapeFrame) {
-                    $tokens['{FUNCTION_ARGS}'] = "\e[0;31m(" . \PHP_EOL . str_repeat(' ', 40) . implode(',' . \PHP_EOL . str_repeat(' ', 40), array_map(function ($arg) {
+                    $tokens['{FUNCTION_ARGS}'] = "\e[0;31m(" . \PHP_EOL . str_repeat(' ', 40) . implode(',' . \PHP_EOL . str_repeat(' ', 40), array_map(static function ($arg) {
                         return static::toSafeString($arg);
                     }, $call['args'])) . ')';
                 } else {

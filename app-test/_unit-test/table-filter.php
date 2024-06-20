@@ -2,20 +2,22 @@
 
 declare(strict_types=1);
 
+use Fohn\Ui\Component\Table\Filter;
 use Fohn\Ui\Component\Table\Filter\Date;
 use Fohn\Ui\Component\Table\Filter\DateTime;
 use Fohn\Ui\Component\Table\Filter\Integer;
 use Fohn\Ui\Component\Table\Filter\Text;
 use Fohn\Ui\Component\Table\Filter\Time;
+use Fohn\Ui\Component\Utils;
 use Fohn\Ui\Service\Ui;
 
 require_once __DIR__ . '/../init-ui.php';
 
 if ($locale = Ui::service()->getQueryParamValue('locale')) {
-    \Fohn\Ui\Component\Utils::requireFLatPickrLocale(\Fohn\Ui\Service\Ui::page(), $locale);
+    Utils::requireFLatPickrLocale(Ui::page(), $locale);
 }
 
-$filter = \Fohn\Ui\Component\Table\Filter::addTo(Ui::layout());
+$filter = Filter::addTo(Ui::layout());
 
 $filter->addColumnFilter(new Integer('id'));
 $filter->addColumnFilter(new Text('name'));

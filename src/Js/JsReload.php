@@ -27,7 +27,7 @@ class JsReload implements JsRenderInterface
         $this->cb = Callback\JqReload::addAbstractTo($view, ['requestPayload' => $queryArguments]);
 
         Ui::app()->onHooks(App::HOOKS_BEFORE_OUTPUT, function () {
-            $this->cb->onJqueryRequest(function () {}, $this->queryArgument);
+            $this->cb->onJqueryRequest(static function () {}, $this->queryArgument);
         });
     }
 

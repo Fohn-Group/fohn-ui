@@ -27,7 +27,7 @@ class CallbackExecuteTest extends FohnTestCase
         $trigger = 'data_tg';
         $cb = new Data(['urlTrigger' => $trigger]);
         // should not trigger
-        $cb->onDataRequest(function () use (&$hasExecute) {
+        $cb->onDataRequest(static function () use (&$hasExecute) {
             $hasExecute = true;
 
             return [];
@@ -38,7 +38,7 @@ class CallbackExecuteTest extends FohnTestCase
         $_GET[Generic::URL_QUERY_TARGET] = $trigger;
         $_GET[$trigger] = Generic::DATA_TYPE;
 
-        $cb->onDataRequest(function () use (&$hasExecute) {
+        $cb->onDataRequest(static function () use (&$hasExecute) {
             $hasExecute = true;
 
             return [];
@@ -52,7 +52,7 @@ class CallbackExecuteTest extends FohnTestCase
         $trigger = 'generic_tg';
         $cb = new Generic(['urlTrigger' => $trigger]);
         // should not trigger
-        $cb->onRequest(function () use (&$hasExecute) {
+        $cb->onRequest(static function () use (&$hasExecute) {
             $hasExecute = true;
 
             return null;
@@ -63,7 +63,7 @@ class CallbackExecuteTest extends FohnTestCase
         $_GET[Generic::URL_QUERY_TARGET] = $trigger;
         $_GET[$trigger] = Generic::GENERIC_TYPE;
 
-        $cb->onRequest(function () use (&$hasExecute) {
+        $cb->onRequest(static function () use (&$hasExecute) {
             $hasExecute = true;
 
             return null;
@@ -77,7 +77,7 @@ class CallbackExecuteTest extends FohnTestCase
         $trigger = 'ajax_tg';
         $cb = new Ajax(['urlTrigger' => $trigger]);
         // should not trigger
-        $cb->onAjaxPostRequest(function () use (&$hasExecute) {
+        $cb->onAjaxPostRequest(static function () use (&$hasExecute) {
             $hasExecute = true;
 
             return null;
@@ -88,7 +88,7 @@ class CallbackExecuteTest extends FohnTestCase
         $_GET[Generic::URL_QUERY_TARGET] = $trigger;
         $_GET[$trigger] = Generic::AJAX_TYPE;
 
-        $cb->onAjaxPostRequest(function () use (&$hasExecute) {
+        $cb->onAjaxPostRequest(static function () use (&$hasExecute) {
             $hasExecute = true;
 
             return Js::from('');
@@ -102,7 +102,7 @@ class CallbackExecuteTest extends FohnTestCase
         $trigger = 'jquery_tg';
         $cb = new Jquery(['urlTrigger' => $trigger]);
         // should not trigger
-        $cb->onJqueryRequest(function () use (&$hasExecute) {
+        $cb->onJqueryRequest(static function () use (&$hasExecute) {
             $hasExecute = true;
 
             return null;
@@ -113,7 +113,7 @@ class CallbackExecuteTest extends FohnTestCase
         $_GET[Generic::URL_QUERY_TARGET] = $trigger;
         $_GET[$trigger] = Generic::JQUERY_TYPE;
 
-        $cb->onJqueryRequest(function () use (&$hasExecute) {
+        $cb->onJqueryRequest(static function () use (&$hasExecute) {
             $hasExecute = true;
 
             return Js::from('');
@@ -129,7 +129,7 @@ class CallbackExecuteTest extends FohnTestCase
         $cb = JqReload::addAbstractTo($view, ['urlTrigger' => $trigger]);
 
         // should not trigger
-        $cb->onJqueryRequest(function () use (&$hasExecute) {
+        $cb->onJqueryRequest(static function () use (&$hasExecute) {
             $hasExecute = true;
 
             return null;
@@ -140,7 +140,7 @@ class CallbackExecuteTest extends FohnTestCase
         $_GET[Generic::URL_QUERY_TARGET] = $trigger;
         $_GET[$trigger] = Generic::JQUERY_TYPE;
 
-        $cb->onJqueryRequest(function () use (&$hasExecute) {
+        $cb->onJqueryRequest(static function () use (&$hasExecute) {
             $hasExecute = true;
         });
         $this->assertTrue($hasExecute);
@@ -154,7 +154,7 @@ class CallbackExecuteTest extends FohnTestCase
         $cb->invokeInitRenderTree();
 
         // should not trigger
-        $cb->onRequest(function () use (&$hasExecute) {
+        $cb->onRequest(static function () use (&$hasExecute) {
             $hasExecute = true;
 
             return null;
@@ -165,7 +165,7 @@ class CallbackExecuteTest extends FohnTestCase
         $_GET[Generic::URL_QUERY_TARGET] = $trigger;
         $_GET[$trigger] = Generic::SERVER_EVENT_TYPE;
 
-        $cb->onRequest(function (ServerEvent $event) use (&$hasExecute) {
+        $cb->onRequest(static function (ServerEvent $event) use (&$hasExecute) {
             $hasExecute = true;
             $event->executeJavascript(Js::from('console.log()'));
         });

@@ -139,7 +139,7 @@ class Html extends RendererAbstract
             $call = $this->parseStackTraceCall($call);
 
             $escapeFrame = false;
-            if ($inFramwork && !preg_match('~Fohn[/\\\\][^/\\\\]+[/\\\\]src[/\\\\]~', $call['file'])) {
+            if ($inFramwork && !preg_match('~Fohn[/\\\][^/\\\]+[/\\\]src[/\\\]~', $call['file'])) {
                 $escapeFrame = true;
                 $inFramwork = false;
             }
@@ -159,7 +159,7 @@ class Html extends RendererAbstract
                 $tokens['{FUNCTION_ARGS}'] = '()';
             } else {
                 if ($escapeFrame) {
-                    $tokens['{FUNCTION_ARGS}'] = '(<br />' . implode(',<br />', array_map(function ($arg) {
+                    $tokens['{FUNCTION_ARGS}'] = '(<br />' . implode(',<br />', array_map(static function ($arg) {
                         return htmlentities(static::toSafeString($arg, false, 1));
                     }, $call['args'])) . ')';
                 } else {

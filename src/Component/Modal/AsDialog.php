@@ -71,7 +71,7 @@ class AsDialog extends Modal
     public function onCallbackEvent(string $name, \Closure $fx): self
     {
         $callback = $this->callbacks[$name];
-        $callback->onAjaxPostRequest(function (array $payload) use ($fx): JsRenderInterface {
+        $callback->onAjaxPostRequest(static function (array $payload) use ($fx): JsRenderInterface {
             return $fx($payload);
         });
 

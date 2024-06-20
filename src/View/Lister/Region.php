@@ -40,7 +40,7 @@ class Region
         $html = '';
 
         foreach ($this->items as $item) {
-            $hookHtml = $this->callHook(self::HOOK_ITEM_RENDER, HookFn::withTypeFn(function ($fn, $args): string {
+            $hookHtml = $this->callHook(self::HOOK_ITEM_RENDER, HookFn::withTypeFn(static function ($fn, $args): string {
                 return $fn(...$args);
             }, [$this->regionTemplate, $item]));
 

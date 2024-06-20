@@ -106,7 +106,7 @@ class Console extends View implements LoggerInterface
      */
     public function outputHtmlMsg(string $message, array $valueTags = []): string
     {
-        $message = preg_replace_callback('~{([\w]+)}~', function ($match) use ($valueTags) {
+        $message = preg_replace_callback('~{([\w]+)}~', static function ($match) use ($valueTags) {
             if (isset($valueTags[$match[1]])) {
                 return $valueTags[$match[1]];
             }
@@ -230,10 +230,8 @@ class Console extends View implements LoggerInterface
     // Methods below implements \Psr\Log\LoggerInterface
     /**
      * System is unusable.
-     *
-     * @param string $message
      */
-    public function emergency($message, array $context = []): void
+    public function emergency(string|\Stringable $message, array $context = []): void
     {
         $this->outputHtmlMsg('<div class="pl-6 text-red-600">' . htmlspecialchars($message) . '</div>', $context);
     }
@@ -241,19 +239,16 @@ class Console extends View implements LoggerInterface
     /**
      * Action must be taken immediately.
      *
-     * @param string $message
-     */
-    public function alert($message, array $context = []): void
+     * */
+    public function alert(string|\Stringable $message, array $context = []): void
     {
         $this->outputHtmlMsg('<div class="pl-6 text-red-600">' . htmlspecialchars($message) . '</div>', $context);
     }
 
     /**
      * Critical conditions.
-     *
-     * @param string $message
      */
-    public function critical($message, array $context = []): void
+    public function critical(string|\Stringable $message, array $context = []): void
     {
         $this->outputHtmlMsg('<div  class="pl-6 text-red-600">' . htmlspecialchars($message) . '</div>', $context);
     }
@@ -261,50 +256,40 @@ class Console extends View implements LoggerInterface
     /**
      * Runtime errors that do not require immediate action but should typically
      * be logged and monitored.
-     *
-     * @param string $message
      */
-    public function error($message, array $context = []): void
+    public function error(string|\Stringable $message, array $context = []): void
     {
         $this->outputHtmlMsg('<div class="pl-6 text-red-500">' . htmlspecialchars($message) . '</div>', $context);
     }
 
     /**
      * Exceptional occurrences that are not errors.
-     *
-     * @param string $message
      */
-    public function warning($message, array $context = []): void
+    public function warning(string|\Stringable $message, array $context = []): void
     {
         $this->outputHtmlMsg('<div class="pl-6 text-yellow-600">' . htmlspecialchars($message) . '</div>', $context);
     }
 
     /**
      * Normal but significant events.
-     *
-     * @param string $message
      */
-    public function notice($message, array $context = []): void
+    public function notice(string|\Stringable $message, array $context = []): void
     {
         $this->outputHtmlMsg('<div class="pl-6 text-yellow-300">' . htmlspecialchars($message) . '</div>', $context);
     }
 
     /**
      * Interesting events.
-     *
-     * @param string $message
      */
-    public function info($message, array $context = []): void
+    public function info(string|\Stringable $message, array $context = []): void
     {
         $this->outputHtmlMsg('<div class="pl-6 text-gray-400">' . htmlspecialchars($message) . '</div>', $context);
     }
 
     /**
      * Detailed debug information.
-     *
-     * @param string $message
      */
-    public function debug($message, array $context = []): void
+    public function debug(string|\Stringable $message, array $context = []): void
     {
         $this->outputHtmlMsg('<div class="pl-6 text-pink-600">' . htmlspecialchars($message) . '</div>', $context);
     }
@@ -312,10 +297,9 @@ class Console extends View implements LoggerInterface
     /**
      * Logs with an arbitrary level.
      *
-     * @param mixed  $level
-     * @param string $message
+     * @param mixed $level
      */
-    public function log($level, $message, array $context = []): void
+    public function log($level, string|\Stringable $message, array $context = []): void
     {
         $this->{$level}($message, $context);
     }

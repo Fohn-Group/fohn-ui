@@ -91,7 +91,7 @@ class HookFn
      */
     public static function with(array $fnArgs = [], $defaultValue = null): self
     {
-        return static::makeWith(function ($fn, $args = []) {
+        return static::makeWith(static function ($fn, $args = []) {
             return $fn(...$args);
         }, $fnArgs, $defaultValue);
     }
@@ -101,7 +101,7 @@ class HookFn
      */
     public static function withVoid(array $fnArgs = []): self
     {
-        return static::makeWith(function ($fn, $args): void {
+        return static::makeWith(static function ($fn, $args): void {
             $fn(...$args);
         }, $fnArgs);
     }
@@ -111,7 +111,7 @@ class HookFn
      */
     public static function withArray(array $fnArgs = []): self
     {
-        return static::makeWith(function ($fn, $args): array {
+        return static::makeWith(static function ($fn, $args): array {
             return $fn(...$args);
         }, $fnArgs, []);
     }
@@ -121,7 +121,7 @@ class HookFn
      */
     public static function withJsRenderInterface(array $fnArgs = []): self
     {
-        return static::makeWith(function ($fn, $args = []): JsRenderInterface {
+        return static::makeWith(static function ($fn, $args = []): JsRenderInterface {
             return $fn(...$args);
         }, $fnArgs, JsStatements::with([]));
     }
@@ -131,7 +131,7 @@ class HookFn
      */
     public static function withTw(array $fnArgs = []): self
     {
-        return static::makeWith(function ($fn, $args = []): Tw {
+        return static::makeWith(static function ($fn, $args = []): Tw {
             return $fn(...$args);
         }, $fnArgs, Tw::from([]));
     }

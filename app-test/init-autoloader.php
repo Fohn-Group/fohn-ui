@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Fohn\Ui\AppTest;
 
+use Composer\Autoload\ClassLoader;
+
 $isRootProject = file_exists(__DIR__ . '/../vendor/autoload.php');
 
-/** @var \Composer\Autoload\ClassLoader $loader */
+/** @var ClassLoader $loader */
 $loader = require dirname(__DIR__, $isRootProject ? 1 : 4) . '/vendor/autoload.php';
 
 $loader->setClassMapAuthoritative(false);

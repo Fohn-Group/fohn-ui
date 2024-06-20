@@ -7,19 +7,15 @@ declare(strict_types=1);
 
 namespace Fohn\Ui\Tests\Concerns;
 
-class MockApp extends \Fohn\Ui\App
+use Fohn\Ui\App;
+
+class MockApp extends App
 {
     protected bool $registerShutdown = false;
 
-    public function terminateJson(array $output, int $statusCode = 200): void
-    {
-    }
+    public function terminateJson(array $output, int $statusCode = 200): void {}
 
-    public function callExit(): void
-    {
-    }
+    public function callExit(): void {}
 
-    public function streamEvent(array $event, int $bufferSize = 0): void
-    {
-    }
+    public function streamEvent(array $event, int $bufferSize = 0): void {}
 }

@@ -10,8 +10,9 @@ namespace Fohn\Ui\Tests\Javascript;
 use Fohn\Ui\HtmlTemplate;
 use Fohn\Ui\Js\Jquery;
 use Fohn\Ui\View;
+use PHPUnit\Framework\TestCase;
 
-class JQueryTest extends \PHPUnit\Framework\TestCase
+class JQueryTest extends TestCase
 {
     private function getView(): View
     {

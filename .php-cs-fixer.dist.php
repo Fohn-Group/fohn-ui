@@ -7,6 +7,7 @@ $finder = PhpCsFixer\Finder::create()
                                          'build',
                                          'vendor',
                                          'js',
+                                         'app-test/_app-data',
                                      ]);
 
 return (new PhpCsFixer\Config())

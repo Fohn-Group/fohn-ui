@@ -168,7 +168,7 @@ class ServerEvent extends Generic
      */
     private function wrapEvent(string $string): string
     {
-        return implode('', array_map(function ($v) {
+        return implode('', array_map(static function ($v) {
             return 'data: ' . $v . "\n";
         }, preg_split('~\r?\n|\r~', $string)));
     }

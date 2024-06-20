@@ -13,8 +13,9 @@ use Fohn\Ui\Component\Form\Control\Input;
 use Fohn\Ui\Component\Form\Control\Number;
 use Fohn\Ui\Component\Form\Control\Radio;
 use Fohn\Ui\Core\Exception;
+use PHPUnit\Framework\TestCase;
 
-class InputTest extends \PHPUnit\Framework\TestCase
+class InputTest extends TestCase
 {
     protected function getInput(array $default = []): Input
     {

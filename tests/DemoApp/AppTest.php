@@ -30,7 +30,7 @@ class AppTest extends TestCase
         );
     }
 
-    public function demoFilesProvider(): array
+    public static function provideAppTestHtmlResponseCases(): iterable
     {
         $excludeDirs = ['_app-data', '_includes', 'local'];
         $excludeFiles = [];
@@ -52,7 +52,7 @@ class AppTest extends TestCase
             }
         }
 
-        return array_reduce($files, function (array $items, string $v) {
+        return array_reduce($files, static function (array $items, string $v) {
             $items[$v] = [$v];
 
             return $items;
@@ -60,7 +60,7 @@ class AppTest extends TestCase
     }
 
     /**
-     * @dataProvider demoFilesProvider
+     * @dataProvider provideAppTestHtmlResponseCases
      */
     public function testAppTestHtmlResponse(string $uri): void
     {

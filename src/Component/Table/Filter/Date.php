@@ -23,8 +23,8 @@ class Date extends Generic implements FilterColumnInterface
         parent::__construct($id, $label, $props);
     }
 
-    public function getValue(string $value): ?\DateTime
+    public function getValue(?string $value): ?\DateTime
     {
-        return \DateTime::createFromFormat($this->format, $value) ?: null;
+        return \DateTime::createFromFormat($this->format, $value ?? '') ?: null;
     }
 }

@@ -96,7 +96,7 @@ class AppTest
                 'items' => [
                     new Item(['name' => 'Table', 'url' => $baseUrl . 'collection/table.php']),
                     new Item(['name' => 'Table w. Atk Model', 'url' => $baseUrl . 'collection/table-as-crud.php']),
-                    new Item(['name' => 'Table Filters', 'url' => $baseUrl . 'collection/table-filter.php']),
+                    new Item(['name' => 'Table Filters', 'url' => $baseUrl . 'collection/employee.php']),
                 ],
             ]),
             new Group([
@@ -127,7 +127,7 @@ class AppTest
     /**
      * Create button suitable to use in a table action column.
      */
-    public static function tableBtnFactory(string $iconName, string $color = 'info'): View\Button
+    public static function tableBtnFactory(string $iconName, string $color = 'info'): Button
     {
         $btn = new Button(['iconName' => $iconName, 'color' => $color, 'shape' => 'circle', 'size' => 'small', 'type' => 'text']);
         $btn->removeTailwind('mx-2');

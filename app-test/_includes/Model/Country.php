@@ -24,7 +24,7 @@ class Country extends Model
         $this->addField('numcode', ['caption' => 'ISO Numeric Code', 'type' => 'integer', 'required' => true]);
         $this->addField('phonecode', ['caption' => 'Phone Prefix', 'type' => 'integer', 'required' => true]);
 
-        $this->onHook(Model::HOOK_BEFORE_SAVE, function (Model $model) {
+        $this->onHook(Model::HOOK_BEFORE_SAVE, static function (Model $model) {
             if (!$model->get('sys_name')) {
                 $model->set('sys_name', mb_strtoupper($model->get('name')));
             }

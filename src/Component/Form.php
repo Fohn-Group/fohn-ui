@@ -180,7 +180,7 @@ class Form extends View implements VueInterface
         return $this;
     }
 
-    public function addControl(Form\Control $control, string $layoutName = self::MAIN_LAYOUT, string $regionName = null): Form\Control
+    public function addControl(Control $control, string $layoutName = self::MAIN_LAYOUT, string $regionName = null): Control
     {
         $this->registerControl($control);
 

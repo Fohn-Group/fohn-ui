@@ -89,7 +89,7 @@ class Tw
     public function toString(\Closure $fn = null, string $seed = ''): string
     {
         if (!$fn) {
-            $fn = function (string $output, string $utility): string {
+            $fn = static function (string $output, string $utility): string {
                 return $output . ' ' . $utility;
             };
         }

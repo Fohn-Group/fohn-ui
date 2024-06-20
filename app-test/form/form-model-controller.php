@@ -26,7 +26,7 @@ View::addTo(Ui::layout(), ['htmlTag' => 'p'])
  * Return a Javascript function that will update text inside a view.
  * Will render as: (newValue) => { $('#View_ID')->text(newValue); }.
  */
-$getJsFunction = function (View $view): JsFunction {
+$getJsFunction = static function (View $view): JsFunction {
     return JsFunction::arrow([Js::var('newValue')])->execute(Jquery::withView($view)->text(Js::var('newValue')));
 };
 
@@ -39,14 +39,14 @@ $recordId = (string) (new FieldTest(Data::db()))->loadAny()->getId();
 $f = Form::addTo($formContainer);
 $f->addControls($modelCtrl->factoryFormControls($recordId));
 $nameCtrl = $f->getControl('first_name')
-    ->onValidate(function (string $value) {
+    ->onValidate(static function (string $value) {
         $error = null;
         if ($value === 'JOHN') {
             $error = 'John is not allow here.';
         }
 
         return $error;
-    })->onSetValue(function ($value) {
+    })->onSetValue(static function ($value) {
         return strtoupper($value);
     });
 
@@ -59,7 +59,7 @@ $f->getControl('last_name')->placeholder = 'a placeholder';
 
 $c = $f->addControl(new Form\Control\Range(['caption' => 'Range', 'controlName' => 'range']))
     ->setValue(23)
-    ->onValidate(function (int $value) {
+    ->onValidate(static function (int $value) {
         if ($value < 20) {
             return 'Value is tool low.';
         }
@@ -68,7 +68,7 @@ $c = $f->addControl(new Form\Control\Range(['caption' => 'Range', 'controlName' 
     });
 $f->addControl(new Form\Control\Range(['caption' => 'Range', 'controlName' => 'range1']))->setValue(40);
 
-$f->onSubmit(function (Form $f) use ($modelCtrl, $recordId) {
+$f->onSubmit(static function (Form $f) use ($modelCtrl, $recordId) {
     if ($errors = $modelCtrl->saveModelUsingForm($recordId, $f->getControls())) {
         $f->addValidationErrors($errors);
     }

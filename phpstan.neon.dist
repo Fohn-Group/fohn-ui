@@ -28,6 +28,7 @@ parameters:
     reportMaybesInMethodSignatures: true
     reportStaticMethodSignatures: true
     checkTooWideReturnTypesInProtectedAndPublicMethods: true
-    checkMissingIterableValueType: false # TODO
 
     ignoreErrors:
+        - identifier: missingType.iterableValue
+

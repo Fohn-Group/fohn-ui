@@ -8,6 +8,7 @@ use Fohn\Ui\Core\Exception;
 use Fohn\Ui\Js\Jquery;
 use Fohn\Ui\Service\Ui;
 use Fohn\Ui\Tailwind\Tw;
+use Fohn\Ui\View;
 use Fohn\Ui\View\Button;
 use Fohn\Ui\View\Console;
 use Fohn\Ui\View\Heading\SectionHeader;
@@ -15,8 +16,8 @@ use Psr\Log\LoggerInterface;
 
 require_once __DIR__ . '/../init-ui.php';
 
-/** @var \Fohn\Ui\View $testRunClass */
-$testRunClass = get_class(new class() extends \Fohn\Ui\View {
+/** @var View $testRunClass */
+$testRunClass = get_class(new class() extends View {
     public function generateReport(LoggerInterface $console): array
     {
         $console->log('info', 'Console Implements Logger Interface');
@@ -46,7 +47,7 @@ $button = Button::addTo(Ui::layout(), ['type' => 'outline'])->setLabel('Re-run j
 $console = Console::addTo(Ui::layout());
 Jquery::addEventTo($button, 'click')->execute($console->run());
 
-$console->onRun(function (Console $console) use ($button) {
+$console->onRun(static function (Console $console) use ($button) {
     $console->executeJavascript($button->disableUsingJavascript());
     $console->outputMsg('Executing process via execute...');
     sleep(1);
@@ -67,7 +68,7 @@ $button = Button::addTo(Ui::layout(), ['type' => 'outline'])->setLabel('Re-run j
 $console = Console::addTo(Ui::layout());
 Jquery::addEventTo($button, 'click')->execute($console->run());
 
-$console->onRun(function (Console $console) use ($testRunClass, $button) {
+$console->onRun(static function (Console $console) use ($testRunClass, $button) {
     $console->executeJavascript($button->disableUsingJavascript());
     $console->outputMsg('Calling object method via runMethod...');
     sleep(1);
@@ -85,7 +86,7 @@ $button = Button::addTo(Ui::layout(), ['type' => 'outline'])->setLabel('Re-run j
 $console = Console::addTo(Ui::layout());
 Jquery::addEventTo($button, 'click')->execute($console->run());
 
-$console->onRun(function (Console $console) {
+$console->onRun(static function (Console $console) {
     $console->outputMsg('Catching exception...');
     sleep(1);
 

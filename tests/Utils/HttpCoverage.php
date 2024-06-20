@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace Fohn\Ui\Tests\Utils;
 
 use SebastianBergmann\CodeCoverage\CodeCoverage;
+use SebastianBergmann\CodeCoverage\Driver\Selector;
 use SebastianBergmann\CodeCoverage\Filter;
 use SebastianBergmann\CodeCoverage\Report;
 
@@ -29,7 +30,7 @@ final class HttpCoverage
         $filter = new Filter();
         $filter->includeDirectory(__DIR__ . '/../src');
         self::$coverage = new CodeCoverage(
-            (new \SebastianBergmann\CodeCoverage\Driver\Selector())->forLineCoverage($filter),
+            (new Selector())->forLineCoverage($filter),
             $filter
         );
 

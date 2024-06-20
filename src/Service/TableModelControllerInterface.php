@@ -3,6 +3,8 @@
 declare(strict_types=1);
 /**
  * Table ModelCtrl Interface.
+ *
+ * @method getModel()
  */
 
 namespace Fohn\Ui\Service;
