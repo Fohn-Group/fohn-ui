@@ -96,7 +96,7 @@ class AppTest
                 'items' => [
                     new Item(['name' => 'Table', 'url' => $baseUrl . 'collection/table.php']),
                     new Item(['name' => 'Table w. Atk Model', 'url' => $baseUrl . 'collection/table-as-crud.php']),
-                    new Item(['name' => 'Table Filters', 'url' => $baseUrl . 'collection/table-filter.php']),
+                    new Item(['name' => 'Table Filters', 'url' => $baseUrl . 'collection/employee.php']),
                 ],
             ]),
             new Group([
