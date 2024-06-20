@@ -99,7 +99,7 @@ class Table extends View implements VueInterface
     protected string $payloadClass = Payload::class;
     protected ?Filter $filter = null;
 
-    protected array $tableTws = [
+    protected array $tableTwsDefault = [
         'relative',
         'w-full',
         'border',
@@ -107,10 +107,14 @@ class Table extends View implements VueInterface
         'table-auto',
     ];
 
-    protected array $rowTws = [
+    protected ?Tw $tableTw = null;
+
+    protected array $rowTwsDefault = [
         'border',
         'border-collapse',
     ];
+
+    protected ?Tw $rowTw = null;
 
     /** The data array */
     protected ?array $data = null;
@@ -120,6 +124,24 @@ class Table extends View implements VueInterface
         $this->addView($caption, 'caption');
 
         return $this;
+    }
+
+    protected function initRenderTree(): void
+    {
+        parent::initRenderTree();
+
+        $this->tableTw = Tw::from($this->tableTwsDefault);
+        $this->rowTw = Tw::from($this->rowTwsDefault);
+    }
+
+    public function getTableTw(): ?Tw
+    {
+        return $this->tableTw;
+    }
+
+    public function getRowTw(): ?Tw
+    {
+        return $this->rowTw;
     }
 
     /**
@@ -223,6 +245,19 @@ class Table extends View implements VueInterface
         return $this->filter;
     }
 
+    public function filterColumns(array $columnFilters, Filter $filter = null): self
+    {
+        if (!$this->filter) {
+            $this->addFilter($filter ?? new Filter());
+        }
+
+        foreach ($columnFilters as $columnFilter) {
+            $this->filter->addColumnFilter($columnFilter);
+        }
+
+        return $this;
+    }
+
     public function setColumJqueryEvents(string $columnName, string $eventName, array $statements): self
     {
         Jquery::addEventTo($this, $eventName, "[data-cell-name='{$columnName}']")->executes(
@@ -297,8 +332,8 @@ class Table extends View implements VueInterface
 
         $this->getTemplate()->trySetJs('height', Js::string($this->height));
 
-        $this->getTemplate()->trySet('tableTws', Tw::from($this->tableTws)->toString());
-        $this->getTemplate()->trySet('rowTws', Tw::from($this->rowTws)->toString());
+        $this->getTemplate()->trySet('tableTws', $this->tableTw->toString());
+        $this->getTemplate()->trySet('rowTws', $this->rowTw->toString());
         $this->renderTableProps();
 
         foreach ($this->columns as $column) {
