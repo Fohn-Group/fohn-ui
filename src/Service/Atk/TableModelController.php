@@ -3,6 +3,8 @@
 declare(strict_types=1);
 /**
  * Manage Atk model for Table.
+ *
+ * @method getModel()
  */
 
 namespace Fohn\Ui\Service\Atk;
