@@ -3,7 +3,8 @@
         <fohn-table
                 store-id="{$storeId}"
                 data-url="{$dataUrl}"
-                :items-per-page="{$itemsPerPage}"
+                :tbl-items-per-page="{$itemsPerPage}"
+                :tbl-items-per-pages="{$itemsPerPages}"
                 :columns="{$columns}"
                 :has-selectable-rows="{$hasSelectableRows}"
                 :keep-selection-across-page="{$keepSelectionAcrossPage}"
@@ -19,7 +20,8 @@
                 rows,
                 heightStyle,
                 totalItems,
-                itemsPerPage,
+                tblItemsPerPage,
+                tblItemsPerPages,
                 loadPage,
                 searchItems,
                 sortTable,
@@ -124,8 +126,8 @@
                             :total-items="totalItems"
                             :disabled="isFetching"
                             :page-limit="{$pagesLimit}"
-                            :items-per-page="itemsPerPage"
-                            :items-per-pages="{$itemsPerPages}"
+                            :items-per-page="tblItemsPerPage"
+                            :items-per-pages="tblItemsPerPages"
                             #default="@{range,
                             currentPage,
                             totalPages,
