@@ -110,6 +110,11 @@ trait GenericTrait
         return Tw::utility('h', $height, $variant);
     }
 
+    public static function size(string $widthHeight, string $variant = ''): string
+    {
+        return Tw::utility('size', $widthHeight, $variant);
+    }
+
     // -------------
     // BOX ALIGNMENT
     // -------------

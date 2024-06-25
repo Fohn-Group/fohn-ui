@@ -118,6 +118,11 @@ class Base implements ThemeInterface
         $output .= TwDefaults::getSpacingDefault($theme->screens, $theme->spaces);
         $output .= TwDefaults::getWidthDefault($theme->screens, $theme->widths);
         $output .= TwDefaults::getHeightDefault($theme->screens, $theme->heights);
+        $output .= TwDefaults::getMinMaxSizeDefault('min-w', $theme->screens, $theme->widths);
+        $output .= TwDefaults::getMinMaxSizeDefault('max-w', $theme->screens, $theme->widths);
+        $output .= TwDefaults::getMinMaxSizeDefault('min-h', $theme->screens, $theme->heights);
+        $output .= TwDefaults::getMinMaxSizeDefault('max-h', $theme->screens, $theme->heights);
+        $output .= TwDefaults::getSizeDefault($theme->screens, $theme->heights);
         $output .= TwDefaults::getJustifyDefault($theme->screens);
         $output .= TwDefaults::getAlignDefault($theme->screens);
         $output .= TwDefaults::getPlaceDefault($theme->screens);
