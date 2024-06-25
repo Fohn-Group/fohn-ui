@@ -29,7 +29,6 @@ class TwDefaults
             }
             $output .= Tw::gridType('cols', 'none', $screen) . self::SEPARATOR;
             $output .= Tw::gridType('cols', 'subgrid', $screen) . self::SEPARATOR;
-
         }
         $output .= \PHP_EOL . '-- end grid-cols --' . \PHP_EOL;
 
