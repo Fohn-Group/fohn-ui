@@ -9,5 +9,5 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use Fohn\Ui\Service\Theme\Fohn;
 
-file_put_contents('fohn-theme-tw.txt', Fohn::getThemeCss());
+file_put_contents(__DIR__ . '/fohn-theme-tw.txt', Fohn::getThemeCss());
 echo 'theme css done!' . \PHP_EOL;

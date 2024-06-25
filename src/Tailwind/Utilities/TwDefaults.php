@@ -16,7 +16,7 @@ class TwDefaults
     /**
      * Generate Grid utility class names.
      */
-    public static function getGridDefaults(array $screens, array $gapSizes, int $cols = 12, int $rows = 6): string
+    public static function getGridDefaults(array $screens, array $gapSizes, int $cols = 12, int $rows = 12): string
     {
         $gridModifier = ['span', 'start', 'end'];
         $gridFlow = ['row', 'col', 'row-dense', 'col-dense'];
@@ -28,6 +28,8 @@ class TwDefaults
                 $output .= Tw::gridType('cols', (string) $x, $screen) . self::SEPARATOR;
             }
             $output .= Tw::gridType('cols', 'none', $screen) . self::SEPARATOR;
+            $output .= Tw::gridType('cols', 'subgrid', $screen) . self::SEPARATOR;
+
         }
         $output .= \PHP_EOL . '-- end grid-cols --' . \PHP_EOL;
 
@@ -76,7 +78,7 @@ class TwDefaults
 
     public static function getTextDefaults(array $screens, array $textSizes): string
     {
-        $textPositions = ['left', 'center', 'right', 'justify'];
+        $textPositions = ['left', 'center', 'right', 'justify', 'wrap', 'nowrap', 'balance', 'pretty'];
         $textVerticalPosition = ['baseline', 'top', 'middle', 'bottom', 'text-top', 'text-bottom', 'sub', 'super'];
 
         $output = '';
@@ -199,6 +201,20 @@ class TwDefaults
         return $output;
     }
 
+    public static function getSizeDefault(array $screens, array $sizes): string
+    {
+        $output = '';
+
+        foreach ($screens as $screen) {
+            foreach ($sizes as $size) {
+                $output .= Tw::size($size, $screen) . self::SEPARATOR;
+            }
+        }
+        $output .= \PHP_EOL . '-- end size --' . \PHP_EOL;
+
+        return $output;
+    }
+
     public static function getWidthDefault(array $screens, array $sizes): string
     {
         $output = '';
@@ -223,6 +239,20 @@ class TwDefaults
             }
         }
         $output .= \PHP_EOL . '-- end height --' . \PHP_EOL;
+
+        return $output;
+    }
+
+    public static function getMinMaxSizeDefault(string $utility, array $screens, array $sizes): string
+    {
+        $output = '';
+
+        foreach ($screens as $screen) {
+            foreach ($sizes as $size) {
+                $output .= Tw::utility($utility, $size, $screen) . self::SEPARATOR;
+            }
+        }
+        $output .= \PHP_EOL . '-- end ' . $utility . ' --' . \PHP_EOL;
 
         return $output;
     }
