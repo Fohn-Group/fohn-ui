@@ -29,7 +29,6 @@ use Fohn\Ui\Js\JsFunction;
 use Fohn\Ui\Js\JsRenderInterface;
 use Fohn\Ui\Js\Type\ArrayLiteral;
 use Fohn\Ui\Js\Type\Integer;
-use Fohn\Ui\Js\Type\ObjectLiteral;
 use Fohn\Ui\Js\Type\Variable;
 use Fohn\Ui\Service\Ui;
 use Fohn\Ui\Tailwind\Tw;
@@ -90,9 +89,6 @@ class Table extends View implements VueInterface
     private array $columns = [];
 
     public string $idColumnName = 'id';
-
-    /** @var array<string, JsFunction> An array of table action */
-    protected array $actions = [];
 
     protected ?Data $tableDataCb = null;
 
@@ -218,23 +214,24 @@ class Table extends View implements VueInterface
                     ['template' => Ui::templateFromFile('vue-component/table/column/header-empty.html')]
                 );
             }
+            /** @var Column\Action $actionColumn */
+            $actionColumn = Column\Action::factory(['columnHeader' => $header])->alignText('center');
+
             $this->addColumn(
                 $columnName,
-                Column\Action::factory(
-                    [
-                        'columnHeader' => $header,
-                    ]
-                )->alignText('center')
+                $actionColumn
             );
+        } else {
+            /** @var Column\Action $actionColumn */
+            $actionColumn = $this->getTableColumn($columnName);
         }
+
         $button->setViewName($actionName);
+        static::bindVueAttr($button, 'disabled', "cell?.state?.{$actionName} || false");
         static::bindVueEvent($button, $eventName, "executeRowAction('{$actionName}', cell)");
-        $column = $this->getTableColumn($columnName);
-        $column->addView($button);
+        $actionColumn->addView($button);
 
-        $this->actions[$actionName] = JsFunction::arrow([Variable::set('cell')]);
-
-        return $this->actions[$actionName];
+        return $actionColumn->addRowActionFn($actionName, JsFunction::arrow([Variable::set('cell')]));
     }
 
     public function addFilter(Filter $filter, string $regionName = self::FILTER_REGION_NAME): Filter
@@ -377,7 +374,6 @@ class Table extends View implements VueInterface
         $this->getTemplate()->setJs('columns', ArrayLiteral::set($this->getColumnsDefinition()));
         $this->getTemplate()->setJs('itemsPerPage', Integer::set($this->paginatorItemsPerPage));
         $this->getTemplate()->setJs('itemsPerPages', ArrayLiteral::set($this->paginatorItemsPerPages));
-        $this->getTemplate()->setJs('tableRowActions', ObjectLiteral::set($this->actions));
     }
 
     private function getColumnsDefinition(): array

@@ -46,9 +46,18 @@ class Set
             $rowTws = $this->table->callHook(Table::HOOK_ROW_TW, HookFn::withTw([(string) $id, (object) $row]));
             $cells = [];
             foreach ($columns as $name => $column) {
+                $attr = [];
                 $value = null;
                 $cellTws = null;
-                if (!$column instanceof Column\ActionInterface) {
+                if ($column instanceof Column\Action) {
+                    // @var Column\Action $column
+                    // call hook function with row value and actionName as params. Callback must return a boolean.
+                    foreach ($column->getRowActions() as $action => $fn) {
+                        $attr[$action] = $column->callHook(Column\Action::HOOK_DISABLED, HookFn::withTypeFn(static function ($fn, $args): bool {
+                            return $fn(...$args);
+                        }, [$action, $row]));
+                    }
+                } else {
                     $value = $column->getDisplayValue($row[$name], $id);
                     // call hook function with cell value as params. Callback must return a Tw object.
                     $cellTws = $column->callHook(Column::HOOK_CELL_TW, HookFn::withTw([$row[$name]]));
@@ -59,6 +68,7 @@ class Set
                     'name' => $column->getColumnName(),
                     'value' => $value,
                     'css' => $cellTws !== null ? $cellTws->toString() : '',
+                    'state' => $attr,
                 ];
             }
             $results['rows'][] = ['id' => (string) $id, 'cells' => $cells, 'css' => $rowTws->toString()];
