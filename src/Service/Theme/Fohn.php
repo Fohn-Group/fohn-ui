@@ -261,7 +261,7 @@ class Fohn extends Base
                     'focus:ring-' . $this->colors[$btn->getColor()],
                     'disabled:text-gray-400',
                     'disabled:cursor-default',
-                        ])
+                ])
                 ->merge($this->btnShape($btn))
                 ->get()
         );
