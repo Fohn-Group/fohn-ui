@@ -259,6 +259,8 @@ class Fohn extends Base
                     'text-' . $textColor,
                     'active:text-' . $this->colors['white'],
                     'focus:ring-' . $this->colors[$btn->getColor()],
+                    'disabled:text-gray-400',
+                    'disabled:cursor-default',
                 ])
                 ->merge($this->btnShape($btn))
                 ->get()
