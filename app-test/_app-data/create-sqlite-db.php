@@ -8,6 +8,7 @@ use Atk4\Data\Model;
 use Atk4\Data\Persistence;
 use Atk4\Data\Schema\Migrator;
 
+require_once __DIR__ . '/FileService.php';
 require_once __DIR__ . '/../init-autoloader.php';
 
 $sqliteFile = __DIR__ . '/db.sqlite';
@@ -57,6 +58,16 @@ $model->import([
         'caption' => null,
     ],
 ]);
+
+
+$model = new Model($db, ['table' => 'file']);
+$model->addField('name', ['type' => 'string']);
+$model->addField('size', ['type' => 'integer']);
+$model->addField('ext', ['type' => 'string']);
+$model->addField('is_folder', ['type' => 'boolean']);
+$model->addField('parent_id', ['type' => 'integer']);
+(new Migrator($model))->create();
+$model->import(\FileService::scanDirectory(dirname(__DIR__, 2) . '/src'));
 
 $model = new Model($db, ['table' => 'country']);
 $model->addField('iso', ['type' => 'string']); // should be CHAR(2) NOT NULL
