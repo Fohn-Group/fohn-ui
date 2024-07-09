@@ -77,9 +77,15 @@ class Fohn extends Base
             'error' => ['bg-' . $this->colors['error'], 'text-' . $this->colors['white']],
             'warning' => ['bg-' . $this->colors['warning'], 'text-' . $this->colors['white']],
             'neutral' => ['bg-' . $this->colors['neutral'], 'text-' . $this->colors['black']],
+            'neutral-light' => ['bg-' . $this->colors['neutral-light'], 'text-' . $this->colors['black']],
         ];
 
         $this->supportedVariants = array_merge($this->screens, $this->states);
+    }
+
+    public static function getColorRecipes(string $name): array
+    {
+        return static::getInstance()->colorRecipes[$name];
     }
 
     public static function colorAs(string $color, View $view, string $type = 'contained'): void
