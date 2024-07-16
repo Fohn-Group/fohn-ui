@@ -32,7 +32,7 @@ class Tree extends View implements VueInterface
 
     public string $selectedColor = 'info';
 
-    public string $defaultTemplate = 'vue-component/prime/tree.html';
+    public string $defaultTemplate = 'vue-component/tree.html';
 
     public array $defaultTailwind = [
         'border',
