@@ -13,7 +13,6 @@ use Fohn\Ui\Service\Ui;
 require_once __DIR__ . '/../init-ui.php';
 
 $fileModel = new File(Data::db());
-
 $tree = Tree::addTo(Ui::layout());
 
 $tree->setNodes($fileModel->getFilesHierarchy());
