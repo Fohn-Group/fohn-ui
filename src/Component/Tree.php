@@ -9,7 +9,6 @@ declare(strict_types=1);
 namespace Fohn\Ui\Component;
 
 use Fohn\Ui\Callback\Ajax;
-use Fohn\Ui\Callback\Data;
 use Fohn\Ui\Core\HookFn;
 use Fohn\Ui\Core\HookTrait;
 use Fohn\Ui\Js\Js;
@@ -21,8 +20,8 @@ use Fohn\Ui\View;
 
 class Tree extends View implements VueInterface
 {
-    use VueTrait;
     use HookTrait;
+    use VueTrait;
 
     public const TREE_SELECTED_COLOR = 'selectedColors';
     public const TREE_HOVER_COLOR = 'hoverColors';
@@ -86,10 +85,10 @@ class Tree extends View implements VueInterface
         $this->onHook(self::HOOK_NODE_SELECT, $fx);
 
         $this->treeRequest->onAjaxPostRequest(function (array $payload): JsRenderInterface {
-            $nodeKey = '1'; //isset($payload['__nodeKey']) ? (string) $payload['__nodeKey'] : null;
+            $nodeKey = '1'; // isset($payload['__nodeKey']) ? (string) $payload['__nodeKey'] : null;
+
             return $this->callHook(self::HOOK_NODE_SELECT, HookFn::withJsRenderInterface([$this, $nodeKey]));
         });
-
     }
 
     public function setFilter(array $fields, string $mode = 'lenient', string $placeholder = null, ?string $locale = 'en'): self
@@ -141,7 +140,6 @@ class Tree extends View implements VueInterface
         $this->getTemplate()->trySetJs('nodes', Js::array($this->nodes));
         $this->getTemplate()->trySetJs('options', Js::object($this->treeOptions));
         $this->getTemplate()->trySetJs('ptProps', Js::object($this->ptProps));
-
 
         $this->createVueApp(self::COMP_NAME, [], $this->getDefaultSelector());
         parent::beforeHtmlRender();
