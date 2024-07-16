@@ -1,0 +1,21 @@
+<div id="{$idAttr}"  class="{$classAttr}" {$attributes}>
+    <fohn-tree :options="{$options}" :pt-props="{$ptProps}" :nodes="{$nodes}" #default="@{nodes, selectNode, unSelectNode, selectedKey, ptProps, updateSelection}">
+        <Tree @update:selection-keys="updateSelection"
+              :selection-keys="selectedKey"
+              @node-select="selectNode"
+              @node-unselect="unSelectNode"
+              :value="nodes"
+              v-bind="ptProps"
+              class="p-5 rounded-md ">
+            <template #checkboxicon="@{checked, partialChecked}">
+                <i :class="@{'bi bi-check': checked, 'bi bi-dash': partialChecked}"></i>
+            </template>
+            <template #filtericon="slotProps">
+                <i class="bi bi-search -ml-6"></i>
+            </template>
+        </Tree>
+        <div>
+            {$Content}
+        </div>
+    </fohn-tree>
+</div>
