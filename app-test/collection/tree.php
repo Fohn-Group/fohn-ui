@@ -13,7 +13,7 @@ use Fohn\Ui\Service\Ui;
 require_once __DIR__ . '/../init-ui.php';
 
 $mode = $_GET['mode'] ?? 'single';
-$hideFolder = ($_GET['folder'] ?? null) === null;
+$allowFolderSelect = ($_GET['folder'] ?? null) === null;
 
 // some file selection in checkbox mode.
 $treeValue = [
@@ -64,7 +64,7 @@ $tree = Tree::addTo(Ui::layout());
 if ($mode === 'checkbox') {
     $tree->setValue($treeValue);
 }
-$tree->setNodes($fileModel->getFilesHierarchy($hideFolder));
+$tree->setNodes($fileModel->getFilesHierarchy($allowFolderSelect));
 $tree->setSelectionMode($mode)
     ->setHeight('600px')
     ->setFilter(['label', 'type'], 'lenient', 'Search file');
