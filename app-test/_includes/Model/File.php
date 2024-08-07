@@ -31,15 +31,15 @@ class File extends Model
             ->addField('subCount', ['aggregate' => 'count', 'field' => $this->getPersistence()->expr($this, '*')]);
     }
 
-    public function getFilesHierarchy(array $icons = []): array
+    public function getFilesHierarchy(bool $isFolderSelectable = true): array
     {
-        return $this->getHierarchicalTreeNodes($this->setOrder('is_folder', 'desc')->export(), null);
+        return $this->getHierarchicalTreeNodes($this->setOrder('is_folder', 'desc')->export(), null, $isFolderSelectable);
     }
 
     /**
-     * Return Files Hierarchy as a TreeNode PrimeVue property.
+     * Return Files Hierarchy as a TreeNode property.
      */
-    private function getHierarchicalTreeNodes(array $files, int $useId = null): array
+    private function getHierarchicalTreeNodes(array $files, int $useId = null, bool $isFolderSelectable): array
     {
         $parent = [];
         // Get top level files or folders.
@@ -49,6 +49,7 @@ class File extends Model
                 'label' => ucfirst($file['name']),
                 'type' => $file['ext'] !== '' ? 'file' : 'dir',
                 'icon' => $file['ext'] !== '' ? 'bi bi-file-code' : 'bi bi-folder',
+                'selectable' => $isFolderSelectable ? true : $file['ext'] !== '',
                 'data' => [
                     'name' => $file['name'],
                     'size' => $file['size'],
@@ -67,7 +68,7 @@ class File extends Model
         // check if each top level parent has children
         foreach ($parent as $k => $file) {
             if ($file['data']['type'] === 'Folder') {
-                $parent[$k]['children'] = $this->getHierarchicalTreeNodes($files, $file['key']);
+                $parent[$k]['children'] = $this->getHierarchicalTreeNodes($files, $file['key'], $isFolderSelectable);
             }
         }
 
