@@ -59,6 +59,8 @@ class Tree extends View implements VueInterface
         'focus:ring-opacity-50',
     ];
 
+    protected array $nodeValue = [];
+
     protected array $treeOptions = [];
 
     protected ?Ajax $treeRequest = null;
@@ -76,18 +78,33 @@ class Tree extends View implements VueInterface
         if (!$this->treeRequest) {
             $this->treeRequest = Ajax::addAbstractTo($this);
         }
-        $this->treeOptions[$mode] = $this->treeRequest->getUrl();
     }
 
-    public function onNodeSelected(\Closure $fx): void
+    public function setValue(array $value): void
+    {
+        $this->nodeValue = $value;
+    }
+
+    /**
+     * Function $fx to be executed when Tree node selection changed.
+     * The callback function ($fx) must return a jsRenderInterface.
+     */
+    public function onTreeNodeChanged(\Closure $fx): void
     {
         $this->initAjaxRequest('selectUrl');
         $this->onHook(self::HOOK_NODE_SELECT, $fx);
 
         $this->treeRequest->onAjaxPostRequest(function (array $payload): JsRenderInterface {
-            $nodeKey = '1'; // isset($payload['__nodeKey']) ? (string) $payload['__nodeKey'] : null;
+            // Weither a node was select or unselect.
+            $nodeAction = $payload['__nodeAction'] ?? null;
+            // the key to the select/unselect node.
+            $hitNode = $payload['__nodeKey'] ?? null;
+            // an array of key values for all selected nodes.
+            $nodeKeys = $payload['__nodeKeys'] ?? [];
+            // the raw value for Tree. Save this array value in order to restore selected state using Tree::setValue method.
+            $treeValue = $payload['__treeValue'] ?? [];
 
-            return $this->callHook(self::HOOK_NODE_SELECT, HookFn::withJsRenderInterface([$this, $nodeKey]));
+            return $this->callHook(self::HOOK_NODE_SELECT, HookFn::withJsRenderInterface([$nodeAction, $hitNode, $nodeKeys, $treeValue, $this]));
         });
     }
 
@@ -140,6 +157,8 @@ class Tree extends View implements VueInterface
         $this->getTemplate()->trySetJs('nodes', Js::array($this->nodes));
         $this->getTemplate()->trySetJs('options', Js::object($this->treeOptions));
         $this->getTemplate()->trySetJs('ptProps', Js::object($this->ptProps));
+        $this->getTemplate()->trySetJs('nodeValue', Js::object($this->nodeValue));
+        $this->getTemplate()->trySetJs('callbackUrl', Js::string($this->treeRequest ? $this->treeRequest->getUrl() : ''));
 
         $this->createVueApp(self::COMP_NAME, [], $this->getDefaultSelector());
         parent::beforeHtmlRender();
