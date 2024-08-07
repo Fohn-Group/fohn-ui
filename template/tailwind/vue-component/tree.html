@@ -1,5 +1,11 @@
 <div id="{$idAttr}"  class="{$classAttr}" {$attributes}>
-    <fohn-tree :options="{$options}" :pt-props="{$ptProps}" :nodes="{$nodes}" #default="@{nodes, selectNode, unSelectNode, selectedKey, ptProps, updateSelection}">
+    <fohn-tree
+            :extended-node-options="{$options}"
+            :pt-props="{$ptProps}"
+            :node-value="{$nodeValue}"
+            :callback-url="{$callbackUrl}"
+            :nodes="{$nodes}"
+            #default="@{nodes, selectNode, unSelectNode, selectedKey, ptProps, updateSelection}">
         <Tree @update:selection-keys="updateSelection"
               :selection-keys="selectedKey"
               @node-select="selectNode"
