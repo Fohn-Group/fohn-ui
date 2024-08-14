@@ -69,8 +69,15 @@ $tree->setSelectionMode($mode)
     ->setHeight('600px')
     ->setFilter(['label', 'type'], 'lenient', 'Search file');
 
-$tree->onTreeNodeChanged(static function ($action, $key, $selected, $newTreeValue) {
-    return JsToast::notify(ucfirst($action), 'Key: ' . $key);
-});
+$onChangedMode = $tree->stickyGet('event') === 'changed';
+if ($onChangedMode) {
+    $tree->onTreeNodeChanged(static function ($action, $key) {
+        return JsToast::notify(ucfirst($action), 'Key: ' . $key);
+    });
+} else {
+    $tree->onTreePost(static function ($keys, $rawValue) {
+        return JsToast::notify('Post: ', 'value: ' . implode(', ', $keys));
+    });
+}
 
 Ui::viewDump($tree, 'tree');
