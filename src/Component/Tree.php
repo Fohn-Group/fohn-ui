@@ -15,8 +15,10 @@ use Fohn\Ui\Js\Js;
 use Fohn\Ui\Js\JsRenderInterface;
 use Fohn\Ui\Service\Theme\Fohn;
 use Fohn\Ui\Service\Theme\TwConstant;
+use Fohn\Ui\Service\Ui;
 use Fohn\Ui\Tailwind\Tw;
 use Fohn\Ui\View;
+use Fohn\Ui\View\Button;
 
 class Tree extends View implements VueInterface
 {
@@ -28,7 +30,10 @@ class Tree extends View implements VueInterface
     public const TREE_COLLAPSED_ICON = 'collapsedIcon';
     public const TREE_EXPANDED_ICON = 'expandedIcon';
 
-    public const HOOK_NODE_SELECT = self::class . '@selectNode';
+    public const POST_BTN_REGION_NAME = 'PostBtn';
+
+    public const HOOK_NODE_CHANGED = self::class . '@changeNode';
+    public const HOOK_TREE_POST = self::class . '@treePost';
 
     public string $selectedColor = 'info';
 
@@ -39,6 +44,10 @@ class Tree extends View implements VueInterface
         'border-gray-300',
         'rounded-md',
     ];
+
+    public array $postBtnSeed = [Button::class, 'label' => 'Save', 'color' => 'primary'];
+    protected ?Button $postBtn = null;
+    protected string $postBtnUiName = 'postBtn';
 
     protected const COMP_NAME = 'fohn-tree';
 
@@ -63,7 +72,8 @@ class Tree extends View implements VueInterface
 
     protected array $treeOptions = [];
 
-    protected ?Ajax $treeRequest = null;
+    protected ?Ajax $treeNodeChangedRequest = null;
+    protected ?Ajax $treePostRequest = null;
 
     protected function initRenderTree(): void
     {
@@ -73,10 +83,19 @@ class Tree extends View implements VueInterface
         $this->setIconOptions('bi bi-caret-right', 'bi bi-caret-down');
     }
 
-    protected function initAjaxRequest(string $mode): void
+    protected function initTreeNodeChangedRequest(\Closure $fx): void
     {
-        if (!$this->treeRequest) {
-            $this->treeRequest = Ajax::addAbstractTo($this);
+        if (!$this->treeNodeChangedRequest) {
+            $this->treeNodeChangedRequest = Ajax::addAbstractTo($this);
+            $this->onHook(self::HOOK_NODE_CHANGED, $fx);
+        }
+    }
+
+    protected function initTreePostRequest(\Closure $fx): void
+    {
+        if (!$this->treePostRequest) {
+            $this->treePostRequest = Ajax::addAbstractTo($this);
+            $this->onHook(self::HOOK_TREE_POST, $fx);
         }
     }
 
@@ -85,26 +104,63 @@ class Tree extends View implements VueInterface
         $this->nodeValue = $value;
     }
 
+    public function onTreePost(\Closure $fx, Button $btn = null): void
+    {
+        $this->initTreePostRequest($fx);
+
+        $this->treePostRequest->onAjaxPostRequest(function (array $payload): JsRenderInterface {
+            // an array of key values for all selected nodes.
+            $nodeKeys = $payload['__nodeKeys'] ?? [];
+            // the raw value for Tree. Save this array value in order to restore selected state using Tree::setValue method.
+            $treeValue = $payload['__treeValue'] ?? [];
+
+            return $this->callHook(self::HOOK_TREE_POST, HookFn::withJsRenderInterface([$nodeKeys, $treeValue, $this]));
+        });
+
+        if (!$this->postBtn) {
+            $this->initPostBtn($btn);
+        }
+    }
+
+    public function getPostBtn(): Button
+    {
+        if (!$this->postBtn) {
+            $this->initPostBtn(null);
+        }
+
+        return $this->postBtn;
+    }
+
+    public function initPostBtn(?Button $btn, string $regionName = self::POST_BTN_REGION_NAME): void
+    {
+        if (!$btn) {
+            /** @var Button $btn */
+            $btn = Ui::factoryFromSeed($this->postBtnSeed);
+        }
+
+        $btn->setViewName($this->postBtnUiName);
+        static::bindVueEvent($btn, 'click', 'postValue');
+        static::bindVueAttr($btn, 'disabled', 'isFetching || !canFetch');
+        static::bindVueAttr($btn, 'class', '{loading: isFetching}');
+        $this->addView($btn, $regionName);
+        $this->postBtn = $btn;
+    }
+
     /**
      * Function $fx to be executed when Tree node selection changed.
      * The callback function ($fx) must return a jsRenderInterface.
      */
     public function onTreeNodeChanged(\Closure $fx): void
     {
-        $this->initAjaxRequest('selectUrl');
-        $this->onHook(self::HOOK_NODE_SELECT, $fx);
+        $this->initTreeNodeChangedRequest($fx);
 
-        $this->treeRequest->onAjaxPostRequest(function (array $payload): JsRenderInterface {
-            // Weither a node was select or unselect.
+        $this->treeNodeChangedRequest->onAjaxPostRequest(function (array $payload): JsRenderInterface {
+            // Weather a node was select or unselect.
             $nodeAction = $payload['__nodeAction'] ?? null;
             // the key to the select/unselect node.
             $hitNode = $payload['__nodeKey'] ?? null;
-            // an array of key values for all selected nodes.
-            $nodeKeys = $payload['__nodeKeys'] ?? [];
-            // the raw value for Tree. Save this array value in order to restore selected state using Tree::setValue method.
-            $treeValue = $payload['__treeValue'] ?? [];
 
-            return $this->callHook(self::HOOK_NODE_SELECT, HookFn::withJsRenderInterface([$nodeAction, $hitNode, $nodeKeys, $treeValue, $this]));
+            return $this->callHook(self::HOOK_NODE_CHANGED, HookFn::withJsRenderInterface([$nodeAction, $hitNode, $this]));
         });
     }
 
@@ -158,7 +214,9 @@ class Tree extends View implements VueInterface
         $this->getTemplate()->trySetJs('options', Js::object($this->treeOptions));
         $this->getTemplate()->trySetJs('ptProps', Js::object($this->ptProps));
         $this->getTemplate()->trySetJs('nodeValue', Js::object($this->nodeValue));
-        $this->getTemplate()->trySetJs('callbackUrl', Js::string($this->treeRequest ? $this->treeRequest->getUrl() : ''));
+        $this->getTemplate()->trySetJs('nodeChangedUrl', Js::string($this->treeNodeChangedRequest ? $this->treeNodeChangedRequest->getUrl() : ''));
+        $this->getTemplate()->trySetJs('postUrl', Js::string($this->treePostRequest ? $this->treePostRequest->getUrl() : ''));
+        $this->getTemplate()->trySetJs('postBtnName', Js::string($this->postBtnUiName));
 
         $this->createVueApp(self::COMP_NAME, [], $this->getDefaultSelector());
         parent::beforeHtmlRender();

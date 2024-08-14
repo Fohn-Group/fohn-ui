@@ -3,9 +3,11 @@
             :extended-node-options="{$options}"
             :pt-props="{$ptProps}"
             :node-value="{$nodeValue}"
-            :callback-url="{$callbackUrl}"
+            :node-changed-url="{$nodeChangedUrl}"
+            :post-url="{$postUrl}"
+            :post-btn-name="{$postBtnName}"
             :nodes="{$nodes}"
-            #default="@{nodes, selectNode, unSelectNode, selectedKey, ptProps, updateSelection}">
+            #default="@{nodes, postValue, selectNode, unSelectNode, selectedKey, ptProps, updateSelection, isFetching, canFetch}">
         <Tree @update:selection-keys="updateSelection"
               :selection-keys="selectedKey"
               @node-select="selectNode"
@@ -21,6 +23,9 @@
             </template>
         </Tree>
         <div>
+            <div class="flex justify-center my-2">
+                <div>{$PostBtn}</div>
+            </div>
             {$Content}
         </div>
     </fohn-tree>
