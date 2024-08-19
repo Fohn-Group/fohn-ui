@@ -104,6 +104,10 @@ class Tree extends View implements VueInterface
         $this->nodeValue = $value;
     }
 
+    /**
+     * Function $fx to be executed when using Save Btn.
+     * The callback function ($fx) must return a jsRenderInterface.
+     */
     public function onTreePost(\Closure $fx, Button $btn = null): void
     {
         $this->initTreePostRequest($fx);
