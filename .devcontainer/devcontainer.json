@@ -1,0 +1,48 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/php-mariadb
+{
+	"name": "PHP / Mysql / Node",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "php",
+	"workspaceFolder": "/workspaces",
+
+
+	// For use with PHP or Apache (e.g.php -S localhost:8080 or apache2ctl start)
+	"forwardPorts": [8080, 3306],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	"postCreateCommand": "sudo chmod a+x \"$(pwd)\" && sudo rm -rf /var/www/html && sudo ln -s \"$(pwd)\"/fohn-ui /var/www/html; ; if [ -f \"$(pwd)\"/fohn-ui/composer.json ];then composer install;fi && if [ -f \"$(pwd)\"/fohn-js/package.json ];then npm install;fi",
+
+	"features": {
+		"ghcr.io/devcontainers/features/node:1": {}
+	},
+
+ 	// Uncomment the next line to use a Dockerfile instead of a docker-compose.yml file.
+
+	// Configure tool-specific properties.
+	"customizations": {
+		"vscode": {
+			"extensions": [
+					"bmewburn.vscode-intelephense-client",
+					"xdebug.php-pack",
+					"ms-azuretools.vscode-docker",
+					"esbenp.prettier-vscode",
+					"dbaeumer.vscode-eslint",
+					"editorconfig.editorconfig",
+					"cweijan.vscode-mysql-client2",
+					"ikappas.composer"
+				],
+			"settings": {
+				"php.validate.executablePath": "/usr/local/bin/php",
+				"php.suggest.basic": false,
+				"editor.formatOnSave": true,
+				"editor.codeActionsOnSave": {
+					"source.fixAll.eslint": true
+				},
+				"git.openRepositoryInParentFolders": "always"
+			}
+		}
+	}
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+}

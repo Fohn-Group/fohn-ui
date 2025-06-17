@@ -1,0 +1,51 @@
+version: '3.8'
+
+services: 
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    volumes:
+      - ../../:/workspaces:cached
+
+
+    # Overrides default command so things don't shut down after the process ends.
+    command: sleep infinity
+
+    # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
+    network_mode: service:mysql
+
+    # Use "forwardPorts" in **devcontainer.json** to forward an app port locally. 
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
+
+  # js:
+  #   image: "node:latest"
+  #   restart: unless-stopped
+  #   container_name: js-server
+  #   working_dir: /usr/src/app
+  #   command: npm start
+  #   environment:
+  #     - NODE_ENV=development
+  #     - PORT=3000
+  #   ports:
+  #     - "3000:3000"
+
+  mysql:
+    image: mysql:latest
+    restart: unless-stopped
+    container_name: mysql-server-1
+    volumes:
+      - ./data:/docker-entrypoint-initdb.d
+      # - ./data/fohn-ui-dump.sql:/docker-entrypoint-initdb.d
+      - ./app-data/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: main
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_HOST: '%'
+
+
+volumes:
+  app-data:
