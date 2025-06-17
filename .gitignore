@@ -20,3 +20,4 @@ behat.yml
 
 .codefresh
 phpstan.neon
+.devcontainer/app-data
