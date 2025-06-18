@@ -54,7 +54,6 @@
     "guzzlehttp/guzzle": "^7.4.3",
     "instaclick/php-webdriver": "^1.4.7",
     "johnkary/phpunit-speedtrap": "^3.3",
-    "pcov/clobber": "^2.0",
     "phpstan/extension-installer": "^1.1",
     "phpstan/phpstan": "^1.0",
     "phpstan/phpstan-deprecation-rules": "^1.0",
