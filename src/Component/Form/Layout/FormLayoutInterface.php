@@ -10,7 +10,7 @@ use Fohn\Ui\View\Button;
 
 interface FormLayoutInterface
 {
-    public function setSubmitButton(Button $button = null): self;
+    public function setSubmitButton(?Button $button = null): self;
 
     public function addButton(Button $button): Button;
 

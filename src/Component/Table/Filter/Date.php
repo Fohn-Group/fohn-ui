@@ -14,7 +14,7 @@ class Date extends Generic implements FilterColumnInterface
     protected string $type = 'date';
     protected string $format;
 
-    public function __construct(string $id, string $format = 'Y-m-d', string $label = null, array $props = [])
+    public function __construct(string $id, string $format = 'Y-m-d', ?string $label = null, array $props = [])
     {
         $props['config'] = Utils::getFlatPickrConfig($this->type, $format);
         $props['config']['allowInput'] = true;

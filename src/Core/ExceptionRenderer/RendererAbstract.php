@@ -17,7 +17,7 @@ abstract class RendererAbstract
 
     public string $output = '';
 
-    final public function __construct(\Throwable $exception, \Throwable $parent_exception = null)
+    final public function __construct(\Throwable $exception, ?\Throwable $parent_exception = null)
     {
         $this->exception = $exception;
         $this->parent_exception = $parent_exception;

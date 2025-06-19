@@ -14,9 +14,6 @@ return (new PhpCsFixer\Config())
     ->setRiskyAllowed(true)
     ->setRules([
                    '@PhpCsFixer' => true,
-                   '@PhpCsFixer:risky' => true,
-                   '@PHP74Migration:risky' => true,
-                   '@PHP74Migration' => true,
 
                    // required by PSR-12
                    'concat_space' => [
@@ -61,9 +58,6 @@ return (new PhpCsFixer\Config())
                    'phpdoc_to_comment' => false,
                    'general_phpdoc_annotation_remove' => [
                        'annotations' => ['author', 'copyright', 'throws'],
-                   ],
-                   'nullable_type_declaration_for_default_null_value' => [
-                       'use_nullable_type_declaration' => false,
                    ],
 
                    // fn => without curly brackets is less readable,

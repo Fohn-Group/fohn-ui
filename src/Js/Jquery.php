@@ -96,7 +96,7 @@ class Jquery extends JsChain
     /**
      * Start chain with a string selector $("selector").
      */
-    public static function withSelector(string $selector = null): self
+    public static function withSelector(?string $selector = null): self
     {
         return new static(self::$jquery, Js::string($selector));
     }
@@ -122,7 +122,7 @@ class Jquery extends JsChain
      * Add a javascript event to a View.
      * render as $('#view_id')->on(event, selector, function() {}).
      */
-    public static function addEventTo(View $view, string $event, string $selector = null, bool $prevent = false, bool $stop = false): JsFunction
+    public static function addEventTo(View $view, string $event, ?string $selector = null, bool $prevent = false, bool $stop = false): JsFunction
     {
         $fn = JqFunction::anonymous();
 
@@ -146,7 +146,7 @@ class Jquery extends JsChain
     /**
      * Add a Jquery ajax callback event to a View.
      */
-    public static function jqCallback(View $view, string $event, \Closure $fn, array $requestPayload = [], string $selector = null): JsFunction
+    public static function jqCallback(View $view, string $event, \Closure $fn, array $requestPayload = [], ?string $selector = null): JsFunction
     {
         $callback = \Fohn\Ui\Callback\Jquery::addAbstractTo($view);
         $callback->onJqueryRequest(static function (array $payload) use ($fn, $view): JsRenderInterface {

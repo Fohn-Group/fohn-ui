@@ -35,7 +35,7 @@ class Standard extends View implements FormLayoutInterface
         $this->addSubmitBtnInLayout = false;
     }
 
-    public function setSubmitButton(Button $button = null): self
+    public function setSubmitButton(?Button $button = null): self
     {
         if (!$button) {
             $button = Button::factoryFromSeed($this->defaultSubmitBtnSeed);
@@ -46,7 +46,7 @@ class Standard extends View implements FormLayoutInterface
         return $this;
     }
 
-    public function addControl(Control $control, string $regionName = null): Control
+    public function addControl(Control $control, ?string $regionName = null): Control
     {
         if (!$regionName) {
             $regionName = $this->template->hasTag(self::CTRL_REGION_PREFIX . $control->getControlName()) ? self::CTRL_REGION_PREFIX . $control->getControlName() : View::MAIN_TEMPLATE_REGION;

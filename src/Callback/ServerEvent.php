@@ -66,7 +66,7 @@ class ServerEvent extends Generic
         $this->app = new App(['registerShutdown' => false]);
     }
 
-    public function onRequest(\Closure $fx, array $params = [], \Closure $onAbortedFx = null): void
+    public function onRequest(\Closure $fx, array $params = [], ?\Closure $onAbortedFx = null): void
     {
         if ($onAbortedFx) {
             $this->onAborted($onAbortedFx);
@@ -139,7 +139,7 @@ class ServerEvent extends Generic
         $this->app->streamEvent($streamEvent, $this->minBufferSize);
     }
 
-    public function start(JsStatements $statements = null): JsRenderInterface
+    public function start(?JsStatements $statements = null): JsRenderInterface
     {
         if (!$statements) {
             $statements = JsStatements::with([]);
@@ -152,7 +152,7 @@ class ServerEvent extends Generic
         return $statements;
     }
 
-    public function stop(JsStatements $statements = null): JsRenderInterface
+    public function stop(?JsStatements $statements = null): JsRenderInterface
     {
         if (!$statements) {
             $statements = JsStatements::with([]);

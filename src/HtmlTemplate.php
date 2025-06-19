@@ -320,7 +320,7 @@ class HtmlTemplate
         }
     }
 
-    protected function parseTemplateTree(array &$inputReversed, string $openedTag = null): TagTree
+    protected function parseTemplateTree(array &$inputReversed, ?string $openedTag = null): TagTree
     {
         $tagTree = new TagTree($this, $openedTag ?? self::TOP_TAG);
 
@@ -398,7 +398,7 @@ class HtmlTemplate
         return implode('', $res);
     }
 
-    public function renderToHtml(string $region = null): string
+    public function renderToHtml(?string $region = null): string
     {
         return $this->renderTagTreeToHtml($this->getTagTree($region ?? self::TOP_TAG));
     }

@@ -56,7 +56,7 @@ class Session implements SessionInterface
      * Retrieve a Session key and remove it after.
      * Will return $default if key is not set.
      */
-    public function retrieve(string $key, string $default = null): ?string
+    public function retrieve(string $key, ?string $default = null): ?string
     {
         $value = $this->get($key, $default);
         $this->forget($key);
@@ -64,7 +64,7 @@ class Session implements SessionInterface
         return $value;
     }
 
-    public function forget(string $key = null): void
+    public function forget(?string $key = null): void
     {
         $this->startSession();
         if (!$key && isset($_SESSION[$this->namespace])) {
@@ -75,7 +75,7 @@ class Session implements SessionInterface
         }
     }
 
-    public function get(string $key, string $default = null): ?string
+    public function get(string $key, ?string $default = null): ?string
     {
         $this->startSession(array_merge($this->sessionOptions, [self::READ_ONLY_OPTION => true]));
 

@@ -108,7 +108,7 @@ class Tree extends View implements VueInterface
      * Function $fx to be executed when using Save Btn.
      * The callback function ($fx) must return a jsRenderInterface.
      */
-    public function onTreePost(\Closure $fx, Button $btn = null): void
+    public function onTreePost(\Closure $fx, ?Button $btn = null): void
     {
         $this->initTreePostRequest($fx);
 
@@ -168,7 +168,7 @@ class Tree extends View implements VueInterface
         });
     }
 
-    public function setFilter(array $fields, string $mode = 'lenient', string $placeholder = null, ?string $locale = 'en'): self
+    public function setFilter(array $fields, string $mode = 'lenient', ?string $placeholder = null, ?string $locale = 'en'): self
     {
         $this->ptProps['filter'] = true;
         $this->ptProps['filterBy'] = implode(',', $fields);

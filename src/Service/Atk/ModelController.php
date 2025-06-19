@@ -70,7 +70,7 @@ class ModelController implements ModelControllerInterface
         }
     }
 
-    public function getRows(array $fieldNames = [], int $limit = null): array
+    public function getRows(array $fieldNames = [], ?int $limit = null): array
     {
         if ($limit) {
             $this->model->setLimit($limit);
@@ -79,7 +79,7 @@ class ModelController implements ModelControllerInterface
         return $this->model->export($fieldNames);
     }
 
-    public function searchModel(string $query, array $searchFieldNames, int $limit = null): array
+    public function searchModel(string $query, array $searchFieldNames, ?int $limit = null): array
     {
         $scope = Model\Scope::createOr();
         foreach ($searchFieldNames as $fieldName) {

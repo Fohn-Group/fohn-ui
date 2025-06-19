@@ -41,7 +41,7 @@ class Request extends AbstractView
         return static::$runningCallbackArgs;
     }
 
-    public static function protect(string $redirectUrl = null): void
+    public static function protect(?string $redirectUrl = null): void
     {
         self::$guard = true;
         self::$csfrRedirectUrl = $redirectUrl;
@@ -57,7 +57,7 @@ class Request extends AbstractView
         $this->setUrlTrigger($this->urlTrigger);
     }
 
-    public function setUrlTrigger(string $trigger = null): void
+    public function setUrlTrigger(?string $trigger = null): void
     {
         if (!$trigger && strlen($this->getViewId()) > 10) {
             $this->urlTrigger = Ui::service()->factoryId($this->getViewId());

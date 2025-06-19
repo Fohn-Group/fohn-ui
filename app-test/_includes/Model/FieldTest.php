@@ -46,7 +46,7 @@ class FieldTest extends Model
         ]);
     }
 
-    public function validate(string $intent = null): array
+    public function validate(?string $intent = null): array
     {
         $errors = parent::validate($intent);
         if (mb_strlen($this->get('first_name') ?? '') < 2) {

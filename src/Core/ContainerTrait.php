@@ -72,7 +72,7 @@ trait ContainerTrait
      * Starting with the immediate owner of the view and each owner of view-owner
      * until no more owner is set.
      */
-    public function getOwners(AbstractView $view = null, array $owners = []): array
+    public function getOwners(?AbstractView $view = null, array $owners = []): array
     {
         if (!$view) {
             $view = $this;

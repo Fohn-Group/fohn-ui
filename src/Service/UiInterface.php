@@ -42,7 +42,7 @@ interface UiInterface
 
     public function getQueryParamValue(string $param): ?string;
 
-    public static function timezone(string $timezone = null): string;
+    public static function timezone(?string $timezone = null): string;
 
     /** Get current Url as request by the client, without query. */
     public static function parseRequestUrl(): string;
