@@ -27,7 +27,7 @@ interface ModelControllerInterface
      */
     public function delete($id): bool;
 
-    public function getRows(array $fieldNames = [], int $limit = null): array;
+    public function getRows(array $fieldNames = [], ?int $limit = null): array;
 
-    public function searchModel(string $query, array $searchFieldNames, int $limit = null): array;
+    public function searchModel(string $query, array $searchFieldNames, ?int $limit = null): array;
 }

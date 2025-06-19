@@ -39,7 +39,7 @@ class File extends Model
     /**
      * Return Files Hierarchy as a TreeNode property.
      */
-    private function getHierarchicalTreeNodes(array $files, int $useId = null, bool $isFolderSelectable): array
+    private function getHierarchicalTreeNodes(array $files, ?int $useId = null, bool $isFolderSelectable = true): array
     {
         $parent = [];
         // Get top level files or folders.

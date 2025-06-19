@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Console.
  */
@@ -80,7 +81,7 @@ class Console extends View implements LoggerInterface
     /**
      * Return Js event that will fire console run method.
      */
-    public function run(JsStatements $statements = null): JsRenderInterface
+    public function run(?JsStatements $statements = null): JsRenderInterface
     {
         if (!$statements) {
             $statements = JsStatements::with([Jquery::withView($this)->text('')]);

@@ -65,7 +65,7 @@ class Form extends View implements VueInterface
         $this->initDefaultLayout(self::MAIN_LAYOUT, $this->defaultLayout);
     }
 
-    protected function initDefaultLayout(string $layoutName, FormLayoutInterface $layout = null): self
+    protected function initDefaultLayout(string $layoutName, ?FormLayoutInterface $layout = null): self
     {
         $this->defaultLayout = $layout ?: Ui::service()->getFormLayout();
 
@@ -180,7 +180,7 @@ class Form extends View implements VueInterface
         return $this;
     }
 
-    public function addControl(Control $control, string $layoutName = self::MAIN_LAYOUT, string $regionName = null): Control
+    public function addControl(Control $control, string $layoutName = self::MAIN_LAYOUT, ?string $regionName = null): Control
     {
         $this->registerControl($control);
 

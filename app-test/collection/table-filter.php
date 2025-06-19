@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Create a Table Vue Component and display Country data
  * using an Atk4\Country model.

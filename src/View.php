@@ -270,7 +270,7 @@ class View extends AbstractView
     /**
      * Add inline CSS style to element.*.
      */
-    public function appendHtmlStyle(string $property, string $style = null): self
+    public function appendHtmlStyle(string $property, ?string $style = null): self
     {
         $this->htmlStyles[$property] = $style;
 
@@ -293,7 +293,7 @@ class View extends AbstractView
         return $this;
     }
 
-    public function appendHtmlAttribute(string $attribute, string $value = null): self
+    public function appendHtmlAttribute(string $attribute, ?string $value = null): self
     {
         if ($value || $value === null) {
             $this->htmlAttributes[$attribute] = $value;
@@ -384,7 +384,7 @@ class View extends AbstractView
     /**
      * Render View using json format.
      */
-    public function renderToJsonArr(string $region = null): array
+    public function renderToJsonArr(?string $region = null): array
     {
         $renderer = Ui::viewRenderer($this);
 
@@ -473,7 +473,7 @@ class View extends AbstractView
      * If GET argument is not presently set you can specify a 2nd argument
      * to forge-set the GET argument for current view, and it's sub-views.
      */
-    public function stickyGet(string $name, string $newValue = null): ?string
+    public function stickyGet(string $name, ?string $newValue = null): ?string
     {
         $this->stickyArgs[$name] = Ui::service()->getQueryParamValue($name) ?? $newValue;
 

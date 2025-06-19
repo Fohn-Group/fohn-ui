@@ -39,7 +39,7 @@ class ViewRenderer
         return $this->renderTemplate;
     }
 
-    public function getHtml(string $region = null): string
+    public function getHtml(?string $region = null): string
     {
         return $this->getRenderTemplate()->renderToHtml($region);
     }

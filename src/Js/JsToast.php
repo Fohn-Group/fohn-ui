@@ -84,7 +84,7 @@ class JsToast
      *       fohn.toastService.notify($(this).text(),{});
      *   });.
      */
-    public static function notifyWithJs(JsRenderInterface $title, JsRenderInterface $message = null, JsRenderInterface $options = null, bool $sanitize = true): JsRenderInterface
+    public static function notifyWithJs(JsRenderInterface $title, ?JsRenderInterface $message = null, ?JsRenderInterface $options = null, bool $sanitize = true): JsRenderInterface
     {
         // / @phpstan-ignore-next-line
         return (new static())->toastService->notify($title, $message ?? StringLiteral::set(''), $options ?? ObjectLiteral::set([]), Boolean::set($sanitize));

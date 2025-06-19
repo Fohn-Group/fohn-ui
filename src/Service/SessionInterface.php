@@ -14,7 +14,7 @@ interface SessionInterface
      */
     public function setOptions(array $options): void;
 
-    public function get(string $key, string $default = null): ?string;
+    public function get(string $key, ?string $default = null): ?string;
 
     public function set(string $key, string $value, bool $keepOpen = false): void;
 
@@ -23,12 +23,12 @@ interface SessionInterface
     /**
      * Retrieve a key and remove it from body.
      */
-    public function retrieve(string $key, string $default = null): ?string;
+    public function retrieve(string $key, ?string $default = null): ?string;
 
     /**
      * Remove a key from body.
      */
-    public function forget(string $key = null): void;
+    public function forget(?string $key = null): void;
 
     /**
      * Retrieve all key from Session.

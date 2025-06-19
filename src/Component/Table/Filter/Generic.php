@@ -16,7 +16,7 @@ abstract class Generic
         'type' => 'text',
     ];
 
-    public function __construct(string $id, string $label = null, array $props = [])
+    public function __construct(string $id, ?string $label = null, array $props = [])
     {
         $this->id = $id;
         $this->label = $label ?? ucfirst($id);

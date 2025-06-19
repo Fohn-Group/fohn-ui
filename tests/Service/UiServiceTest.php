@@ -55,7 +55,7 @@ class UiServiceTest extends FohnTestCase
             'test view name' => ['view', View::class],
             'test table name' => ['table', Table::class],
             'test button name' => ['button', View\Button::class],
-            'test anonymous' => ['anonymous', get_class(new class() {})],
+            'test anonymous' => ['anonymous', get_class(new class {})],
         ];
     }
 

@@ -31,7 +31,7 @@ class AsDialog extends Modal
      * When calling this method with no Closure function, the modal will
      * close without triggering a callback event.
      */
-    public function addCancelEvent(\Closure $fx = null, View $trigger = null): View
+    public function addCancelEvent(?\Closure $fx = null, ?View $trigger = null): View
     {
         $cancelTrigger = $trigger ?: View::factoryFromSeed($this->cancelButtonSeed);
         if ($fx) {
@@ -45,7 +45,7 @@ class AsDialog extends Modal
         return $cancelTrigger;
     }
 
-    public function addConfirmEvent(\Closure $fx = null, View $trigger = null): View
+    public function addConfirmEvent(?\Closure $fx = null, ?View $trigger = null): View
     {
         $confirmTrigger = $trigger ?: View::factoryFromSeed($this->confirmButtonSeed);
         if ($fx) {

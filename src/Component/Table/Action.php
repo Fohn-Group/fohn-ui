@@ -46,7 +46,7 @@ class Action extends View
         return $this->confirmationModal;
     }
 
-    public function addConfirmationDialog(string $title, Messages $messages, View\Button $ok = null, View\Button $cancel = null, bool $isClosable = true): self
+    public function addConfirmationDialog(string $title, Messages $messages, ?View\Button $ok = null, ?View\Button $cancel = null, bool $isClosable = true): self
     {
         $this->addProperty('messages', $messages->getJsMessages());
         $this->confirmationModal = AsDialog::addTo($this, ['title' => $title, 'isClosable' => $isClosable]);

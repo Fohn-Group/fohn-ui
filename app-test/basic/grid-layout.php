@@ -12,8 +12,8 @@ use Fohn\Ui\View\Heading\Header;
 
 require_once __DIR__ . '/../init-ui.php';
 
-$viewStyle =
-    [
+$viewStyle
+    = [
         'text-white',
         'flex',
         'items-center',

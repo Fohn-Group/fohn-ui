@@ -192,7 +192,7 @@ class Ui implements UiInterface
         return (string) (new Uri($url))->withQuery(Query::build($params));
     }
 
-    public static function locale(string $locale = null, int $option = \LC_ALL): string
+    public static function locale(?string $locale = null, int $option = \LC_ALL): string
     {
         if ($locale) {
             setlocale($option, $locale);
@@ -202,7 +202,7 @@ class Ui implements UiInterface
         return static::service()->locale;
     }
 
-    public static function timezone(string $timezone = null): string
+    public static function timezone(?string $timezone = null): string
     {
         if ($timezone) {
             static::service()->timezone = $timezone;

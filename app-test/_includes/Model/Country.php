@@ -31,7 +31,7 @@ class Country extends Model
         });
     }
 
-    public function validate(string $intent = null): array
+    public function validate(?string $intent = null): array
     {
         $errors = parent::validate($intent);
 

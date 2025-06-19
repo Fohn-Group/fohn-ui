@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Tailwind CSS.
  */
@@ -86,7 +87,7 @@ class Tw
         return static::from(static::from($this->tw)->reduce($fn, $seed)->get());
     }
 
-    public function toString(\Closure $fn = null, string $seed = ''): string
+    public function toString(?\Closure $fn = null, string $seed = ''): string
     {
         if (!$fn) {
             $fn = static function (string $output, string $utility): string {

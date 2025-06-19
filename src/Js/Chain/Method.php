@@ -39,10 +39,10 @@ class Method implements Chainable
 
     public function renderArguments(array $args): string
     {
-        return '(' .
-               implode(',', array_map(static function ($arg) {
+        return '('
+               . implode(',', array_map(static function ($arg) {
                    return $arg->jsRender();
-               }, $args)) .
-               ')';
+               }, $args))
+               . ')';
     }
 }

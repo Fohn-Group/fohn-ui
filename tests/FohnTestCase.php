@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 class FohnTestCase extends TestCase
 {
-    public function __construct(string $name = null, array $data = [], $dataName = '')
+    public function __construct(?string $name = null, array $data = [], $dataName = '')
     {
         MockUi::service();
         MockUi::service()->setApp(new MockApp(['registerShutdown' => false]));

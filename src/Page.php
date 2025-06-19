@@ -78,7 +78,7 @@ class Page extends View
     /**
      * Protect all callback request, coming from this page, from CSFR attack.
      */
-    public function csfrProtect(string $secret, string $redirectTo = null, int $strength = 16): void
+    public function csfrProtect(string $secret, ?string $redirectTo = null, int $strength = 16): void
     {
         Request::protect($redirectTo);
 
@@ -128,7 +128,7 @@ class Page extends View
      * Render the entire Html page.
      * Update template with page specific content.
      */
-    public function outputHtml(string $content = null): string
+    public function outputHtml(?string $content = null): string
     {
         $renderView = Ui::viewRenderer($this);
         $template = $renderView->getRenderTemplate();

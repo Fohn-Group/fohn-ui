@@ -206,7 +206,7 @@ class Table extends View implements VueInterface
         return $this->jsGetStore(self::PINIA_PREFIX)->getCellValue(Js::var($idVar), Js::string($colName));
     }
 
-    public function addActionColumn(string $columnName, string $actionName, View\Button $button, Header $header = null, string $eventName = 'click.stop'): JsFunction
+    public function addActionColumn(string $columnName, string $actionName, View\Button $button, ?Header $header = null, string $eventName = 'click.stop'): JsFunction
     {
         if (!$this->hasColumn($columnName)) {
             if (!$header) {
@@ -242,7 +242,7 @@ class Table extends View implements VueInterface
         return $this->filter;
     }
 
-    public function filterColumns(array $columnFilters, Filter $filter = null): self
+    public function filterColumns(array $columnFilters, ?Filter $filter = null): self
     {
         if (!$this->filter) {
             $this->addFilter($filter ?? new Filter());
