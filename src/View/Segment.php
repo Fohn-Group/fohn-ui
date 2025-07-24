@@ -15,8 +15,8 @@ class Segment extends View
 {
     public string $borderRadius = 'none';
     public string $borderWidth = '1';
-    public string $padding = '4';
-    public string $borderColor = '';
+    public string $padding = '8';
+    public string $borderColor = 'neutral';
     public string $yValue = '2';
 
     protected function initRenderTree(): void

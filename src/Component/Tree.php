@@ -60,12 +60,12 @@ class Tree extends View implements VueInterface
         'mt-1',
         'w-1/2',
         'rounded-md',
+        'border',
         'border-gray-300',
         'shadow-sm',
         'focus:border-blue-300',
         'focus:ring-0',
-        'focus:ring-blue-200',
-        'focus:ring-opacity-50',
+        'focus:ring-blue-200/50',
     ];
 
     protected array $nodeValue = [];

@@ -116,6 +116,7 @@ class AppTest
                     new Item(['name' => 'Tabs Menu', 'url' => $baseUrl . 'interactive/tabs-menu.php']),
                     new Item(['name' => 'Modal', 'url' => $baseUrl . 'interactive/modal.php']),
                     new Item(['name' => 'Toast', 'url' => $baseUrl . 'interactive/toast.php']),
+                    new Item(['name' => 'Tree', 'url' => $baseUrl . 'interactive/tree.php']),
                     new Item(['name' => 'Virtual Page', 'url' => $baseUrl . 'interactive/virtual.php']),
                     new Item(['name' => 'Server Side Event', 'url' => $baseUrl . 'interactive/sse.php']),
                     new Item(['name' => 'Console', 'url' => $baseUrl . 'interactive/console.php']),

@@ -99,6 +99,7 @@ class Table extends View implements VueInterface
         'relative',
         'w-full',
         'border',
+        'border-gray-200',
         'border-collapse',
         'table-auto',
     ];
@@ -107,6 +108,7 @@ class Table extends View implements VueInterface
 
     protected array $rowTwsDefault = [
         'border',
+        'border-gray-200',
         'border-collapse',
     ];
 
