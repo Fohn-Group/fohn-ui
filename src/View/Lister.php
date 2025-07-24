@@ -24,7 +24,7 @@ class Lister extends View
 {
     protected const HOOK_REGION_RENDER = self::class . '@region_render';
 
-    /** @var array<string, View\Lister\Region> Repeatable region name of this template. */
+    /** @var array<string, Lister\Region> Repeatable region name of this template. */
     public array $repeatableRegions = [];
 
     public function setRegionItems(string $regionName, array $items, HtmlTemplate $template): self

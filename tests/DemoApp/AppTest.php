@@ -30,6 +30,17 @@ class AppTest extends TestCase
         );
     }
 
+    /**
+     * @dataProvider provideAppTestHtmlResponseCases
+     */
+    public function testAppTestHtmlResponse(string $uri): void
+    {
+        $request = new Request('GET', '/app-test/' . $uri);
+        $response = $this->client->send($request);
+
+        $this->assertSame(200, $response->getStatusCode(), ' Status error on ' . $uri);
+    }
+
     public static function provideAppTestHtmlResponseCases(): iterable
     {
         $excludeDirs = ['_app-data', '_includes', 'local'];
@@ -57,16 +68,5 @@ class AppTest extends TestCase
 
             return $items;
         }, []);
-    }
-
-    /**
-     * @dataProvider provideAppTestHtmlResponseCases
-     */
-    public function testAppTestHtmlResponse(string $uri): void
-    {
-        $request = new Request('GET', '/app-test/' . $uri);
-        $response = $this->client->send($request);
-
-        $this->assertSame(200, $response->getStatusCode(), ' Status error on ' . $uri);
     }
 }

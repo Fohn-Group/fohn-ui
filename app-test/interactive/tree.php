@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-
 use Fohn\Ui\Component\Tree;
-use Fohn\Ui\Service\Ui;
-use Fohn\Ui\Js\JsToast;
 use Fohn\Ui\Js\JsRenderInterface;
+use Fohn\Ui\Js\JsToast;
+use Fohn\Ui\Service\Ui;
 
 require_once __DIR__ . '/../init-ui.php';
 
