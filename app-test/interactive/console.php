@@ -16,7 +16,6 @@ use Psr\Log\LoggerInterface;
 
 require_once __DIR__ . '/../init-ui.php';
 
-/** @var View $testRunClass */
 $testRunClass = get_class(new class extends View {
     public function generateReport(LoggerInterface $console): array
     {

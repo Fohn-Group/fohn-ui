@@ -139,7 +139,6 @@ class Ui implements UiInterface
     public static function theme(): ThemeInterface
     {
         if (!static::service()->theme) {
-            /** @var Base $class */
             $class = static::service()->themeClass;
             self::service()->setTheme($class::getInstance());
         }
