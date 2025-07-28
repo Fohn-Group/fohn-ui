@@ -61,9 +61,9 @@ class Page extends View
     {
         $this->includePackage('jQuery', Package::addScript('https://unpkg.com/jquery@' . $this->jQueryVersion));
         $this->includePackage('fohn-js', Package::addScript($this->fohnJsBaseUrl . $this->fohnJsVersion));
-        $this->includePackage('flatPickrCss', Package::addLink($this->flatPickrCssUrl));
-        $this->includePackage('bootstrapIcon', Package::addLink($this->bootStrapIconsUrl));
-        $this->includePackage('fohn-css', Package::addLink($this->fohnCssBaseUrl . $this->fohnCssVersion));
+        $this->includePackage('flatPickrCss', Package::addStylesheet($this->flatPickrCssUrl));
+        $this->includePackage('bootstrapIcon', Package::addStylesheet($this->bootStrapIconsUrl));
+        $this->includePackage('fohn-css', Package::addStylesheet($this->fohnCssBaseUrl . $this->fohnCssVersion));
     }
 
     protected function initRenderTree(): void

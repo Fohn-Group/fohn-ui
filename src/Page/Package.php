@@ -25,7 +25,7 @@ class Package
         return new self(Page::JS_PACKAGE_TAG_REGION, 'script', $attributes, '');
     }
 
-    public static function addLink(string $url, bool $defer = false): self
+    public static function addStylesheet(string $url, bool $defer = false): self
     {
         $attributes = [
             'rel' => 'stylesheet',

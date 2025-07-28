@@ -32,7 +32,7 @@ class AppTest
 
         if ($environment === 'dev') {
             $page->includePackage('fohn-js', Package::addScript('/public/fohn-ui.js'));
-            $page->includePackage('fohn-css', Package::addLink('/public/fohn-ui.css'));
+            $page->includePackage('fohn-css', Package::addStylesheet('/public/fohn-ui.css'));
         }
 
         // Add Admin layout to this page.
