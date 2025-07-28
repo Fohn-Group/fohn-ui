@@ -16,6 +16,7 @@ use Fohn\Ui\Js\Jquery;
 use Fohn\Ui\Js\Js;
 use Fohn\Ui\Js\JsChain;
 use Fohn\Ui\Js\JsFunction;
+use Fohn\Ui\Page\Package;
 use Fohn\Ui\PageLayout\Layout;
 use Fohn\Ui\Service\Theme\Base;
 use Fohn\Ui\Service\Ui;
@@ -23,6 +24,8 @@ use Fohn\Ui\Service\Ui;
 class Page extends View
 {
     public const TOKEN_KEY_NAME = '_csfr_token';
+    public const JS_PACKAGE_TAG_REGION = 'includeJs';
+    public const CSS_PACKAGE_TAG_REGION = 'includeCss';
     public string $defaultTemplate = 'page.html';
 
     public string $title = '';
@@ -30,47 +33,42 @@ class Page extends View
 
     /** Used a specific js package version, ex: '1.5.0', a wildcard or leave empty for latest. */
     public string $fohnJsVersion = '^1';
+    public string $fohnCssVersion = '^2';
     public string $jQueryVersion = '^3';
 
-    public ?string $toastSelector = '#fohn-toast';
+    public string $toastSelector = '#fohn-toast';
     public string $jsBundleLocation = '/public';
+    public string $flatPickrCssUrl = 'https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.6/flatpickr.min.css';
+    public string $bootStrapIconsUrl = 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css';
+    public string $fohnCssBaseUrl = 'https://unpkg.com/fohn-ui-css@';
+    public string $fohnJsBaseUrl = 'https://unpkg.com/fohn-ui@';
 
-    /** An array of Js packages to include in Page. */
-    public array $jsPackages = [
-        'jquery' => [
-            'url' => 'https://unpkg.com/jquery',
-        ],
-        'fohn-js' => [
-            'url' => 'https://unpkg.com/fohn-ui',
-        ],
-    ];
-
-    /** An array of Css packages to include in Page. */
-    public array $cssPackages = [
-        'flatpickr' => [
-            'url' => 'https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.6/flatpickr.min.css',
-        ],
-        'icons' => [
-            'url' => 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css',
-        ],
-        'fohn-css' => [
-            'url' => 'https://unpkg.com/fohn-ui-css@1.4.0/dist/fohn-ui.min.css',
-        ],
-    ];
+    /** @var array<string, Package> */
+    protected array $externalPackages = [];
 
     public array $metaTags = [];
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->includePackages();
+    }
+
+    /**
+     * Include necessary Javascript/Css external package need to run the page.
+     */
+    protected function includePackages(): void
+    {
+        $this->includePackage('jQuery', Package::addScript('https://unpkg.com/jquery@' . $this->jQueryVersion));
+        $this->includePackage('fohn-js', Package::addScript($this->fohnJsBaseUrl . $this->fohnJsVersion));
+        $this->includePackage('flatPickrCss', Package::addLink($this->flatPickrCssUrl));
+        $this->includePackage('bootstrapIcon', Package::addLink($this->bootStrapIconsUrl));
+        $this->includePackage('fohn-css', Package::addLink($this->fohnCssBaseUrl . $this->fohnCssVersion));
+    }
 
     protected function initRenderTree(): void
     {
         parent::initRenderTree();
-
-        if ($this->fohnJsVersion) {
-            $this->includeJsPackage('fohn-js', 'https://unpkg.com/fohn-ui@' . $this->fohnJsVersion);
-        }
-
-        if ($this->jQueryVersion) {
-            $this->includeJsPackage('jquery', 'https://unpkg.com/jquery@' . $this->jQueryVersion);
-        }
 
         Ui::theme()::styleAs(Base::PAGE, [$this]);
     }
@@ -147,24 +145,8 @@ class Page extends View
      */
     private function includePackagesInTemplate(HtmlTemplate $template): void
     {
-        foreach ($this->jsPackages as $package) {
-            $tag = Ui::service()->buildHtmlTag('script', [
-                'type' => 'application/javascript',
-                'src' => $package['url'],
-                'defer' => $package['isDefer'] ?? false,
-                'async' => $package['isAsync'] ?? false,
-            ], '');
-            $template->tryDangerouslyAppendHtml('includeJs', $tag . "\n");
-        }
-
-        foreach ($this->cssPackages as $package) {
-            $tag = Ui::service()->buildHtmlTag('link/', [
-                'rel' => 'stylesheet',
-                'type' => 'text/css',
-                'href' => $package['url'],
-                'defer' => $package['isDefer'] ?? false,
-            ]);
-            $template->tryDangerouslyAppendHtml('includeCss', $tag . "\n");
+        foreach ($this->externalPackages as $name => $package) {
+            $template->tryDangerouslyAppendHtml($package->getPageRegion(), $package->getHtmlTag() . "\n");
         }
 
         // Set js bundle dynamic loading path.
@@ -174,23 +156,8 @@ class Page extends View
         );
     }
 
-    /**
-     * Adds additional JS script include in application template.
-     */
-    public function includeJsPackage(string $packageName, string $url, bool $isAsync = false, bool $isDefer = false): self
+    public function includePackage(string $packageName, Package $package): void
     {
-        $this->jsPackages[$packageName] = ['url' => $url, 'isAsync' => $isAsync, 'isDefer' => $isDefer];
-
-        return $this;
-    }
-
-    /**
-     * Adds additional CSS stylesheet include in application template.
-     */
-    public function includeCssPackage(string $packageName, string $url): self
-    {
-        $this->cssPackages[$packageName] = ['url' => $url];
-
-        return $this;
+        $this->externalPackages[$packageName] = $package;
     }
 }
