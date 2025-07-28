@@ -1,29 +1,29 @@
-<phpunit bootstrap="vendor/autoload.php" printerClass="\PHPUnit\TextUI\DefaultResultPrinter" colors="true">
-    <php>
-        <var name="DB_DSN" value="sqlite::memory:" />
-        <var name="DB_USER" value="" />
-        <var name="DB_PASSWD" value="" />
-        <var name="DB_DBNAME" value="" />
-    </php>
-    <testsuites>
-        <testsuite name="main">
-            <directory>tests</directory>
-            <directory>tests/Core</directory>
-            <directory>tests/Service</directory>
-            <directory>tests/DemoApp</directory>
-            <directory>tests/Callback</directory>
-            <directory>tests/Javascript</directory>
-        </testsuite>
-    </testsuites>
-    <listeners>
-        <listener class="JohnKary\PHPUnit\Listener\SpeedTrapListener" />
-    </listeners>
-    <coverage processUncoveredFiles="true">
-        <include>
-            <directory suffix=".php">src</directory>
-        </include>
-        <report>
-            <php outputFile="build/logs/clover.cov" />
-        </report>
-    </coverage>
+<?xml version="1.0"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="vendor/autoload.php" colors="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd" cacheDirectory=".phpunit.cache">
+  <php>
+    <var name="DB_DSN" value="sqlite::memory:"/>
+    <var name="DB_USER" value=""/>
+    <var name="DB_PASSWD" value=""/>
+    <var name="DB_DBNAME" value=""/>
+  </php>
+  <testsuites>
+    <testsuite name="main">
+      <directory>tests</directory>
+      <directory>tests/Core</directory>
+      <directory>tests/Service</directory>
+      <directory>tests/DemoApp</directory>
+      <directory>tests/Callback</directory>
+      <directory>tests/Javascript</directory>
+    </testsuite>
+  </testsuites>
+  <coverage>
+    <report>
+      <php outputFile="build/logs/clover.cov"/>
+    </report>
+  </coverage>
+  <source>
+    <include>
+      <directory suffix=".php">src</directory>
+    </include>
+  </source>
 </phpunit>
