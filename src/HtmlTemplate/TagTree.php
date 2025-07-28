@@ -69,12 +69,12 @@ class TagTree
     public function add(object $value): self
     {
         // very important check
-        if ($value instanceof self) {
+        if ($value instanceof self) { // @phpstan-ignore instanceof.alwaysFalse
             throw new Exception('Tag tree can not be added directly');
         }
 
         // not strictly needed, but catch issues sooner
-        if (!$value instanceof Value && !$value instanceof HtmlTemplate) {
+        if (!$value instanceof Value && !$value instanceof HtmlTemplate) { // @phpstan-ignore instanceof.alwaysTrue, booleanAnd.alwaysFalse
             throw new Exception('Value must be of type HtmlTemplate\Value or HtmlTemplate');
         }
 

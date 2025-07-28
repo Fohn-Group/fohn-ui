@@ -11,13 +11,7 @@ parameters:
             - build (?)
             - cache (?)
 
-    # TODO review once we drop PHP 7.x support
-    treatPhpDocTypesAsCertain: false
-
     # some extra rules
-    checkExplicitMixedMissingReturn: true
-    checkFunctionNameCase: true
-    # TODO checkMissingClosureNativeReturnTypehintRule: true
     reportMaybesInMethodSignatures: true
     reportStaticMethodSignatures: true
     checkTooWideReturnTypesInProtectedAndPublicMethods: true

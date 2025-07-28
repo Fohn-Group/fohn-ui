@@ -183,7 +183,7 @@ class TableModelController extends ModelController implements TableModelControll
 
         $max = array_keys($matches, max($matches), true);
 
-        return reset($max) ?: reset($delimiters);
+        return reset($max) ?: reset($delimiters); // @phpstan-ignore ternary.alwaysTrue
     }
 
     private function getRecordCount(): int
