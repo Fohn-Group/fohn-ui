@@ -30,9 +30,7 @@ class AppTest extends TestCase
         );
     }
 
-    /**
-     * @dataProvider provideAppTestHtmlResponseCases
-     */
+    #[DataProvider('provideAppTestHtmlResponseCases')]
     public function testAppTestHtmlResponse(string $uri): void
     {
         $request = new Request('GET', '/app-test/' . $uri);
