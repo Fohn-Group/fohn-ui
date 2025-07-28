@@ -59,7 +59,7 @@
                                     v-model="query"
                                     name="_q"
                                     @keyup="searchItems(query)"
-                                    class="block w-full py-2 pl-10 mt-1 rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring-0 focus:ring-blue-200 focus:ring-opacity-50"
+                                    class="block w-full py-2 pl-10 mt-1 rounded-md border-gray-200 shadow-sm focus:border-blue-300 focus:ring-0 focus:ring-blue-200 focus:ring-opacity-50"
                                     placeholder="Search..."
                                     :disabled="isFetching"
                                     required
@@ -71,7 +71,7 @@
                         {/TableSearch}
                     </div>
                 </div>
-                <div class="overflow-auto border" :style="heightStyle">
+                <div class="overflow-auto border border-gray-200" :style="heightStyle">
                     <div class="">
                         <table class="{$tableTws}" :class="@{'animate-pulse': isFetching}">
                             <caption class="bg-gray-100">
@@ -120,7 +120,7 @@
                 </div>
                 {$afterTable}
                 {Paginator}
-                <div class="border bg-gray-100">
+                <div class="border border-gray-200 bg-gray-100">
                     <fohn-table-paginator
                             :current-page="currentPage"
                             :total-items="totalItems"
@@ -185,7 +185,7 @@
                             </div>
                             <div class="hidden md:block py-2">{{fromItem}} - {{toItem}} / {{totalItems}}</div>
                             <div class="p-2">
-                                <select v-model="itemsPerPage" @change="setItemsPerPage(itemsPerPage)" class=" p-1 mb-1 w-24 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500">
+                                <select v-model="itemsPerPage" @change="setItemsPerPage(itemsPerPage)" class=" p-1 mb-1 w-24 text-sm rounded-lg border border-gray-200 focus:ring-blue-500 focus:border-blue-500">
                                     <option v-for="(items, idx) in itemsPerPages" :key="idx" :value="items">{{items}}</option>
                                 </select>
                             </div>

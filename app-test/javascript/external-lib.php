@@ -8,12 +8,13 @@ use Fohn\Ui\Js\Jquery;
 use Fohn\Ui\Js\Js;
 use Fohn\Ui\Js\JsChain;
 use Fohn\Ui\Js\JsFunction;
+use Fohn\Ui\Page\Package;
 use Fohn\Ui\Service\Ui;
 use Fohn\Ui\View;
 
 require_once __DIR__ . '/../init-ui.php';
 
-Ui::page()->includeJsPackage('dayjs', 'https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js');
+Ui::page()->includePackage('dayjs', Package::addScript('https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js'));
 
 View\Heading\Header::addTo(Ui::layout(), ['title' => 'Load external library test:', 'size' => 5]);
 $clock = View::addTo(Ui::layout())->setTextContent((new \DateTime())->format('H:i:s'))->appendCssClasses('js-clock');

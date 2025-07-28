@@ -11,6 +11,7 @@ namespace Fohn\Ui\AppTest;
 use Fohn\Ui\Component\Navigation\Group;
 use Fohn\Ui\Component\Navigation\Item;
 use Fohn\Ui\Page;
+use Fohn\Ui\Page\Package;
 use Fohn\Ui\PageLayout\SideNavigation;
 use Fohn\Ui\Service\Ui;
 use Fohn\Ui\Tailwind\Tw;
@@ -30,9 +31,8 @@ class AppTest
         ]);
 
         if ($environment === 'dev') {
-            $page->fohnJsVersion = '';
-            $page->includeJsPackage('fohn-js', '/public/fohn-ui.js');
-            $page->includeCssPackage('fohn-css', '/public/fohn-ui.css');
+            $page->includePackage('fohn-js', Package::addScript('/public/fohn-ui.js'));
+            $page->includePackage('fohn-css', Package::addStylesheet('/public/fohn-ui.css'));
         }
 
         // Add Admin layout to this page.
@@ -105,6 +105,7 @@ class AppTest
                 'url' => $baseUrl . 'javascript/js.php',
                 'items' => [
                     new Item(['name' => 'jQuery Integration', 'url' => $baseUrl . 'javascript/js.php']),
+                    new Item(['name' => 'External Js Library', 'url' => $baseUrl . 'javascript/external-lib.php']),
                 ],
             ]),
             new Group([
@@ -116,6 +117,7 @@ class AppTest
                     new Item(['name' => 'Tabs Menu', 'url' => $baseUrl . 'interactive/tabs-menu.php']),
                     new Item(['name' => 'Modal', 'url' => $baseUrl . 'interactive/modal.php']),
                     new Item(['name' => 'Toast', 'url' => $baseUrl . 'interactive/toast.php']),
+                    new Item(['name' => 'Tree', 'url' => $baseUrl . 'interactive/tree.php']),
                     new Item(['name' => 'Virtual Page', 'url' => $baseUrl . 'interactive/virtual.php']),
                     new Item(['name' => 'Server Side Event', 'url' => $baseUrl . 'interactive/sse.php']),
                     new Item(['name' => 'Console', 'url' => $baseUrl . 'interactive/console.php']),

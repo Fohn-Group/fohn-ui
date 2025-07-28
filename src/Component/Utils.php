@@ -9,6 +9,7 @@ namespace Fohn\Ui\Component;
 
 use Fohn\Ui\Js\JsChain;
 use Fohn\Ui\Page;
+use Fohn\Ui\Page\Package;
 
 class Utils
 {
@@ -21,7 +22,7 @@ class Utils
     public static function requireFLatPickrLocale(Page $page, string $locale): void
     {
         $localeUrl = "https://npmcdn.com/flatpickr/dist/l10n/{$locale}.js";
-        $page->includeJsPackage('flatpickr', $localeUrl);
+        $page->includePackage('flatpickr', Package::addScript($localeUrl));
         // @phpstan-ignore-next-line
         $page->appendJsAction(JsChain::with('flatpickr')->localize(JsChain::with('flatpickr')->l10ns->{$locale}));
     }

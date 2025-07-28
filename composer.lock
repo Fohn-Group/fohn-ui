@@ -4,30 +4,31 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8193619e0d85c98e6dacb9fdd9db1fba",
+    "content-hash": "ec508b8b47a2e7a2b18604c6efc1aed2",
     "packages": [
         {
             "name": "atk4/core",
-            "version": "5.2.0",
+            "version": "6.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/atk4/core.git",
-                "reference": "d4dc25eba80c9ea86359656e3592a86c99e871a9"
+                "reference": "0715ee3b0eb570f98fa0046e37f3fa0d503e0322"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/atk4/core/zipball/d4dc25eba80c9ea86359656e3592a86c99e871a9",
-                "reference": "d4dc25eba80c9ea86359656e3592a86c99e871a9",
+                "url": "https://api.github.com/repos/atk4/core/zipball/0715ee3b0eb570f98fa0046e37f3fa0d503e0322",
+                "reference": "0715ee3b0eb570f98fa0046e37f3fa0d503e0322",
                 "shasum": ""
             },
             "require": {
                 "benmorel/weakmap-polyfill": "^0.5.0",
-                "php": ">=7.4 <8.4",
+                "php": ">=7.4 <8.5",
                 "psr/log": "^1.0 || ^2.0 || ^3.0",
                 "symfony/polyfill-php80": "^1.28",
                 "symfony/polyfill-php81": "^1.28",
                 "symfony/polyfill-php82": "^1.28",
                 "symfony/polyfill-php83": "^1.28",
+                "symfony/polyfill-php84": "^1.29",
                 "symfony/yaml": "^3.4 || ^4.4 || ^5.1 || ^6.0 || ^7.0"
             },
             "require-dev": {
@@ -35,10 +36,10 @@
                 "ergebnis/phpunit-slow-test-detector": "^2.9",
                 "friendsofphp/php-cs-fixer": "^3.0",
                 "phpstan/extension-installer": "^1.1",
-                "phpstan/phpstan": "^1.11",
-                "phpstan/phpstan-deprecation-rules": "^1.0",
-                "phpstan/phpstan-strict-rules": "^1.3",
-                "phpunit/phpunit": "^9.5.5 || ^10.0 || ^11.0"
+                "phpstan/phpstan": "^2.0",
+                "phpstan/phpstan-deprecation-rules": "^2.0",
+                "phpstan/phpstan-strict-rules": "^2.0",
+                "phpunit/phpunit": "^9.5.5 || ^10.0 || ^11.0 || ^12.0"
             },
             "type": "library",
             "autoload": {
@@ -78,26 +79,26 @@
             ],
             "support": {
                 "issues": "https://github.com/atk4/core/issues",
-                "source": "https://github.com/atk4/core/tree/5.2.0"
+                "source": "https://github.com/atk4/core/tree/6.0.0"
             },
-            "time": "2024-06-15T14:24:35+00:00"
+            "time": "2025-04-22T14:27:50+00:00"
         },
         {
             "name": "atk4/data",
-            "version": "5.2.0",
+            "version": "6.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/atk4/data.git",
-                "reference": "d5cb07ae91e6d0d33774d7c3e08a374e24444842"
+                "reference": "5d322fd7b8bbeed67c4c49942867a1ff8ac89030"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/atk4/data/zipball/d5cb07ae91e6d0d33774d7c3e08a374e24444842",
-                "reference": "d5cb07ae91e6d0d33774d7c3e08a374e24444842",
+                "url": "https://api.github.com/repos/atk4/data/zipball/5d322fd7b8bbeed67c4c49942867a1ff8ac89030",
+                "reference": "5d322fd7b8bbeed67c4c49942867a1ff8ac89030",
                 "shasum": ""
             },
             "require": {
-                "atk4/core": "~5.2.0",
+                "atk4/core": "~6.0.0",
                 "doctrine/dbal": "~3.5.1 || ~3.6.0",
                 "mvorisek/atk4-hintable": "~1.9.0",
                 "php": ">=7.4 <8.4"
@@ -111,9 +112,9 @@
                 "ergebnis/phpunit-slow-test-detector": "^2.9",
                 "friendsofphp/php-cs-fixer": "^3.0",
                 "phpstan/extension-installer": "^1.1",
-                "phpstan/phpstan": "^1.11",
-                "phpstan/phpstan-deprecation-rules": "^1.0",
-                "phpstan/phpstan-strict-rules": "^1.3",
+                "phpstan/phpstan": "^2.0",
+                "phpstan/phpstan-deprecation-rules": "^2.0",
+                "phpstan/phpstan-strict-rules": "^2.0",
                 "phpunit/phpunit": "^9.5.25 || ^10.0 || ^11.0"
             },
             "suggest": {
@@ -163,9 +164,9 @@
             ],
             "support": {
                 "issues": "https://github.com/atk4/data/issues",
-                "source": "https://github.com/atk4/data/tree/5.2.0"
+                "source": "https://github.com/atk4/data/tree/6.0.0"
             },
-            "time": "2024-06-15T14:41:26+00:00"
+            "time": "2025-04-22T14:28:08+00:00"
         },
         {
             "name": "benmorel/weakmap-polyfill",
@@ -679,32 +680,32 @@
         },
         {
             "name": "mvorisek/atk4-hintable",
-            "version": "1.9.13",
+            "version": "1.9.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mvorisek/atk4-hintable-mirror.git",
-                "reference": "90037b3e319fbbacaffb81647dcccc243cc3546c"
+                "reference": "442a1b630aef76917778b21b31657a87738d82ad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mvorisek/atk4-hintable-mirror/zipball/90037b3e319fbbacaffb81647dcccc243cc3546c",
-                "reference": "90037b3e319fbbacaffb81647dcccc243cc3546c",
+                "url": "https://api.github.com/repos/mvorisek/atk4-hintable-mirror/zipball/442a1b630aef76917778b21b31657a87738d82ad",
+                "reference": "442a1b630aef76917778b21b31657a87738d82ad",
                 "shasum": ""
             },
             "require": {
-                "atk4/data": "~5.2.0 || dev-develop",
-                "php": ">=7.4 <8.4"
+                "atk4/data": "~6.0.0 || dev-develop",
+                "php": ">=7.4 <8.5"
             },
             "conflict": {
-                "phpstan/phpstan": "<1.10.12"
+                "phpstan/phpstan": "<2.1.13"
             },
             "require-dev": {
                 "ergebnis/phpunit-slow-test-detector": "^2.9",
                 "friendsofphp/php-cs-fixer": "^3.0",
                 "phpstan/extension-installer": "^1.1",
-                "phpstan/phpstan": "^1.11",
-                "phpstan/phpstan-deprecation-rules": "^1.0",
-                "phpstan/phpstan-strict-rules": "^1.3",
+                "phpstan/phpstan": "^2.0",
+                "phpstan/phpstan-deprecation-rules": "^2.0",
+                "phpstan/phpstan-strict-rules": "^2.0",
                 "phpunit/phpunit": "^9.6 || ^10.0 || ^11.0"
             },
             "type": "library",
@@ -734,9 +735,9 @@
             "homepage": "https://www.mvorisek.com/",
             "support": {
                 "issues": "https://github.com/mvorisek/atk4-hintable-mirror/issues",
-                "source": "https://github.com/mvorisek/atk4-hintable-mirror/tree/1.9.13"
+                "source": "https://github.com/mvorisek/atk4-hintable-mirror/tree/1.9.14"
             },
-            "time": "2024-09-06T10:13:11+00:00"
+            "time": "2025-05-01T12:19:54+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -1502,6 +1503,82 @@
                 }
             ],
             "time": "2024-09-09T11:45:10+00:00"
+        },
+        {
+            "name": "symfony/polyfill-php84",
+            "version": "v1.32.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-php84.git",
+                "reference": "000df7860439609837bbe28670b0be15783b7fbf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-php84/zipball/000df7860439609837bbe28670b0be15783b7fbf",
+                "reference": "000df7860439609837bbe28670b0be15783b7fbf",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2"
+            },
+            "type": "library",
+            "extra": {
+                "thanks": {
+                    "url": "https://github.com/symfony/polyfill",
+                    "name": "symfony/polyfill"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Php84\\": ""
+                },
+                "classmap": [
+                    "Resources/stubs"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill backporting some PHP 8.4+ features to lower PHP versions",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "polyfill",
+                "portable",
+                "shim"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/polyfill-php84/tree/v1.32.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2025-02-20T12:04:08+00:00"
         },
         {
             "name": "symfony/yaml",
@@ -2937,16 +3014,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v5.5.0",
+            "version": "v5.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "ae59794362fe85e051a58ad36b289443f57be7a9"
+                "reference": "221b0d0fdf1369c71047ad1d18bb5880017bbc56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/ae59794362fe85e051a58ad36b289443f57be7a9",
-                "reference": "ae59794362fe85e051a58ad36b289443f57be7a9",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/221b0d0fdf1369c71047ad1d18bb5880017bbc56",
+                "reference": "221b0d0fdf1369c71047ad1d18bb5880017bbc56",
                 "shasum": ""
             },
             "require": {
@@ -2989,9 +3066,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
-                "source": "https://github.com/nikic/PHP-Parser/tree/v5.5.0"
+                "source": "https://github.com/nikic/PHP-Parser/tree/v5.6.0"
             },
-            "time": "2025-05-31T08:24:38+00:00"
+            "time": "2025-07-27T20:03:57+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -3161,20 +3238,20 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.12.28",
+            "version": "2.1.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "fcf8b71aeab4e1a1131d1783cef97b23a51b87a9"
+                "reference": "a9ccfef95210f92ba6feea6e8d1eef42b5605499"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/fcf8b71aeab4e1a1131d1783cef97b23a51b87a9",
-                "reference": "fcf8b71aeab4e1a1131d1783cef97b23a51b87a9",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/a9ccfef95210f92ba6feea6e8d1eef42b5605499",
+                "reference": "a9ccfef95210f92ba6feea6e8d1eef42b5605499",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.2|^8.0"
+                "php": "^7.4|^8.0"
             },
             "conflict": {
                 "phpstan/phpstan-shim": "*"
@@ -3215,30 +3292,30 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-07-17T17:15:39+00:00"
+            "time": "2025-07-26T20:45:26+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
-            "version": "1.2.1",
+            "version": "2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-deprecation-rules.git",
-                "reference": "f94d246cc143ec5a23da868f8f7e1393b50eaa82"
+                "reference": "468e02c9176891cc901143da118f09dc9505fc2f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-deprecation-rules/zipball/f94d246cc143ec5a23da868f8f7e1393b50eaa82",
-                "reference": "f94d246cc143ec5a23da868f8f7e1393b50eaa82",
+                "url": "https://api.github.com/repos/phpstan/phpstan-deprecation-rules/zipball/468e02c9176891cc901143da118f09dc9505fc2f",
+                "reference": "468e02c9176891cc901143da118f09dc9505fc2f",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.2 || ^8.0",
-                "phpstan/phpstan": "^1.12"
+                "php": "^7.4 || ^8.0",
+                "phpstan/phpstan": "^2.1.15"
             },
             "require-dev": {
                 "php-parallel-lint/php-parallel-lint": "^1.2",
-                "phpstan/phpstan-phpunit": "^1.0",
-                "phpunit/phpunit": "^9.5"
+                "phpstan/phpstan-phpunit": "^2.0",
+                "phpunit/phpunit": "^9.6"
             },
             "type": "phpstan-extension",
             "extra": {
@@ -3260,9 +3337,9 @@
             "description": "PHPStan rules for detecting usage of deprecated classes, methods, properties, constants and traits.",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-deprecation-rules/issues",
-                "source": "https://github.com/phpstan/phpstan-deprecation-rules/tree/1.2.1"
+                "source": "https://github.com/phpstan/phpstan-deprecation-rules/tree/2.0.3"
             },
-            "time": "2024-09-11T15:52:35+00:00"
+            "time": "2025-05-14T10:56:57+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
