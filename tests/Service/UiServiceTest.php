@@ -42,7 +42,6 @@ class UiServiceTest extends FohnTestCase
         $this->assertTrue(Ui::service()->hasValidOptions($options, ['opt1', 'opt2', 'opt3', 'opt4']));
     }
 
-
     #[DataProvider('provideGetFromClassNameCases')]
     public function testGetFromClassName(string $value, string $className): void
     {
@@ -67,7 +66,6 @@ class UiServiceTest extends FohnTestCase
         $this->assertSame(['classA', 'name' => 'A', 'id' => 'id'], Ui::service()->mergeSeeds($s1, $s2));
         $this->assertSame(['classB', 'name' => 'B', 'id' => 'id'], Ui::service()->mergeSeeds($s2, $s1));
     }
-
 
     #[DataProvider('provideDecodeJsonCases')]
     public function testDecodeJson(array $expected, array $decode): void
