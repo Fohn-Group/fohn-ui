@@ -11,6 +11,7 @@ namespace Fohn\Ui\AppTest;
 use Fohn\Ui\Component\Navigation\Group;
 use Fohn\Ui\Component\Navigation\Item;
 use Fohn\Ui\Page;
+use Fohn\Ui\Page\Package;
 use Fohn\Ui\PageLayout\SideNavigation;
 use Fohn\Ui\Service\Ui;
 use Fohn\Ui\Tailwind\Tw;
@@ -30,9 +31,8 @@ class AppTest
         ]);
 
         if ($environment === 'dev') {
-            $page->fohnJsVersion = '';
-            $page->includeJsPackage('fohn-js', '/public/fohn-ui.js');
-            $page->includeCssPackage('fohn-css', '/public/fohn-ui.css');
+            $page->includePackage('fohn-js', Package::addScript('/public/fohn-ui.js'));
+            $page->includePackage('fohn-css', Package::addLink('/public/fohn-ui.css'));
         }
 
         // Add Admin layout to this page.
@@ -105,6 +105,7 @@ class AppTest
                 'url' => $baseUrl . 'javascript/js.php',
                 'items' => [
                     new Item(['name' => 'jQuery Integration', 'url' => $baseUrl . 'javascript/js.php']),
+                    new Item(['name' => 'External Js Library', 'url' => $baseUrl . 'javascript/external-lib.php']),
                 ],
             ]),
             new Group([

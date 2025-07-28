@@ -6,6 +6,7 @@ namespace Fohn\Ui\AppTest;
 
 use Atk4\Data\Persistence\Sql;
 use Fohn\Ui\App;
+use Fohn\Ui\Page;
 use Fohn\Ui\PageException;
 use Fohn\Ui\Service\Data;
 use Fohn\Ui\Service\Ui;
