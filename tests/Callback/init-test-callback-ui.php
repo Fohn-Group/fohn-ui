@@ -19,10 +19,12 @@ $config = loadConfig();
 Ui::service()->boot(static function (Ui $ui) use ($config) {
     $app = new App(['registerShutdown' => false]);
 
-    HttpCoverage::start();
-    $app->onHooks(App::HOOKS_BEFORE_EXIT, static function () {
-        HttpCoverage::saveData();
-    });
+    if ($config['env'] === 'test') {
+        HttpCoverage::start();
+        $app->onHooks(App::HOOKS_BEFORE_EXIT, static function () {
+            HttpCoverage::saveData();
+        });
+    }
 
     date_default_timezone_set($config['timezone']);
     Data::setDb($config['db']);
