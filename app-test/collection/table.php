@@ -112,7 +112,7 @@ $table->onDataRequest(static function (Table\Payload $payload, Table\Result\Set 
     $data = [];
     for ($i = 0; $i < 15; ++$i) {
         $first = $faker->firstName(random_int(0, 1) ? 'male' : 'female');
-        $last = $faker->lastName;
+        $last = $faker->lastName();
         $name = $first . ' ' . $last;
         $email = strtolower(substr($first, 0, 1) . '.' . $last . '@salescomp.com');
         $data[] = [
