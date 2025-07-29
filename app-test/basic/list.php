@@ -27,10 +27,10 @@ $factoryPeople = static function (int $number): array {
     for ($i = 0; $i < $number; ++$i) {
         $maleFemale = ($i % 2) === 0 ? 'male' : 'female';
         $items[$i] = [
-            'name' => $faker->firstName($maleFemale) . ' ' . $faker->lastName,
+            'name' => $faker->firstName($maleFemale) . ' ' . $faker->lastName(),
             'gender' => $faker->title($maleFemale),
             'imgSrc' => '/app-test/images/avatar.png',
-            'jobTitle' => $faker->jobTitle,
+            'jobTitle' => $faker->jobTitle(),
         ];
     }
 

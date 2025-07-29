@@ -9,6 +9,7 @@ namespace Fohn\Ui\Tests\DemoApp;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class AppTest extends TestCase
@@ -22,17 +23,18 @@ class AppTest extends TestCase
     {
         require_once __DIR__ . '/../init-configuration.php';
 
+        $config = loadConfig();
+
         $this->client = new Client(
             [
-                'base_uri' => loadConfig()['base_uri'],
-                'headers' => ['x-coverage-id' => 'pcov'],
+                'base_uri' => $config['base_uri'],
+                'headers' => ['x-coverage-id' => $config['x-coverage-value']],
+                'http_errors' => false,
             ]
         );
     }
 
-    /**
-     * @dataProvider provideAppTestHtmlResponseCases
-     */
+    #[DataProvider('provideAppTestHtmlResponseCases')]
     public function testAppTestHtmlResponse(string $uri): void
     {
         $request = new Request('GET', '/app-test/' . $uri);

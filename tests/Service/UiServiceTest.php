@@ -11,6 +11,7 @@ use Fohn\Ui\Service\Ui;
 use Fohn\Ui\Tests\Concerns\MockView;
 use Fohn\Ui\Tests\FohnTestCase;
 use Fohn\Ui\View;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class UiServiceTest extends FohnTestCase
 {
@@ -41,9 +42,7 @@ class UiServiceTest extends FohnTestCase
         $this->assertTrue(Ui::service()->hasValidOptions($options, ['opt1', 'opt2', 'opt3', 'opt4']));
     }
 
-    /**
-     * @dataProvider provideGetFromClassNameCases
-     */
+    #[DataProvider('provideGetFromClassNameCases')]
     public function testGetFromClassName(string $value, string $className): void
     {
         $this->assertSame($value, Ui::service()->factoryViewName($className));
@@ -68,9 +67,7 @@ class UiServiceTest extends FohnTestCase
         $this->assertSame(['classB', 'name' => 'B', 'id' => 'id'], Ui::service()->mergeSeeds($s2, $s1));
     }
 
-    /**
-     * @dataProvider provideDecodeJsonCases
-     */
+    #[DataProvider('provideDecodeJsonCases')]
     public function testDecodeJson(array $expected, array $decode): void
     {
         $this->assertSame($expected, $decode);
@@ -101,9 +98,7 @@ class UiServiceTest extends FohnTestCase
         $this->assertSame('{"jsMaxInt":9007199254740991,"jsBigInt":"9007199254740992n"}', $json);
     }
 
-    /**
-     * @dataProvider provideBuildHtmlTagCases
-     */
+    #[DataProvider('provideBuildHtmlTagCases')]
     public function testBuildHtmlTag(string $expectedTag, string $resultTag): void
     {
         $this->assertSame($expectedTag, $resultTag);

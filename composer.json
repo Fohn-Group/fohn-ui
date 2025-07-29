@@ -41,6 +41,7 @@
     "ext-json": "*",
     "ext-pdo": "*",
     "atk4/data": "^6.0",
+    "fakerphp/faker": "^1.24",
     "guzzlehttp/psr7": "^2.2",
     "myclabs/deep-copy": "^1.10"
   },
@@ -50,15 +51,13 @@
     "behat/mink-extension": "^2.3.1",
     "behat/mink-selenium2-driver": "^1.4",
     "friendsofphp/php-cs-fixer": "^3.0",
-    "fzaninotto/faker": "^1.6",
     "guzzlehttp/guzzle": "^7.4.3",
     "instaclick/php-webdriver": "^1.4.7",
-    "johnkary/phpunit-speedtrap": "^3.3",
     "phpstan/extension-installer": "^1.1",
     "phpstan/phpstan": "^2.0",
     "phpstan/phpstan-deprecation-rules": "^2.0",
     "phpunit/phpcov": "*",
-    "phpunit/phpunit": "^9.6",
+    "phpunit/phpunit": "^11.0",
     "symfony/process": "^4.4 || ^5.0"
   },
   "autoload": {

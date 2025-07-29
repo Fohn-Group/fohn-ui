@@ -41,4 +41,4 @@ $jQueryReload->onJqueryRequest(static function ($payload) use ($v) {
 });
 
 $genericCallback = Generic::addAbstractTo(Ui::layout(), ['urlTrigger' => 'generic_tg']);
-$genericCallback->onRequest(Closure::fromCallable([new CallbackPayloadTest(), 'executeGenericCallback']));
+$genericCallback->onRequest(Closure::fromCallable([new CallbackPayloadTest('testGenericCallback'), 'executeGenericCallback']));
