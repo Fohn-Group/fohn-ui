@@ -23,10 +23,12 @@ class AppTest extends TestCase
     {
         require_once __DIR__ . '/../init-configuration.php';
 
+        $config = loadConfig();
+
         $this->client = new Client(
             [
-                'base_uri' => loadConfig()['base_uri'],
-                'headers' => ['x-coverage-id' => 'pcov'],
+                'base_uri' => $config['base_uri'],
+                'headers' => ['x-coverage-id' => $config['x-coverage-value']],
                 'http_errors' => false,
             ]
         );
