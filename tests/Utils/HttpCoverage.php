@@ -28,7 +28,6 @@ final class HttpCoverage
         }
 
         $filter = new Filter();
-        $filter->includeDirectory(__DIR__ . '/../src');
         self::$coverage = new CodeCoverage(
             (new Selector())->forLineCoverage($filter),
             $filter
