@@ -57,7 +57,7 @@
     "phpstan/phpstan": "^2.0",
     "phpstan/phpstan-deprecation-rules": "^2.0",
     "phpunit/phpcov": "*",
-    "phpunit/phpunit": "^10.0",
+    "phpunit/phpunit": "^11.0",
     "symfony/process": "^4.4 || ^5.0"
   },
   "autoload": {
