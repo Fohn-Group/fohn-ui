@@ -26,7 +26,8 @@ class AppTest extends TestCase
         $this->client = new Client(
             [
                 'base_uri' => loadConfig()['base_uri'],
-                'headers' => ['x-coverage-id' => 'pcov'],
+                // 'headers' => ['x-coverage-id' => 'pcov'],
+                'http_errors' => false,
             ]
         );
     }
