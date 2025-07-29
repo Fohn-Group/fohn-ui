@@ -9,6 +9,7 @@ namespace Fohn\Ui\Tests\DemoApp;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class AppTest extends TestCase
