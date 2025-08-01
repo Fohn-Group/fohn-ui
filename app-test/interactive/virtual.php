@@ -8,7 +8,7 @@ use Fohn\Ui\Core\Utils;
 use Fohn\Ui\Js\Jquery;
 use Fohn\Ui\Js\JsReload;
 use Fohn\Ui\Page;
-use Fohn\Ui\PageLayout\Layout;
+use Fohn\Ui\Page\Layout;
 use Fohn\Ui\Service\Ui;
 use Fohn\Ui\View;
 use Fohn\Ui\View\Button;
