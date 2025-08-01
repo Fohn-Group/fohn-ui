@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Fohn\Ui\PageLayout;
+namespace Fohn\Ui\Page;
 
 /**
  * Base Page layout view.

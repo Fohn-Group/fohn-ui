@@ -25,7 +25,7 @@ use Fohn\Ui\Js\JsChain;
 use Fohn\Ui\Js\JsRenderInterface;
 use Fohn\Ui\Js\Type\Type;
 use Fohn\Ui\Page;
-use Fohn\Ui\PageLayout\Layout;
+use Fohn\Ui\Page\Layout;
 use Fohn\Ui\Service\Theme\Base;
 use Fohn\Ui\Service\Theme\Fohn;
 use Fohn\Ui\Service\Theme\ThemeInterface;
