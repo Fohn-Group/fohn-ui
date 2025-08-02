@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Fohn\Ui\PageLayout;
+namespace Fohn\Ui\Page\Layout;
 
 use Fohn\Ui\Component\Navigation;
+use Fohn\Ui\Page\Layout;
 use Fohn\Ui\View;
 
 /**
