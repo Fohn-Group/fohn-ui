@@ -34,11 +34,6 @@ $grid = View::addTo(Ui::layout(), ['template' => Ui::templateFromFile(
     dirname(__DIR__) . '/templates/split-columns.html'
 )]);
 
-$subtitles = [
-    'Easily format cell value using formatter function.',
-    'Apply Tailwinds utilities on row and/or cell base on data values.',
-];
-
 $select = Select::addTo($grid, ['controlName' => 'loc_select', 'allowNull' => false, 'caption' => 'Select locale for displaying data:'], 'rightContent');
 $select->setItems($locales);
 
