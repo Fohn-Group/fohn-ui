@@ -21,6 +21,7 @@
             <input type="hidden" :value="select.value" :name="inputAttrs.name">
             <div class="relative flex justify-center items-center">
                 <input :value="select.label"
+                        :name="inputAttrs.name + '_label'"
                        :placeholder="inputAttrs.placeholder"
                        type="text"
                        @input="filterItems"
@@ -39,7 +40,7 @@
                 </div>
             </div>
             <transition :duration="300" name="fade">
-                    <div class="fohn-select-items relative" v-if="select.isOpen" tabindex="-1">
+                    <div class="fohn-select-items relative z-10" v-if="select.isOpen" tabindex="-1">
                         <div class="bg-white border border-gray-200 shadow-xl max-h-64 overflow-y-scroll overscroll-y-none absolute inset-x-0 top-1 z-10">
                             <ul class="divide-y divide-gray-300">
                                 <template v-for="(item, index) in select.items" :key="index" >
