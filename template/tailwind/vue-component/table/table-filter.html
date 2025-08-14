@@ -1,6 +1,6 @@
 <div id="{$idAttr}" class="{$classAttr}" {$attributes}>
     <fohn-table-filter {$properties}
-                       #default="@{iconCss, toggleFilterIcon, isActive, matchType, matchTypes, filters, filterMatchResult, removeAll, filterCount, columns, operators, removeFilter, closeFilters, insertFilter, updateFilter, setMatchType}">
+                       #default="@{iconCss, toggleFilterIcon, isActive, matchType, matchTypes, filters, filterMatchResult, removeAll, filterCount, columns, operators, removeFilter, closeFilters, insertFilter, updateFilter, setMatchType, setPreventClickOutside}">
         <div class="" >
             <div class="flex flex-row items-center" @click="toggleFilterIcon">
                 <div><i class="cursor-pointer" :class="iconCss"></i></div>
@@ -97,7 +97,7 @@
                                     </div>
                                 </div>
                             </fohn-item-select>
-                            <fohn-table-filter-value :component="columnComponent" @on-update-value="setValue"
+                            <fohn-table-filter-value :component="columnComponent" @on-update-value="setValue" @on-calendar-open="setPreventClickOutside(true)" @on-calendar-close="setPreventClickOutside(false)"
                                                      #default="@{ update, componentProps, componentName}" class="col-span-3">
                                     <component :is="componentName" v-bind="componentProps" v-show="columnRequiredValue"
                                                v-model="componentProps.value"
