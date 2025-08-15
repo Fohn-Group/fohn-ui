@@ -23,12 +23,13 @@ class Filter extends View implements FilterInterface
     public const FILTER_PROP_ICON_NAME = 'icon-name';
     public const FILTER_PROP_ALT_ICON_NAME = 'alt-icon-name';
 
+    protected string $filterLabel = 'Filter';
     protected const INPUT_VUE_COMPONENT = 'input';
     protected const DATE_VUE_COMPONENT = 'flat-pickr';
 
     protected array $removeAllBtnSeed = [View\Button::class, 'label' => 'Remove All', 'type' => 'text'];
 
-    /**
+    /** 
      * Vue component to use according to data type.
      */
     protected const VUE_COMPONENT_NAME_TYPE = [
@@ -120,10 +121,14 @@ class Filter extends View implements FilterInterface
 
     protected function beforeHtmlRender(): void
     {
+        if ($this->filterLabel) {
+            $this->getTemplate()->trySet('filterLabel', $this->filterLabel);
+        }
+
         $btn = $this->addView(View\Button::factoryFromSeed($this->removeAllBtnSeed), 'removeBtn');
         $this->bindVueEvent($btn, 'click', 'removeAll');
 
-        $this->addProperty('columns', Js::array($this->getFitlersColumn()));
+        $this->addProperty('columns', Js::array($this->getFilterColumns()));
         $this->addProperty('operators', Js::array($this->operators));
         $this->addProperty('match-types', Js::array($this->matchTypes));
         $this->addProperty(self::FILTER_PROP_ICON_NAME, Js::string($this->iconName));
@@ -137,7 +142,7 @@ class Filter extends View implements FilterInterface
         parent::beforeHtmlRender();
     }
 
-    private function getFitlersColumn(): array
+    private function getFilterColumns(): array
     {
         $columns = [];
         foreach ($this->columnFilters as $filter) {

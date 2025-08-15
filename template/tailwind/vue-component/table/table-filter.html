@@ -2,8 +2,9 @@
     <fohn-table-filter {$properties}
                        #default="@{iconCss, toggleFilterIcon, isActive, matchType, matchTypes, filters, filterMatchResult, removeAll, filterCount, columns, operators, removeFilter, closeFilters, insertFilter, updateFilter, setMatchType, setPreventClickOutside}">
         <div class="" >
-            <div class="flex flex-row items-center" @click="toggleFilterIcon">
-                <div><i class="cursor-pointer" :class="iconCss"></i></div>
+            <div class="flex flex-row items-center cursor-pointer" @click="toggleFilterIcon">
+                <div class="mx-2 text-sm">{$filterLabel}</div>
+                <div><i :class="iconCss"></i></div>
                 <div class="text-sm mx-2 -mt-3">{{filterCount > 0 ? filterCount : ''}}</div>
             </div>
             <div class="absolute left-0 bg-white z-20 shadow-xl top-24 border w-full lg:w-5/6 pb-2" v-if="isActive">
