@@ -29,7 +29,7 @@ class Filter extends View implements FilterInterface
 
     protected array $removeAllBtnSeed = [View\Button::class, 'label' => 'Remove All', 'type' => 'text'];
 
-    /** 
+    /**
      * Vue component to use according to data type.
      */
     protected const VUE_COMPONENT_NAME_TYPE = [
